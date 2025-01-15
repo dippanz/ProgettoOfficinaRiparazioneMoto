@@ -18,6 +18,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
@@ -45,8 +46,9 @@ public class Cliente {
 	@Column(name = "Telefono", length = 256)
 	private String telefono;
 	
+	@NotNull(message = "Email obbligatoria")
 	@Email
-	@Column(name = "Email", length = 256)
+	@Column(name = "Email", length = 256, unique = true)
 	private String email;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
