@@ -51,7 +51,7 @@ CREATE TABLE public."MOTO"
 (
     "Id" uuid NOT NULL DEFAULT gen_random_uuid(),
     "Modello" character varying(256),
-    "Targa" character varying(20),
+    "Targa" character varying(20) NOT NULL UNIQUE,
     "Id_cliente" uuid NOT NULL,
 	"Id_utente_reg" uuid NOT NULL, -- utente che registra la moto
     PRIMARY KEY ("Id"),

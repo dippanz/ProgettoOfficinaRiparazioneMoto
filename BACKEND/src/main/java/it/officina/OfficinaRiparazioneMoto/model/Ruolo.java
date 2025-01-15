@@ -24,11 +24,13 @@ import jakarta.persistence.Table;
 public class Ruolo {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")
 	private UUID id;
+	
 	@Column(name = "Nome")
 	private String nome;
+	
 	@OneToMany(mappedBy = "ruolo", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	private List<Utente> utenti;
 	

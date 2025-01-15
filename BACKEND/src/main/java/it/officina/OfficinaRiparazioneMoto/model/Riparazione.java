@@ -25,21 +25,27 @@ import jakarta.persistence.Table;
 public class Riparazione {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")
 	private UUID id;
+	
 	@Column(name = "Descrizione")
 	private String descrizione;
-	@Column(name = "DataInizio")
+	
+	@Column(name = "DataInizio", updatable = false)
 	private LocalDateTime dataInizio;
+	
 	@Column(name = "DataFine")
 	private LocalDateTime dataFine;
+	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "Id_moto", nullable = false)
 	private Moto moto;
+	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "Id_utente_mec", nullable = true)
 	private Utente utenteMec;
+	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "Id_stato", nullable = false)
 	private StatoRiparazione stato;

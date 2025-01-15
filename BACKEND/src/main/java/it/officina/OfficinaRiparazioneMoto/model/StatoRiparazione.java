@@ -24,11 +24,13 @@ import jakarta.persistence.Table;
 public class StatoRiparazione {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")
 	private UUID id;
+	
 	@Column(name = "Stato")
 	private String stato;
+	
 	@OneToMany(mappedBy = "stato", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	private List<Riparazione> riparazioni;
 	

@@ -17,6 +17,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 /**
  * 
@@ -26,19 +28,26 @@ import jakarta.persistence.Table;
 public class Moto {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")
 	private UUID id;
-	@Column(name = "Modello")
+	
+	@Size(min = 2, max = 80, message = "Il modello non può superare i 80 caratteri")
+	@Column(name = "Modello", length = 256)
 	private String modello;
-	@Column(name = "Targa")
+	
+	@Pattern(regexp = "^[A-Za-z0-9-\\s]{1,20}$", message = "La targa può contenere solo lettere, numeri, trattini e spazi, con massimo 20 caratteri")
+	@Column(name = "Targa", length = 20, unique = true, nullable = false)
 	private String targa;
+	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "Id_cliente", nullable = false)
 	private Cliente cliente;
+	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "Id_utente_reg", nullable = false)
 	private Utente utenteReg;
+	
 	@OneToMany(mappedBy = "moto", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	private List<Riparazione> riparazioni;
 	

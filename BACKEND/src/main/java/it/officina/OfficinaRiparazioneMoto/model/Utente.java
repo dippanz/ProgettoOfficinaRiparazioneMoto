@@ -33,7 +33,7 @@ import jakarta.validation.constraints.Size;
 public class Utente {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")
 	private UUID id;
 	
@@ -57,7 +57,6 @@ public class Utente {
 	@Size(min = 4, max = 50, message = "Il userName non può superare i 50 caratteri")
 	@Column(name = "UserName", unique = true, length = 256)
 	private String userName;
-	
 	
 	@NotBlank(message = "HashPassword obbligatoria")
 	@Pattern(

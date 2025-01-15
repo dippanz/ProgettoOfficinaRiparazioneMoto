@@ -17,6 +17,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 /**
  * 
@@ -26,20 +29,30 @@ import jakarta.persistence.Table;
 public class Cliente {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")
 	private UUID id;
-	@Column(name = "Nome")
+	
+	@Size(min = 2, max = 50, message = "Il nome non può superare i 50 caratteri")
+	@Column(name = "Nome", length = 256)
 	private String nome;
-	@Column(name = "Cognome")
+	
+	@Size(min = 2, max = 50, message = "Il cognome non può superare i 50 caratteri")
+	@Column(name = "Cognome", length = 256)
 	private String cognome;
-	@Column(name = "Telefono")
+	
+	@Pattern(regexp = "^\\+?[0-9]{1,3}?\\s?[0-9]{6,10}$", message = "Formato del telefono non valido")
+	@Column(name = "Telefono", length = 256)
 	private String telefono;
-	@Column(name = "Email")
+	
+	@Email
+	@Column(name = "Email", length = 256)
 	private String email;
+	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "Id_utente_reg", nullable = false)
 	private Utente utenteReg;
+	
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	private List<Moto> listaMoto;
 	
