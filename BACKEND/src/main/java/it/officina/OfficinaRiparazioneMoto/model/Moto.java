@@ -17,6 +17,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
@@ -36,6 +38,7 @@ public class Moto {
 	@Column(name = "Modello", length = 256)
 	private String modello;
 	
+	@NotBlank(message = "Targa obbligatoria")
 	@Pattern(regexp = "^[A-Za-z0-9-\\s]{1,20}$", message = "La targa può contenere solo lettere, numeri, trattini e spazi, con massimo 20 caratteri")
 	@Column(name = "Targa", length = 20, unique = true, nullable = false)
 	private String targa;

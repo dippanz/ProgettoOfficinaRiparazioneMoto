@@ -1,3 +1,10 @@
+-- DROP TABLE IF EXISTS public."RIPARAZIONE";
+-- DROP TABLE IF EXISTS public."STATO_RIPARAZIONE";
+-- DROP TABLE IF EXISTS public."MOTO";
+-- DROP TABLE IF EXISTS public."CLIENTE";
+-- DROP TABLE IF EXISTS public."UTENTE";
+-- DROP TABLE IF EXISTS public."RUOLO";
+
 -- RUOLO
 CREATE TABLE public."RUOLO"
 (
@@ -36,7 +43,7 @@ CREATE TABLE public."CLIENTE"
     "Nome" character varying(256),
     "Cognome" character varying(256),
 	"Telefono" character varying(20),
-	"Email" character varying(256),
+	"Email" character varying(256) NOT NULL UNIQUE,
 	"Id_utente_reg" uuid NOT NULL, -- utente che registra il cliente
     PRIMARY KEY ("Id"),
 	CONSTRAINT fk_utentReg_cliente FOREIGN KEY("Id_utente_reg") REFERENCES public."UTENTE"("Id")
