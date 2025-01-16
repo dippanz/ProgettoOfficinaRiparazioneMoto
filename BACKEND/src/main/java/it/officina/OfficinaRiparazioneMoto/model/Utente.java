@@ -16,7 +16,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
@@ -66,9 +67,13 @@ public class Utente {
 	@Column(name = "HashPassword")
 	private String hashPassword;
 	
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-	@JoinColumn(name = "Id_ruolo", nullable = false)
-	private Ruolo ruolo;
+	@ManyToMany
+    @JoinTable(
+        name = "UTENTE_RUOLO", // Nome della tabella di join
+        joinColumns = @JoinColumn(name = "Id_utente", referencedColumnName = "Id"),
+        inverseJoinColumns = @JoinColumn(name = "Id_ruolo", referencedColumnName = "Id")
+    )
+	private List<Ruolo> ruoli;
 	
 	@OneToMany(mappedBy = "utenteReg", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	private List<Cliente> clienti;
@@ -121,12 +126,6 @@ public class Utente {
 	public void setHashPassword(String hashPassword) {
 		this.hashPassword = BCrypt.hashpw(hashPassword, BCrypt.gensalt());
 	}
-	public Ruolo getRuolo() {
-		return ruolo;
-	}
-	public void setRuolo(Ruolo ruolo) {
-		this.ruolo = ruolo;
-	}
 	public List<Cliente> getClienti() {
 		return clienti;
 	}
@@ -144,5 +143,11 @@ public class Utente {
 	}
 	public void setRiparazioni(List<Riparazione> riparazioni) {
 		this.riparazioni = riparazioni;
+	}
+	public List<Ruolo> getRuoli() {
+		return ruoli;
+	}
+	public void setRuoli(List<Ruolo> ruoli) {
+		this.ruoli = ruoli;
 	}
 }

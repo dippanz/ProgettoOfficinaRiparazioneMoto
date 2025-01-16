@@ -18,7 +18,7 @@
 --     OWNER to postgres;
 
 -- RUOLO
-CREATE TABLE public."RUOLO"
+CREATE TABLE IF NOT EXISTS public."RUOLO"
 (
     "Id" uuid NOT NULL DEFAULT gen_random_uuid(),
     "Nome" character varying(50) NOT NULL UNIQUE,
@@ -32,7 +32,7 @@ ALTER TABLE IF EXISTS public."RUOLO"
 
 -- UTENTE
 
-CREATE TABLE public."UTENTE"
+CREATE TABLE IF NOT EXISTS public."UTENTE"
 (
     "Id" uuid NOT NULL DEFAULT gen_random_uuid(),
     "Email" character varying(256) NOT NULL UNIQUE,
@@ -41,17 +41,33 @@ CREATE TABLE public."UTENTE"
     "Cognome" character varying(256),
     "Telefono" character varying(20),
     "HashPassword" text NOT NULL,
-    "Id_ruolo" uuid NOT NULL,
+    -- "Id_ruolo" uuid NOT NULL,
     PRIMARY KEY ("Id"),
-	CONSTRAINT fk_ruolo FOREIGN KEY("Id_ruolo") REFERENCES public."RUOLO"("Id")
+	-- CONSTRAINT fk_ruolo FOREIGN KEY("Id_ruolo") REFERENCES public."RUOLO"("Id")
 );
 
 ALTER TABLE IF EXISTS public."UTENTE"
     OWNER to postgres;
 
+-- UTENTE_RUOLO relazione
+
+CREATE TABLE IF NOT EXISTS public."UTENTE_RUOLO"
+(
+    "Id_utente" uuid NOT NULL,
+    "Id_ruolo" uuid NOT NULL,
+    PRIMARY KEY ("Id_utente", "Id_ruolo"),
+    CONSTRAINT fk_ruolo FOREIGN KEY ("Id_ruolo")
+        REFERENCES public."RUOLO" ("Id"),
+    CONSTRAINT fk_utente FOREIGN KEY ("Id_utente")
+        REFERENCES public."UTENTE" ("Id")
+)
+
+ALTER TABLE IF EXISTS public."UTENTE_RUOLO"
+    OWNER to postgres;
+
 -- CLIENTE
 
-CREATE TABLE public."CLIENTE"
+CREATE TABLE IF NOT EXISTS public."CLIENTE"
 (
     "Id" uuid NOT NULL DEFAULT gen_random_uuid(),
     "Nome" character varying(256),
@@ -68,7 +84,7 @@ ALTER TABLE IF EXISTS public."CLIENTE"
 
 -- MOTO
 
-CREATE TABLE public."MOTO"
+CREATE TABLE IF NOT EXISTS public."MOTO"
 (
     "Id" uuid NOT NULL DEFAULT gen_random_uuid(),
     "Modello" character varying(256),
@@ -86,7 +102,7 @@ ALTER TABLE IF EXISTS public."MOTO"
 
 -- Tabella tipologica Stato della riparazione
 
-CREATE TABLE public."STATO_RIPARAZIONE"
+CREATE TABLE IF NOT EXISTS public."STATO_RIPARAZIONE"
 (
     "Id" SERIAL NOT NULL ,
     "Stato" character varying(256) NOT NULL UNIQUE,
@@ -99,7 +115,7 @@ ALTER TABLE IF EXISTS public."STATO_RIPARAZIONE"
 
 -- RIPARAZIONE
 
-CREATE TABLE public."RIPARAZIONE"
+CREATE TABLE IF NOT EXISTS public."RIPARAZIONE"
 (
     "Id" uuid NOT NULL DEFAULT gen_random_uuid(),
     "Id_stato" int,

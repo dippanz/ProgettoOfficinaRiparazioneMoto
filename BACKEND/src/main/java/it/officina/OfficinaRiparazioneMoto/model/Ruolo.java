@@ -6,15 +6,16 @@ package it.officina.OfficinaRiparazioneMoto.model;
 import java.util.List;
 import java.util.UUID;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * 
@@ -28,10 +29,16 @@ public class Ruolo {
 	@Column(name = "Id")
 	private UUID id;
 	
-	@Column(name = "Nome")
+	@NotNull
+	@Column(name = "Nome", unique = true)
 	private String nome;
 	
-	@OneToMany(mappedBy = "ruolo", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@ManyToMany
+    @JoinTable(
+        name = "UTENTE_RUOLO", // Nome della tabella di join
+        joinColumns = @JoinColumn(name = "Id_ruolo", referencedColumnName = "Id"),
+        inverseJoinColumns = @JoinColumn(name = "Id_utente", referencedColumnName = "Id")
+    )
 	private List<Utente> utenti;
 	
 	public UUID getId() {
