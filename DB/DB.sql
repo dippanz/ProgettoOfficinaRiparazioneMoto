@@ -4,13 +4,27 @@
 -- DROP TABLE IF EXISTS public."CLIENTE";
 -- DROP TABLE IF EXISTS public."UTENTE";
 -- DROP TABLE IF EXISTS public."RUOLO";
+-- DROP TABLE IF EXISTS public."LIVELLO_ACCESSO";
+
+-- LIVELLO DI ACCESSO
+-- CREATE TABLE public."LIVELLO_ACCESSO"
+-- (
+--     "Id" SERIAL NOT NULL ,
+--     "Livello" character varying(50) NOT NULL UNIQUE,
+--     PRIMARY KEY ("Id")
+-- );
+
+-- ALTER TABLE IF EXISTS public."LIVELLO_ACCESSO"
+--     OWNER to postgres;
 
 -- RUOLO
 CREATE TABLE public."RUOLO"
 (
     "Id" uuid NOT NULL DEFAULT gen_random_uuid(),
-    "Nome" character varying(256) NOT NULL UNIQUE,
+    "Nome" character varying(50) NOT NULL UNIQUE,
+	-- "Id_livello_accesso" int,
     PRIMARY KEY ("Id")
+	-- CONSTRAINT fk_livello_accesso FOREIGN KEY("Id_livello_accesso") REFERENCES public."LIVELLO_ACCESSO"("Id")
 );
 
 ALTER TABLE IF EXISTS public."RUOLO"
@@ -108,6 +122,21 @@ VALUES
     ('Accettato'),
     ('In lavorazione'),
     ('Completata');
+
+-- Inserimento dei livelli di accesso
+-- INSERT INTO public."LIVELLO_ACCESSO" ("Livello")
+-- VALUES
+--     ('admin'),
+--     ('user'),
+-- 	('generic');
+
+-- Inserimento dei ruoli
+INSERT INTO public."RUOLO" ("Nome")
+VALUES
+    ('admin'),              -- Ruolo admin con livello di accesso "admin"
+    ('meccanico'),          -- Ruolo meccanico con livello di accesso "user"
+    ('addetto_accettazione');  -- Ruolo addetto_accettazione con livello di accesso "user"
+	-- ('utente_generico');
 
 
 
