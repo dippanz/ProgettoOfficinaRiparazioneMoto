@@ -30,7 +30,7 @@ import jakarta.validation.constraints.Size;
  * 
  */
 @Entity
-@Table(name = "UTENTE")
+@Table(name = "\"UTENTE\"")
 public class Utente {
 	
 	@Id
@@ -69,7 +69,7 @@ public class Utente {
 	
 	@ManyToMany
     @JoinTable(
-        name = "UTENTE_RUOLO", // Nome della tabella di join
+        name = "\"UTENTE_RUOLO\"", // Nome della tabella di join
         joinColumns = @JoinColumn(name = "Id_utente", referencedColumnName = "Id"),
         inverseJoinColumns = @JoinColumn(name = "Id_ruolo", referencedColumnName = "Id")
     )

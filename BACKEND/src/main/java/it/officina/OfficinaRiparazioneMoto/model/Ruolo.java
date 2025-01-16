@@ -21,7 +21,7 @@ import jakarta.validation.constraints.NotNull;
  * 
  */
 @Entity
-@Table(name = "RUOLO")
+@Table(name = "\"RUOLO\"")
 public class Ruolo {
 
 	@Id
@@ -35,7 +35,7 @@ public class Ruolo {
 	
 	@ManyToMany
     @JoinTable(
-        name = "UTENTE_RUOLO", // Nome della tabella di join
+        name = "\"UTENTE_RUOLO\"", // Nome della tabella di join
         joinColumns = @JoinColumn(name = "Id_ruolo", referencedColumnName = "Id"),
         inverseJoinColumns = @JoinColumn(name = "Id_utente", referencedColumnName = "Id")
     )

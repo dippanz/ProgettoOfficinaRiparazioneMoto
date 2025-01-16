@@ -4,7 +4,6 @@
 package it.officina.OfficinaRiparazioneMoto.model;
 
 import java.util.List;
-import java.util.UUID;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -20,13 +19,13 @@ import jakarta.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "STATO_RIPARAZIONE")
+@Table(name = "\"STATO_RIPARAZIONE\"")
 public class StatoRiparazione {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "Id")
-	private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id")
+	private int id;
 	
 	@Column(name = "Stato")
 	private String stato;
@@ -34,10 +33,10 @@ public class StatoRiparazione {
 	@OneToMany(mappedBy = "stato", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	private List<Riparazione> riparazioni;
 	
-	public UUID getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(UUID id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getStato() {

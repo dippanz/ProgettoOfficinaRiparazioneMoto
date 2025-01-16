@@ -21,7 +21,7 @@ import jakarta.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "RIPARAZIONE")
+@Table(name = "\"RIPARAZIONE\"")
 public class Riparazione {
 
 	@Id
