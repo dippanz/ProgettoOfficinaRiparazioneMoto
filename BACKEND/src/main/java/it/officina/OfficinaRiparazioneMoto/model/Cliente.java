@@ -31,28 +31,27 @@ public class Cliente {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "Id")
 	private UUID id;
 	
 	@Size(min = 2, max = 50, message = "Il nome non può superare i 50 caratteri")
-	@Column(name = "Nome", length = 256)
+	@Column(length = 256)
 	private String nome;
 	
 	@Size(min = 2, max = 50, message = "Il cognome non può superare i 50 caratteri")
-	@Column(name = "Cognome", length = 256)
+	@Column(length = 256)
 	private String cognome;
 	
 	@Pattern(regexp = "^\\+?[0-9]{1,3}?\\s?[0-9]{6,10}$", message = "Formato del telefono non valido")
-	@Column(name = "Telefono", length = 256)
+	@Column(length = 256)
 	private String telefono;
 	
 	@NotNull(message = "Email obbligatoria")
 	@Email
-	@Column(name = "Email", length = 256, unique = true)
+	@Column(length = 256, unique = true)
 	private String email;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "Id_utente_reg", nullable = false)
+	@JoinColumn(name = "id_utente_reg", nullable = false)
 	private Utente utenteReg;
 	
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)

@@ -26,18 +26,17 @@ public class Ruolo {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "Id")
 	private UUID id;
 	
 	@NotNull
-	@Column(name = "Nome", unique = true)
+	@Column(unique = true)
 	private String nome;
 	
 	@ManyToMany
     @JoinTable(
         name = "\"UTENTE_RUOLO\"", // Nome della tabella di join
-        joinColumns = @JoinColumn(name = "Id_ruolo", referencedColumnName = "Id"),
-        inverseJoinColumns = @JoinColumn(name = "Id_utente", referencedColumnName = "Id")
+        joinColumns = @JoinColumn(name = "id_ruolo", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "id_utente", referencedColumnName = "id")
     )
 	private List<Utente> utenti;
 	

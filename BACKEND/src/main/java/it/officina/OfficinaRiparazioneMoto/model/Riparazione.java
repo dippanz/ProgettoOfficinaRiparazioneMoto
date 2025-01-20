@@ -16,6 +16,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 /**
  * 
@@ -26,28 +28,33 @@ public class Riparazione {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "Id")
 	private UUID id;
 	
-	@Column(name = "Descrizione")
 	private String descrizione;
 	
-	@Column(name = "DataInizio", updatable = false)
+	@Column(updatable = false)
 	private LocalDateTime dataInizio;
 	
-	@Column(name = "DataFine")
 	private LocalDateTime dataFine;
 	
+	@NotBlank(message = "Codice servizio obbligatorio")
+	@Pattern(
+			regexp = "^[A-Z0-9]{6,25}$", 
+			message = "Il codice non rispetta i criteri richiesti"
+	)
+	@Column(name = "codice_servizio", unique = true, nullable = false)
+	private String codiceServizio;
+	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "Id_moto", nullable = false)
+	@JoinColumn(name = "id_moto", nullable = false)
 	private Moto moto;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "Id_utente_mec", nullable = true)
+	@JoinColumn(name = "id_utente_mec", nullable = true)
 	private Utente utenteMec;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-	@JoinColumn(name = "Id_stato", nullable = false)
+	@JoinColumn(name = "id_stato", nullable = false)
 	private StatoRiparazione stato;
 	
 	public UUID getId() {

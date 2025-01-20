@@ -2,6 +2,7 @@
 -- DROP TABLE IF EXISTS public."STATO_RIPARAZIONE";
 -- DROP TABLE IF EXISTS public."MOTO";
 -- DROP TABLE IF EXISTS public."CLIENTE";
+-- DROP TABLE IF EXISTS public."UTENTE_RUOLO";
 -- DROP TABLE IF EXISTS public."UTENTE";
 -- DROP TABLE IF EXISTS public."RUOLO";
 -- DROP TABLE IF EXISTS public."LIVELLO_ACCESSO";
@@ -9,9 +10,9 @@
 -- LIVELLO DI ACCESSO
 -- CREATE TABLE public."LIVELLO_ACCESSO"
 -- (
---     "Id" SERIAL NOT NULL ,
+--     "id" SERIAL NOT NULL ,
 --     "Livello" character varying(50) NOT NULL UNIQUE,
---     PRIMARY KEY ("Id")
+--     PRIMARY KEY ("id")
 -- );
 
 -- ALTER TABLE IF EXISTS public."LIVELLO_ACCESSO"
@@ -20,11 +21,11 @@
 -- RUOLO
 CREATE TABLE IF NOT EXISTS public."RUOLO"
 (
-    "Id" uuid NOT NULL DEFAULT gen_random_uuid(),
-    "Nome" character varying(50) NOT NULL UNIQUE,
-	-- "Id_livello_accesso" int,
-    PRIMARY KEY ("Id")
-	-- CONSTRAINT fk_livello_accesso FOREIGN KEY("Id_livello_accesso") REFERENCES public."LIVELLO_ACCESSO"("Id")
+    "id" uuid NOT NULL DEFAULT gen_random_uuid(),
+    "nome" character varying(50) NOT NULL UNIQUE,
+	-- "id_livello_accesso" int,
+    PRIMARY KEY ("id")
+	-- CONSTRAINT fk_livello_accesso FOREIGN KEY("id_livello_accesso") REFERENCES public."LIVELLO_ACCESSO"("id")
 );
 
 ALTER TABLE IF EXISTS public."RUOLO"
@@ -34,16 +35,16 @@ ALTER TABLE IF EXISTS public."RUOLO"
 
 CREATE TABLE IF NOT EXISTS public."UTENTE"
 (
-    "Id" uuid NOT NULL DEFAULT gen_random_uuid(),
-    "Email" character varying(256) NOT NULL UNIQUE,
-    "UserName" character varying(256) UNIQUE,
-    "Nome" character varying(256),
-    "Cognome" character varying(256),
-    "Telefono" character varying(20),
-    "HashPassword" text NOT NULL,
-    -- "Id_ruolo" uuid NOT NULL,
-    PRIMARY KEY ("Id"),
-	-- CONSTRAINT fk_ruolo FOREIGN KEY("Id_ruolo") REFERENCES public."RUOLO"("Id")
+    "id" uuid NOT NULL DEFAULT gen_random_uuid(),
+    "email" character varying(256) NOT NULL UNIQUE,
+    "username" character varying(256) UNIQUE,
+    "nome" character varying(256),
+    "cognome" character varying(256),
+    "telefono" character varying(20),
+    "hashPassword" text NOT NULL,
+    -- "id_ruolo" uuid NOT NULL,
+    PRIMARY KEY ("id")
+	-- CONSTRAINT fk_ruolo FOREIGN KEY("id_ruolo") REFERENCES public."RUOLO"("id")
 );
 
 ALTER TABLE IF EXISTS public."UTENTE"
@@ -53,14 +54,14 @@ ALTER TABLE IF EXISTS public."UTENTE"
 
 CREATE TABLE IF NOT EXISTS public."UTENTE_RUOLO"
 (
-    "Id_utente" uuid NOT NULL,
-    "Id_ruolo" uuid NOT NULL,
-    PRIMARY KEY ("Id_utente", "Id_ruolo"),
-    CONSTRAINT fk_ruolo FOREIGN KEY ("Id_ruolo")
-        REFERENCES public."RUOLO" ("Id"),
-    CONSTRAINT fk_utente FOREIGN KEY ("Id_utente")
-        REFERENCES public."UTENTE" ("Id")
-)
+    "id_utente" uuid NOT NULL,
+    "id_ruolo" uuid NOT NULL,
+    PRIMARY KEY ("id_utente", "id_ruolo"),
+    CONSTRAINT fk_ruolo FOREIGN KEY ("id_ruolo")
+        REFERENCES public."RUOLO" ("id"),
+    CONSTRAINT fk_utente FOREIGN KEY ("id_utente")
+        REFERENCES public."UTENTE" ("id")
+);
 
 ALTER TABLE IF EXISTS public."UTENTE_RUOLO"
     OWNER to postgres;
@@ -69,14 +70,14 @@ ALTER TABLE IF EXISTS public."UTENTE_RUOLO"
 
 CREATE TABLE IF NOT EXISTS public."CLIENTE"
 (
-    "Id" uuid NOT NULL DEFAULT gen_random_uuid(),
-    "Nome" character varying(256),
-    "Cognome" character varying(256),
-	"Telefono" character varying(20),
-	"Email" character varying(256) NOT NULL UNIQUE,
-	"Id_utente_reg" uuid NOT NULL, -- utente che registra il cliente
-    PRIMARY KEY ("Id"),
-	CONSTRAINT fk_utentReg_cliente FOREIGN KEY("Id_utente_reg") REFERENCES public."UTENTE"("Id")
+    "id" uuid NOT NULL DEFAULT gen_random_uuid(),
+    "nome" character varying(256),
+    "cognome" character varying(256),
+	"telefono" character varying(20),
+	"email" character varying(256) NOT NULL UNIQUE,
+	"id_utente_reg" uuid NOT NULL, -- utente che registra il cliente
+    PRIMARY KEY ("id"),
+	CONSTRAINT fk_utentReg_cliente FOREIGN KEY("id_utente_reg") REFERENCES public."UTENTE"("id")
 );
 
 ALTER TABLE IF EXISTS public."CLIENTE"
@@ -86,14 +87,14 @@ ALTER TABLE IF EXISTS public."CLIENTE"
 
 CREATE TABLE IF NOT EXISTS public."MOTO"
 (
-    "Id" uuid NOT NULL DEFAULT gen_random_uuid(),
-    "Modello" character varying(256),
-    "Targa" character varying(20) NOT NULL UNIQUE,
-    "Id_cliente" uuid NOT NULL,
-	"Id_utente_reg" uuid NOT NULL, -- utente che registra la moto
-    PRIMARY KEY ("Id"),
-	CONSTRAINT fk_cliente FOREIGN KEY("Id_cliente") REFERENCES public."CLIENTE"("Id"),
-	CONSTRAINT fk_utenteReg_moto FOREIGN KEY("Id_utente_reg") REFERENCES public."UTENTE"("Id")
+    "id" uuid NOT NULL DEFAULT gen_random_uuid(),
+    "modello" character varying(256),
+    "targa" character varying(20) NOT NULL UNIQUE,
+    "id_cliente" uuid NOT NULL,
+	"id_utente_reg" uuid NOT NULL, -- utente che registra la moto
+    PRIMARY KEY ("id"),
+	CONSTRAINT fk_cliente FOREIGN KEY("id_cliente") REFERENCES public."CLIENTE"("id"),
+	CONSTRAINT fk_utenteReg_moto FOREIGN KEY("id_utente_reg") REFERENCES public."UTENTE"("id")
 );
 
 ALTER TABLE IF EXISTS public."MOTO"
@@ -104,9 +105,9 @@ ALTER TABLE IF EXISTS public."MOTO"
 
 CREATE TABLE IF NOT EXISTS public."STATO_RIPARAZIONE"
 (
-    "Id" SERIAL NOT NULL ,
-    "Stato" character varying(256) NOT NULL UNIQUE,
-    PRIMARY KEY ("Id")
+    "id" SERIAL NOT NULL ,
+    "stato" character varying(256) NOT NULL UNIQUE,
+    PRIMARY KEY ("id")
 );
 
 ALTER TABLE IF EXISTS public."STATO_RIPARAZIONE"
@@ -117,23 +118,24 @@ ALTER TABLE IF EXISTS public."STATO_RIPARAZIONE"
 
 CREATE TABLE IF NOT EXISTS public."RIPARAZIONE"
 (
-    "Id" uuid NOT NULL DEFAULT gen_random_uuid(),
-    "Id_stato" int,
-    "Descrizione" text,
-	"DataInizio" TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-	"DataFine" TIMESTAMP, 
-    "Id_utente_mec" uuid DEFAULT NULL, -- utente che effettua la riparazione (meccanico)
-	"Id_moto" uuid NOT NULL,
-    PRIMARY KEY ("Id"),
-	CONSTRAINT fk_utente_mec FOREIGN KEY("Id_utente_mec") REFERENCES public."UTENTE"("Id"),
-	CONSTRAINT fk_stato_riparazione FOREIGN KEY("Id_stato") REFERENCES public."STATO_RIPARAZIONE"("Id"),
-	CONSTRAINT fk_moto FOREIGN KEY("Id_moto") REFERENCES public."MOTO"("Id")
+    "id" uuid NOT NULL DEFAULT gen_random_uuid(),
+	"codice_servizio" character varying(30) NOT NULL UNIQUE, -- codice fornito al cliente per ricercare la sua prenotazione
+    "id_stato" int,
+    "descrizione" text,
+	"dataInizio" TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+	"dataFine" TIMESTAMP, 
+    "id_utente_mec" uuid DEFAULT NULL, -- utente che effettua la riparazione (meccanico)
+	"id_moto" uuid NOT NULL,
+    PRIMARY KEY ("id"),
+	CONSTRAINT fk_utente_mec FOREIGN KEY("id_utente_mec") REFERENCES public."UTENTE"("id"),
+	CONSTRAINT fk_stato_riparazione FOREIGN KEY("id_stato") REFERENCES public."STATO_RIPARAZIONE"("id"),
+	CONSTRAINT fk_moto FOREIGN KEY("id_moto") REFERENCES public."MOTO"("id")
 );
 
 ALTER TABLE IF EXISTS public."RIPARAZIONE"
     OWNER to postgres;
 
-INSERT INTO public."STATO_RIPARAZIONE" ("Stato")
+INSERT INTO public."STATO_RIPARAZIONE" ("stato")
 VALUES
     ('Accettato'),
     ('In lavorazione'),
@@ -147,11 +149,11 @@ VALUES
 -- 	('generic');
 
 -- Inserimento dei ruoli
-INSERT INTO public."RUOLO" ("Nome")
+INSERT INTO public."RUOLO" ("nome")
 VALUES
-    ('admin'),              -- Ruolo admin con livello di accesso "admin"
-    ('meccanico'),          -- Ruolo meccanico con livello di accesso "user"
-    ('addetto_accettazione');  -- Ruolo addetto_accettazione con livello di accesso "user"
+	    ('ADMIN'),              -- Ruolo admin con livello di accesso "admin"
+    ('MECCANICO'),          -- Ruolo meccanico con livello di accesso "user"
+    ('ADDETTO_ACCETTAZIONE');  -- Ruolo addetto_accettazione con livello di accesso "user"
 	-- ('utente_generico');
 
 

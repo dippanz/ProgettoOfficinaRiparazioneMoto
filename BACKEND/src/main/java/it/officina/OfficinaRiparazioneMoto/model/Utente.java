@@ -35,43 +35,41 @@ public class Utente {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "Id")
 	private UUID id;
 	
 	@Size(min = 2, max = 50, message = "Il nome non può superare i 50 caratteri")
-	@Column(name = "Nome", length = 256)
+	@Column(length = 256)
 	private String nome;
 	
 	@Size(min = 2, max = 50, message = "Il cognome non può superare i 50 caratteri")
-	@Column(name = "Cognome", length = 256)
+	@Column(length = 256)
 	private String cognome;
 	
 	@Pattern(regexp = "^\\+?[0-9]{1,3}?\\s?[0-9]{6,10}$", message = "Formato del telefono non valido")
-	@Column(name = "Telefono", length = 256)
+	@Column(length = 256)
 	private String telefono;
 	
 	@NotNull(message = "Email obbligatoria")
 	@Email
-	@Column(name = "Email", nullable = false, unique = true, length = 256)
+	@Column(nullable = false, unique = true, length = 256)
 	private String email;
 	
 	@Size(min = 4, max = 50, message = "Il userName non può superare i 50 caratteri")
-	@Column(name = "UserName", unique = true, length = 256)
-	private String userName;
+	@Column(unique = true, length = 256)
+	private String username;
 	
 	@NotBlank(message = "HashPassword obbligatoria")
 	@Pattern(
 			regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\\\d)(?=.*[@$!%*?&])[A-Za-z\\\\d@$!%*?&]{8,64}$", 
 			message = "La password non rispetta i criteri richiesti"
 	)
-	@Column(name = "HashPassword")
 	private String hashPassword;
 	
 	@ManyToMany
     @JoinTable(
         name = "\"UTENTE_RUOLO\"", // Nome della tabella di join
-        joinColumns = @JoinColumn(name = "Id_utente", referencedColumnName = "Id"),
-        inverseJoinColumns = @JoinColumn(name = "Id_ruolo", referencedColumnName = "Id")
+        joinColumns = @JoinColumn(name = "id_utente", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "id_ruolo", referencedColumnName = "id")
     )
 	private List<Ruolo> ruoli;
 	
@@ -83,6 +81,19 @@ public class Utente {
 	
 	@OneToMany(mappedBy = "utenteMec", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	private List<Riparazione> riparazioni;
+	
+	public Utente() {
+		
+	}
+	
+	public Utente(String nome, String cognome, String telefono, String email, String username, String hashpassword) {
+		this.nome = nome;
+		this.cognome = cognome;
+		this.telefono = telefono;
+		this.email = email;
+		this.username = username;
+		this.hashPassword = hashpassword;
+	}
 	
 	public UUID getId() {
 		return id;
@@ -114,17 +125,17 @@ public class Utente {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public String getHashPassword() {
 		return hashPassword;
 	}
 	public void setHashPassword(String hashPassword) {
-		this.hashPassword = BCrypt.hashpw(hashPassword, BCrypt.gensalt());
+		this.hashPassword = hashPassword;
 	}
 	public List<Cliente> getClienti() {
 		return clienti;
