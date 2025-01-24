@@ -24,26 +24,24 @@ public class SecurityConfig {
 	@Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 	    http
-	        /*.csrf(csrf -> csrf.disable())
-	        .sessionManagement(session -> session
-	            .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-	        )*/
-	    	.securityMatcher("/api/**")
+	        .csrf(csrf -> csrf.disable())
 	        .authorizeHttpRequests(authorize -> authorize
 	        	.dispatcherTypeMatchers(DispatcherType.FORWARD,DispatcherType.ERROR).permitAll()
-	            .requestMatchers("/","/resources/**", "/home/**").permitAll()
+	            .requestMatchers(
+					"/",
+					"/resources/**",
+					"/public/**"
+					).permitAll()
 	            //.requestMatchers("/admin/**").hasRole("ADMIN")
-	            .anyRequest().denyAll()
+	            .anyRequest().authenticated()
 	        )
-	        .formLogin(Customizer.withDefaults())
-	        /*.formLogin(form -> form
-	            .loginPage("/login")
-	            .defaultSuccessUrl("/", true)
-	            .permitAll()
-	        )
-	        .logout(logout -> logout
-	            .permitAll()
-	        )*/;
+	        .formLogin(form -> form
+                .loginPage("/public/login")
+                .loginProcessingUrl("/public/process_login") 
+                .defaultSuccessUrl("/", true) 
+                .failureUrl("/public/login?error") 
+                .permitAll()
+            );
 
 	    return http.build();
 	}

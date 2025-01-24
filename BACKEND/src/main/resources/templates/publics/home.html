@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/layout.css}">
+    <title>Officina Riparazioni Moto</title>
+    <!-- <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 18px;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .intro img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .carousel {
+            display: flex;
+            overflow: hidden;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .carousel img {
+            width: 300px;
+            height: auto;
+            margin: 0 10px;
+            border-radius: 10px;
+        }
+
+        .carousel button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .carousel button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .carousel .prev {
+            left: 10px;
+        }
+
+        .carousel .next {
+            right: 10px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style> -->
+</head>
+<body>
+    <div th:replace="fragments/header :: header"></div>
+
+    <main>
+        <h2>Benvenuto nel nostro sistema di gestione</h2>
+        <div class="intro">
+            <p>
+                La nostra officina offre un sistema semplice e intuitivo per monitorare lo stato delle riparazioni dei tuoi veicoli.
+                Puoi utilizzare il nostro sito per:
+            </p>
+            <ul>
+                <li>Controllare lo stato della tua riparazione con il codice servizio e la targa.</li>
+                <li>Scoprire i dettagli delle lavorazioni effettuate.</li>
+                <li>Ricevere aggiornamenti sullo stato del tuo veicolo.</li>
+            </ul>
+            <div class="carousel">
+                <button class="prev">&#8249;</button>
+                <img src="/static/images/image1.jpg" alt="Officina 1">
+                <img src="/static/images/image2.jpg" alt="Officina 2">
+                <img src="/static/images/image3.jpg" alt="Officina 3">
+                <button class="next">&#8250;</button>
+            </div>
+        </div>
+    </main>
+
+    <div th:replace="fragments/footer :: footer"></div>
+
+    <script>
+        const carousel = document.querySelector('.carousel');
+        const images = Array.from(carousel.querySelectorAll('img'));
+        const prevButton = carousel.querySelector('.prev');
+        const nextButton = carousel.querySelector('.next');
+
+        let currentIndex = 0;
+
+        function updateCarousel() {
+            images.forEach((img, index) => {
+                img.style.display = index >= currentIndex && index < currentIndex + 3 ? 'block' : 'none';
+            });
+        }
+
+        prevButton.addEventListener('click', () => {
+            currentIndex = Math.max(0, currentIndex - 1);
+            updateCarousel();
+        });
+
+        nextButton.addEventListener('click', () => {
+            currentIndex = Math.min(images.length - 3, currentIndex + 1);
+            updateCarousel();
+        });
+
+        updateCarousel();
+    </script>
+</body>
+</html>

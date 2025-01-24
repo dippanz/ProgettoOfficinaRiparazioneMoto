@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registrazione Utente</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css"> <!-- Collegamento a un file CSS -->
+    <script>
+        function validatePasswords() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const errorMessage = document.getElementById('passwordError');
+
+            if (password !== confirmPassword) {
+                errorMessage.textContent = 'Le password non coincidono';
+                return false;
+            }
+
+            errorMessage.textContent = ''; // Rimuove l'errore se le password coincidono
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Registrazione Nuovo Utente</h1>
+
+        <!-- Messaggio di errore o successo -->
+        <div th:if="${error}" class="error">
+            <p th:text="${error}"></p>
+        </div>
+        <div th:if="${success}" class="success">
+            <p th:text="${success}"></p>
+        </div>
+
+        <!-- Form di registrazione -->
+        <form th:action="@{/register}" method="post" onsubmit="return validatePasswords()">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" minlength="4" maxlength="50">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" minlength="8" maxlength="64">
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Conferma Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" minlength="8" maxlength="64">
+                <p id="passwordError" class="error" style="color: red;"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="role">Ruolo:</label>
+                <select id="role" name="role">
+                    <option value="">Seleziona un ruolo</option>
+                    <option value="ROLE_USER">Utente</option>
+                    <option value="ROLE_ADMIN">Amministratore</option>
+                </select>
+            </div>
+
+            <button type="submit">Registrati</button>
+        </form>
+    </div>
+
+    <!-- Stile di base -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            width: 50%;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 50px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: red;
+            margin-bottom: 15px;
+        }
+        .success {
+            color: green;
+            margin-bottom: 15px;
+        }
+    </style>
+</body>
+</html>

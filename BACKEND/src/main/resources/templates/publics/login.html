@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/layout.css}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .login-container h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .login-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .login-container label {
+            font-size: 16px;
+            color: #333;
+            align-self: flex-start;
+        }
+
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .login-container button {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 50%;
+        }
+
+        .login-container button:hover {
+            background-color: #0056b3;
+        }
+
+        .login-container .register-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .login-container .register-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .login-container .register-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form th:action="@{/public/process_login}" method="post">
+            <label for="username">Username o Email:</label>
+            <input type="text" id="username" name="username" placeholder="Inserisci il tuo username o email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Inserisci la tua password" required>
+
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <button type="submit">Accedi</button>
+            </div>
+        </form>
+
+        <div class="error" th:if="${param.error}">
+            <p style="color: red;">Credenziali non valide. Riprova.</p>
+        </div>
+        <div class="logout-message" th:if="${param.logout}">
+            <p style="color: green;">Logout effettuato con successo.</p>
+        </div>
+    </div>
+</body>
+</html>
+
+

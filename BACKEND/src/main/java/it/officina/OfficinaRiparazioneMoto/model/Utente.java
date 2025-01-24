@@ -1,12 +1,7 @@
-/**
- * 
- */
 package it.officina.OfficinaRiparazioneMoto.model;
 
 import java.util.List;
 import java.util.UUID;
-
-import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

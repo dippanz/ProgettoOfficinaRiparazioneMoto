@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-OfficinaRiparazioneMotoApplication<OfficinaRiparazioneMoto>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "it.officina.OfficinaRiparazioneMoto.OfficinaRiparazioneMotoApplication",
+            "projectName": "OfficinaRiparazioneMoto",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
