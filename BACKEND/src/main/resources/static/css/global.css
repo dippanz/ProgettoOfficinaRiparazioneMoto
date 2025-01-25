@@ -3,22 +3,58 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f4f4f9;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 main {
-  padding: 20px;
+  /* padding: 20px;
   max-width: 900px;
   margin: 40px auto;
   background: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  border-radius: 10px; */
+
+  flex: 1;
 }
 
 footer {
+  background-color: #333;
+  color: white; 
+  padding: 20px 0;
   text-align: center;
-  margin-top: 40px;
+}
+
+footer p {
+  margin: 0;
   font-size: 14px;
-  color: #666;
+  color: #bbb; 
+}
+
+footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+footer ul li {
+  margin: 0;
+}
+
+footer ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+footer ul li a:hover {
+  color: #00bcd4; 
 }
 
 header {
@@ -31,8 +67,6 @@ header h1 {
   text-align: center;
 }
 
-/* NAVBAR */
-
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -40,17 +74,19 @@ header h1 {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+  margin-bottom: 10px;
 }
 
 .navbar ul {
   list-style: none;
   display: flex;
   padding: 0;
-  margin: 0;
+  margin: 10px 0 0 0;
+  gap: 20px;
 }
 
 .navbar ul li {
-  margin: 0 10px;
+  margin: 0;
 }
 
 .navbar ul.left {
@@ -65,8 +101,9 @@ header h1 {
   color: white;
   text-decoration: none;
   font-size: 18px;
+  transition: color 0.3s;
 }
 
 .navbar a:hover {
-  text-decoration: underline;
+  color: #00bcd4;
 }
