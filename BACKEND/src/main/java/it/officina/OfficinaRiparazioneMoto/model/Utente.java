@@ -15,11 +15,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 
 /**
  * 
@@ -32,32 +28,23 @@ public class Utente {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 	
-	@Size(min = 2, max = 50, message = "Il nome non può superare i 50 caratteri")
 	@Column(length = 256)
 	private String nome;
 	
-	@Size(min = 2, max = 50, message = "Il cognome non può superare i 50 caratteri")
 	@Column(length = 256)
 	private String cognome;
 	
-	@Pattern(regexp = "^\\+?[0-9]{1,3}?\\s?[0-9]{6,10}$", message = "Formato del telefono non valido")
 	@Column(length = 256)
 	private String telefono;
 	
-	@NotNull(message = "Email obbligatoria")
-	@Email
+	@NotBlank(message = "Email obbligatoria")
 	@Column(nullable = false, unique = true, length = 256)
 	private String email;
 	
-	@Size(min = 4, max = 50, message = "Il userName non può superare i 50 caratteri")
 	@Column(unique = true, length = 256)
 	private String username;
 	
 	@NotBlank(message = "HashPassword obbligatoria")
-	@Pattern(
-			regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\\\d)(?=.*[@$!%*?&])[A-Za-z\\\\d@$!%*?&]{8,64}$", 
-			message = "La password non rispetta i criteri richiesti"
-	)
 	@Column(name = "\"hashPassword\"", nullable = false)
 	private String hashPassword;
 	
