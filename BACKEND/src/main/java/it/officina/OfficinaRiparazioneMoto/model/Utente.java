@@ -58,6 +58,7 @@ public class Utente {
 			regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\\\d)(?=.*[@$!%*?&])[A-Za-z\\\\d@$!%*?&]{8,64}$", 
 			message = "La password non rispetta i criteri richiesti"
 	)
+	@Column(name = "\"hashPassword\"", nullable = false)
 	private String hashPassword;
 	
 	@ManyToMany

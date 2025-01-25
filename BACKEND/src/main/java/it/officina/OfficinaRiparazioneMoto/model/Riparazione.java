@@ -32,9 +32,10 @@ public class Riparazione {
 	
 	private String descrizione;
 	
-	@Column(updatable = false)
+	@Column(name = "\"dataInizio\"", updatable = false)
 	private LocalDateTime dataInizio;
 	
+	@Column(name = "\"dataFine\"")
 	private LocalDateTime dataFine;
 	
 	@NotBlank(message = "Codice servizio obbligatorio")

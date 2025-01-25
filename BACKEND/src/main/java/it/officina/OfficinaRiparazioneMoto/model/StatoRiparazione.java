@@ -26,6 +26,7 @@ public class StatoRiparazione {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
+	@Column(nullable = false, unique = true)
 	private String stato;
 	
 	@OneToMany(mappedBy = "stato", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)

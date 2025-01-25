@@ -47,7 +47,7 @@ public class Cliente {
 	
 	@NotNull(message = "Email obbligatoria")
 	@Email
-	@Column(length = 256, unique = true)
+	@Column(length = 256, unique = true, nullable = false)
 	private String email;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
