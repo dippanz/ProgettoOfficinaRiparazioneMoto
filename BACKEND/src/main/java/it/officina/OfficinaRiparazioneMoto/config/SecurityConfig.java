@@ -5,7 +5,6 @@ package it.officina.OfficinaRiparazioneMoto.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,8 +28,11 @@ public class SecurityConfig {
 	        	.dispatcherTypeMatchers(DispatcherType.FORWARD,DispatcherType.ERROR).permitAll()
 	            .requestMatchers(
 					"/",
-					"/resources/**",
-					"/public/**"
+					"/css/**",
+					"/js/**",
+					"/images/**",
+					"/public/**",
+					"/admin/**"
 					).permitAll()
 	            //.requestMatchers("/admin/**").hasRole("ADMIN")
 	            .anyRequest().authenticated()
