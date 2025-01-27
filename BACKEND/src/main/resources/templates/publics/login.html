@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Login</title>
-        <link rel="stylesheet" th:href="@{/css/global.css}">
+        <th:block th:replace="~{fragments/globalFragment :: head}"></th:block>
         <style>
             
         .login-container-esterno{
@@ -108,7 +105,7 @@
     </head>
     <body>
 
-        <div th:replace="fragments/header :: header"></div>
+        <header th:insert="~{fragments/globalFragment :: header}"></header>
 
         <main>
             <div class="login-container-esterno">
@@ -142,6 +139,6 @@
             </div>
         </main>
 
-        <div th:replace="fragments/footer :: footer"></div>
+        <footer th:insert="~{fragments/globalFragment :: footer}"></footer>
     </body>
 </html>

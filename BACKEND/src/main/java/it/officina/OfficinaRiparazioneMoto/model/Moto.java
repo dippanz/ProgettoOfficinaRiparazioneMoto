@@ -37,7 +37,7 @@ public class Moto {
 	private String modello;
 	
 	@NotBlank(message = "Targa obbligatoria")
-	@Pattern(regexp = "^[A-Za-z0-9-\\s]{1,20}$", message = "La targa può contenere solo lettere, numeri, trattini e spazi, con massimo 20 caratteri")
+	@Pattern(regexp = "^[A-Z]{1,3}[0-9]{1,4}[A-Z]{1,3}$|^[A-Z]{1,3}-[0-9]{1,4}-[A-Z]{1,3}$|^[A-Z0-9]{6,8}$", message = "La targa può contenere solo lettere, numeri e trattini")
 	@Column(length = 20, unique = true, nullable = false)
 	private String targa;
 	

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/globalFragment :: head}"></th:block>
+    <style>
+
+        /* .container {
+            margin: 20px auto;
+            padding: 30px;
+            max-width: 600px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        } */
+
+        /* .container h2 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #333;
+        } */
+
+        
+        main{
+            padding: 20px;
+            background: white;
+        }
+
+        .description {
+            margin-bottom: 20px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .container form {
+            margin-top: 4rem;
+            max-width: 40%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .container label {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .container input {
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 100%;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .container input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .container form button {
+            max-width: 30%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .container button:hover {
+            background-color: #0056b3;
+        }
+
+        .container .error {
+            color: red;
+            text-align: center;
+        }
+
+        .container .success {
+            color: green;
+            text-align: center;
+        }
+
+        .table-container {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <header th:insert="~{fragments/globalFragment :: header}"></header>
+
+    <main>
+        <div class="container">
+            <h2>Controllo Stato Riparazione</h2>
+            <p class="description">
+                Inserisci il codice servizio e la targa del veicolo per controllare lo stato della riparazione.
+                Puoi ottenere informazioni dettagliate sulla tua riparazione in tempo reale.
+            </p>
+            
+            <div class="form-container">
+                <form th:action="@{/public/controllo_riparazione}" method="get">
+                    <div class="form-group">
+                        <label for="codice">Codice Servizio:</label>
+                        <input type="text" id="codice" name="codice" placeholder="Inserisci il codice servizio" required>
+                    </div>
+        
+                    <div class="form-group">
+                        <label for="targa">Targa Veicolo:</label>
+                        <input type="text" id="targa" name="targa" placeholder="Inserisci la targa del veicolo" required>
+                    </div>
+        
+                    <button type="submit">Cerca</button>
+                </form>
+            </div>
+    
+            <!-- Messaggi di errore o successo -->
+            <div th:if="${error}" class="error">
+                <p th:text="${error}"></p>
+            </div>
+            <div th:if="${success}" class="success">
+                <p th:text="${success}"></p>
+            </div>
+    
+            <!-- Tabella dei risultati -->
+            <div class="table-container" th:if="${riparazione}">
+                <h3>Dettagli Riparazione</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Codice Servizio</th>
+                            <th>Targa</th>
+                            <th>Stato</th>
+                            <th>Data Consegna</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td th:text="${riparazione.codice}"></td>
+                            <td th:text="${riparazione.targa}"></td>
+                            <td th:text="${riparazione.stato}"></td>
+                            <td th:text="${riparazione.dataConsegna}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+
+    <footer th:insert="~{fragments/globalFragment :: footer}"></footer>
+
+</body>
+</html>

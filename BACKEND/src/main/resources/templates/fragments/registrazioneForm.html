@@ -1,0 +1,90 @@
+<!-- inserisco th:object="${registrazioneUtenteDto}" per visualizzazione errori dinamicamente -->
+<form
+    th:fragment="registrazioneForm"
+    id="registrationForm"
+    th:action="@{/admin/process_registra_utente}"
+    method="post"
+    th:object="${registrazioneUtenteDto}"
+    >
+
+    <div class="form-group">
+        <label for="nome">Nome:</label>
+        <input type="text" th:field="*{nome}" id="nome"
+            name="nome" minlength="2" maxlength="50">
+        <p
+            th:if="${#fields.hasErrors('nome')}"
+            th:errors="*{nome}"
+            id="nomeError"
+            class="error"></p>
+    </div>
+    <div class="form-group">
+        <label for="cognome">Cognome:</label>
+        <input type="text" th:field="*{cognome}" id="cognome"
+            name="cognome" minlength="2" maxlength="50">
+        <p
+            th:if="${#fields.hasErrors('cognome')}"
+            th:errors="*{cognome}"
+            id="cognomeError"
+            class="error"></p>
+    </div>
+    <div class="form-group">
+        <label for="telefono">Telefono:</label>
+        <input type="text" th:field="*{telefono}" id="telefono"
+            name="telefono"
+            pattern="^\+?[0-9]{1,3}?\s?[0-9]{5,10}$">
+        <p
+            th:if="${#fields.hasErrors('telefono')}"
+            th:errors="*{telefono}"
+            id="telefonoError"
+            class="error"></p>
+    </div>
+    <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" th:field="*{username}" id="username"
+            name="username" minlength="4" maxlength="50">
+        <p
+            th:if="${#fields.hasErrors('username')}"
+            th:errors="*{username}"
+            id="usernameError"
+            class="error"></p>
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email *:</label>
+        <input type="email" th:field="*{email}" id="email"
+            name="email">
+        <p
+            th:if="${#fields.hasErrors('email')}"
+            th:errors="*{email}"
+            id="emailError"
+            class="error"></p>
+    </div>
+
+    <div class="form-group">
+        <label for="hashPassword">Password *:</label>
+        <input
+            type="password"
+            th:field="*{hashPassword}"
+            id="hashPassword"
+            name="hashPassword"
+            minlength="8"
+            maxlength="64">
+        <!-- pattern="" -->
+        <p
+            th:if="${#fields.hasErrors('hashPassword')}"
+            th:errors="*{hashPassword}"
+            id="hashPasswordError"
+            class="error"></p>
+    </div>
+
+    <!-- <div class="form-group">
+<label for="role">Ruolo:</label>
+<select id="role" name="role">
+    <option value="">Seleziona un ruolo</option>
+    <option value="ROLE_USER">Utente</option>
+    <option value="ROLE_ADMIN">Amministratore</option>
+</select>
+</div> -->
+
+    <button type="submit">Registrati</button>
+</form>
