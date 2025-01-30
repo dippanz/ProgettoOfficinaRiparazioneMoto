@@ -1,4 +1,10 @@
-function handleRegistrationForm() {
+import {
+  handleFetchError,
+  handleFetchResponse,
+} from "../utils/fetchManager.js";
+import { updateInnerHTML } from "../utils/domManager.js";
+
+export function handleRegistrationForm() {
   const formContainer = document.getElementById("formContainer");
 
   if (formContainer) {
@@ -19,16 +25,11 @@ function handleRegistrationForm() {
           method: "POST",
           body: formData,
         })
-          .then((response) => {
-            return response.text();
-          })
+          .then(handleFetchResponse)
           .then((html) => {
-            const formContainer = document.getElementById("formContainer");
-            formContainer.innerHTML = html;
+            updateInnerHTML("formContainer", html);
           })
-          .catch((error) => {
-            console.error("Errore:", error);
-          })
+          .catch(handleFetchError)
           .finally(() => {
             submitButton.disabled = false;
           });
