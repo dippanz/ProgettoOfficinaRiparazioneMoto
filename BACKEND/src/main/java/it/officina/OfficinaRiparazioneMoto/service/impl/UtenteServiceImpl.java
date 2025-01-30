@@ -7,8 +7,11 @@ import org.springframework.stereotype.Service;
 
 import it.officina.OfficinaRiparazioneMoto.dao.UtenteDao;
 import it.officina.OfficinaRiparazioneMoto.dto.RegistrazioneUtenteDto;
+import it.officina.OfficinaRiparazioneMoto.exception.BadRequestException;
 import it.officina.OfficinaRiparazioneMoto.model.Utente;
 import it.officina.OfficinaRiparazioneMoto.service.UtenteService;
+import it.officina.OfficinaRiparazioneMoto.shared.Constants;
+import it.officina.OfficinaRiparazioneMoto.shared.Constants.ErrorManager;
 
 @Service
 public class UtenteServiceImpl implements UtenteService{
@@ -22,10 +25,13 @@ public class UtenteServiceImpl implements UtenteService{
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    public Utente registraUtente(RegistrazioneUtenteDto utenteDto) {
+    public Utente registraUtente(RegistrazioneUtenteDto utenteDto) throws BadRequestException {
         if (utenteDao.existsByEmail(utenteDto.getEmail())) {
-            //LANCIARE ECCEZZIONE PERSONALIZZATA PER ERRORE PERSONALIZZATO
-            throw new IllegalArgumentException("Username già esistente");
+            throw new BadRequestException(ErrorManager.EMAIL_ALREADY_EXISTS);
+        }
+
+        if (utenteDto.getUsername() != null && utenteDao.existsByUsername(utenteDto.getUsername())) {
+            throw new BadRequestException(ErrorManager.USERNAME_ALREADY_EXISTS);
         }
 
         // Mappo l'utenteDto in un oggetto Utente

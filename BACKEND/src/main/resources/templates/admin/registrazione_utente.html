@@ -2,12 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
         <th:block th:replace="~{fragments/globalFragment :: head}"></th:block>
-        <script type="text/javascript" th:src="@{/js/registrazione_utente.js}"></script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                handleRegistrationForm();
-            });
-        </script>
+        <script type="text/javascript"
+            th:src="@{/js/main.js}"></script>
         <style>
             .container {
                 width: 50%;
@@ -18,25 +14,25 @@
                 border-radius: 8px;
                 margin-top: 50px;
             }
-            h1 {
+            main h1 {
                 text-align: center;
                 margin-bottom: 20px;
             }
             .form-group {
                 margin-bottom: 15px;
             }
-            label {
+            main label {
                 display: block;
                 margin-bottom: 5px;
                 font-weight: bold;
             }
-            input, select {
+            main input, select {
                 width: 100%;
                 padding: 10px;
                 border: 1px solid #ccc;
                 border-radius: 5px;
             }
-            button {
+            main button {
                 display: block;
                 width: 100%;
                 padding: 10px;
@@ -47,7 +43,7 @@
                 font-size: 16px;
                 cursor: pointer;
             }
-            button:hover {
+            main button:hover {
                 background-color: #0056b3;
             }
             .error {
@@ -61,7 +57,9 @@
             }
         </style>
     </head>
-    <body>
+    <body data-page="registration">
+
+        <div th:replace="~{fragments/globalFragment :: modal}"></div>
 
         <header th:insert="~{fragments/globalFragment :: header}"></header>
 

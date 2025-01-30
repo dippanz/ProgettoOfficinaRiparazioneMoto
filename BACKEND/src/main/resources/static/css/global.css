@@ -107,3 +107,24 @@ header h1 {
 .navbar a:hover {
   color: #00bcd4;
 }
+
+/* Stile modale di errore */
+.modal-content {
+  background-color: #fc4f69 !important;
+  border: 1px solid #ff0000 !important; 
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2) !important; 
+  color: white !important;
+}
+
+/* Posiziona la modale sulla destra */
+.modal-dialog {
+  margin-right: 0 !important;
+  top: 20px; 
+  right: 20px; 
+  max-width: 25rem !important; 
+}
+
+/* Rimuove l'oscuramento */
+.modal-backdrop {
+  display: none;
+}

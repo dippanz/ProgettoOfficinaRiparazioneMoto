@@ -1,11 +1,7 @@
 package it.officina.OfficinaRiparazioneMoto.dto;
 
-import java.util.List;
-
-import it.officina.OfficinaRiparazioneMoto.model.Ruolo;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
@@ -23,7 +19,7 @@ public class RegistrazioneUtenteDto {
 	@Email(message = "Formato email non valido")
 	private String email;
 
-	@Size(min = 4, max = 50, message = "Il userName non può superare i 50 caratteri")
+	@Size(min = 4, max = 50, message = "L'username non può superare i 50 caratteri")
 	private String username;
 
 	@NotBlank(message = "Password obbligatoria")

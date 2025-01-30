@@ -1,6 +1,6 @@
 package it.officina.OfficinaRiparazioneMoto.controller;
 
-import javax.naming.Binding;
+import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,12 +9,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
 import it.officina.OfficinaRiparazioneMoto.dto.RegistrazioneUtenteDto;
 import it.officina.OfficinaRiparazioneMoto.service.UtenteService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 @Controller
@@ -23,11 +21,13 @@ public class AdminController {
 
     @Autowired
     private UtenteService utenteService;
-    
-    @PostMapping("/process_registra_utente")
-    public String postRegistraUtente(@Valid @ModelAttribute("registrazioneUtenteDto") RegistrazioneUtenteDto utente, BindingResult bindingResult, Model model) {
 
-        if(bindingResult.hasErrors()) {
+    @PostMapping("/process_registra_utente")
+    public String postRegistraUtente(@Valid @ModelAttribute("registrazioneUtenteDto") RegistrazioneUtenteDto utente,
+            BindingResult bindingResult,
+            Model model) {
+
+        if (bindingResult.hasErrors()) {
             model.addAttribute("registrazioneUtenteDto", utente);
             return "fragments/registrazioneForm :: registrazioneForm";
         }
