@@ -1,15 +1,17 @@
-package it.officina.OfficinaRiparazioneMoto.dto;
+package it.officina.OfficinaRiparazioneMoto.dto.publics;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 public class CercaRiparazioneDto {
 
-    @Pattern(regexp = "^[A-Z0-9]{6,25}$", message = "Il codice non rispetta i criteri richiesti")
+    @Pattern(regexp = "^[A-Z0-9]{6,25}$", message = "Inserire caratteri validi")
     private String codiceServizio;
 
     @NotBlank(message = "Targa obbligatoria")
-    @Pattern(regexp = "^[A-Z]{1,3}[0-9]{1,4}[A-Z]{1,3}$|^[A-Z]{1,3}-[0-9]{1,4}-[A-Z]{1,3}$|^[A-Z0-9]{6,8}$", message = "La targa può contenere solo lettere, numeri e trattini")
+    @Pattern(
+        regexp = "^[A-Z]{1,3}[0-9]{1,4}[A-Z]{1,3}$|^[A-Z]{1,3}-[0-9]{1,4}-[A-Z]{1,3}$|^[A-Z0-9]{6,8}$", 
+        message = "Inserire una targa valida")
     private String targa;
 
     public String getCodiceServizio() {

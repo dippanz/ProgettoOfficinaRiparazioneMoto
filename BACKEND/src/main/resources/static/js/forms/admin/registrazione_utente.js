@@ -1,8 +1,8 @@
 import {
   handleFetchError,
   handleFetchResponse,
-} from "../utils/fetchManager.js";
-import { updateInnerHTML } from "../utils/domManager.js";
+} from "../../utils/fetchManager.js";
+import { updateInnerHTML } from "../../utils/domManager.js";
 
 export function handleRegistrationForm() {
   const formContainer = document.getElementById("formContainer");

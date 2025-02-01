@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import it.officina.OfficinaRiparazioneMoto.dto.RegistrazioneUtenteDto;
+
+import it.officina.OfficinaRiparazioneMoto.dto.admin.RegistrazioneUtenteDto;
 import it.officina.OfficinaRiparazioneMoto.service.UtenteService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -27,9 +28,11 @@ public class AdminController {
             BindingResult bindingResult,
             Model model) {
 
+                // AGGIUNGERE RUOLI NELLA REGISTRAZIONE UTENTE
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("registrazioneUtenteDto", utente);
-            return "fragments/registrazioneForm :: registrazioneForm";
+            return "fragments/admin/registrazioneForm :: registrazioneForm";
         }
 
         utenteService.registraUtente(utente);

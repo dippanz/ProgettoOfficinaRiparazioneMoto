@@ -36,7 +36,7 @@ public class AuthServiceImpl implements AuthService{
             utenteOp.get().getEmail(),
             utenteOp.get().getHashPassword(),
             utenteOp.get().getRuoli().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getNome()))
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getNome()))
                 .toList()
         );
     }

@@ -16,9 +16,9 @@
             <li><a href="/public/cerca_riparazione"
                     th:href="@{/public/cerca_riparazione}">Cerca
                     Riparazione</a></li>
-            <li><a href="/admin/registra_utente"
-                    th:href="@{/admin/registra_utente}"
-                    sec:authorize="hasRole('ADMIN')">Registra utente</a></li>
+            <li sec:authorize="hasRole('ADMIN')">
+                <a href="/admin/registra_utente"
+                    th:href="@{/admin/registra_utente}">Registra utente</a></li>
         </ul>
         <ul class="right">
             <li
@@ -60,22 +60,16 @@
     <!-- Modale di errore -->
     <div class="modal fade" id="modalError" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body d-flex align-items-center text-center">
-                    <div class="col-2">
-                        <button type="button" class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close">
-                        </button>
-                    </div>
-                    <div class="col-auto">
-                        <p id="contentModalError" class="mb-3 mt-3">Messaggio di
-                            errore dinamico o
-                            personalizzato. Se questo fosse piu lungo allora
-                            cosa dovrebbe succedere?</p>
-                    </div>
+            <div class="modal-content p-3">
+                <div class="modal-header">
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="contentModalError" class="mb-1">
+                    </p>
                 </div>
             </div>
         </div>
     </div>
+    
 </th:block>

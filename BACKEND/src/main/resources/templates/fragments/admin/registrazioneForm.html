@@ -52,7 +52,7 @@
     <div class="form-group">
         <label for="email">Email *:</label>
         <input type="email" th:field="*{email}" id="email"
-            name="email">
+            name="email" required>
         <p
             th:if="${#fields.hasErrors('email')}"
             th:errors="*{email}"
@@ -68,7 +68,8 @@
             id="hashPassword"
             name="hashPassword"
             minlength="8"
-            maxlength="64">
+            maxlength="64"
+            required>
         <!-- pattern="" -->
         <p
             th:if="${#fields.hasErrors('hashPassword')}"

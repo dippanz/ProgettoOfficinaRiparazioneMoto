@@ -1,6 +1,7 @@
 package it.officina.OfficinaRiparazioneMoto.service;
 
-import it.officina.OfficinaRiparazioneMoto.dto.RegistrazioneUtenteDto;
+import it.officina.OfficinaRiparazioneMoto.dto.admin.RegistrazioneUtenteDto;
+import it.officina.OfficinaRiparazioneMoto.dto.admin.UtenteDto;
 import it.officina.OfficinaRiparazioneMoto.model.Utente;
 
 /**
@@ -8,5 +9,5 @@ import it.officina.OfficinaRiparazioneMoto.model.Utente;
  */
 public interface UtenteService {
 
-    Utente registraUtente(RegistrazioneUtenteDto utenteDto);
+    UtenteDto registraUtente(RegistrazioneUtenteDto utenteDto);
 }

@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <th:block th:replace="~{fragments/globalFragment :: head}"></th:block>
-    <style>
+    <head>
+        <th:block th:replace="~{fragments/globalFragment :: head}"></th:block>
+        <script type="text/javascript"
+            th:src="@{/js/main.js}"></script>
+        <style>
 
         /* .container {
             margin: 20px auto;
@@ -105,70 +107,33 @@
             color: white;
         }
     </style>
-</head>
-<body>
+    </head>
+    <body data-page="riparazione">
+        <div th:replace="~{fragments/globalFragment :: modal}"></div>
+        <header th:insert="~{fragments/globalFragment :: header}"></header>
+        <main>
+            <div class="container">
+                <h2>Controllo Stato Riparazione</h2>
+                <p class="description">
+                    Inserisci il codice servizio e la targa del veicolo per
+                    controllare lo stato della riparazione.
+                    Puoi ottenere informazioni dettagliate sulla tua riparazione
+                    in tempo reale.
+                </p>
 
-    <header th:insert="~{fragments/globalFragment :: header}"></header>
+                <div 
+                    class="form-container"
+                    id="formContainer"
+                    th:insert="~{fragments/publics/ricercaRiparazione :: cercaRiparazioneForm}">
+                </div>
 
-    <main>
-        <div class="container">
-            <h2>Controllo Stato Riparazione</h2>
-            <p class="description">
-                Inserisci il codice servizio e la targa del veicolo per controllare lo stato della riparazione.
-                Puoi ottenere informazioni dettagliate sulla tua riparazione in tempo reale.
-            </p>
-            
-            <div class="form-container">
-                <form th:action="@{/public/controllo_riparazione}" method="get">
-                    <div class="form-group">
-                        <label for="codice">Codice Servizio:</label>
-                        <input type="text" id="codice" name="codice" placeholder="Inserisci il codice servizio" required>
-                    </div>
-        
-                    <div class="form-group">
-                        <label for="targa">Targa Veicolo:</label>
-                        <input type="text" id="targa" name="targa" placeholder="Inserisci la targa del veicolo" required>
-                    </div>
-        
-                    <button type="submit">Cerca</button>
-                </form>
+                <!-- Tabella dei risultati -->
+                <div 
+                    class="table-container" 
+                    id="tableContainer">
+                </div>
             </div>
-    
-            <!-- Messaggi di errore o successo -->
-            <div th:if="${error}" class="error">
-                <p th:text="${error}"></p>
-            </div>
-            <div th:if="${success}" class="success">
-                <p th:text="${success}"></p>
-            </div>
-    
-            <!-- Tabella dei risultati -->
-            <div class="table-container" th:if="${riparazione}">
-                <h3>Dettagli Riparazione</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Codice Servizio</th>
-                            <th>Targa</th>
-                            <th>Stato</th>
-                            <th>Data Consegna</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td th:text="${riparazione.codice}"></td>
-                            <td th:text="${riparazione.targa}"></td>
-                            <td th:text="${riparazione.stato}"></td>
-                            <td th:text="${riparazione.dataConsegna}"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </main>
-
-
-    <footer th:insert="~{fragments/globalFragment :: footer}"></footer>
-
-</body>
+        </main>
+        <footer th:insert="~{fragments/globalFragment :: footer}"></footer>
+    </body>
 </html>

@@ -100,4 +100,10 @@ public class Riparazione {
 	public void setStato(StatoRiparazione stato) {
 		this.stato = stato;
 	}
+	public String getCodiceServizio() {
+		return codiceServizio;
+	}
+	public void setCodiceServizio(String codiceServizio) {
+		this.codiceServizio = codiceServizio;
+	}
 }

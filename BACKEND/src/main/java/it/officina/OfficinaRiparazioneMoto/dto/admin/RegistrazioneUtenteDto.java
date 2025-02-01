@@ -1,4 +1,4 @@
-package it.officina.OfficinaRiparazioneMoto.dto;
+package it.officina.OfficinaRiparazioneMoto.dto.admin;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

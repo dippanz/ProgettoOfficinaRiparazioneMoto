@@ -58,11 +58,8 @@
         </style>
     </head>
     <body data-page="registration">
-
         <div th:replace="~{fragments/globalFragment :: modal}"></div>
-
         <header th:insert="~{fragments/globalFragment :: header}"></header>
-
         <main>
             <div class="container">
                 <h1>Registrazione Nuovo Utente</h1>
@@ -70,11 +67,9 @@
                 <!-- Form di registrazione -->
                 <div
                     id="formContainer"
-                    th:insert="~{fragments/registrazioneForm :: registrazioneForm}"></div>
+                    th:insert="~{fragments/admin/registrazioneForm :: registrazioneForm}"></div>
             </div>
         </main>
-
         <footer th:insert="~{fragments/globalFragment :: footer}"></footer>
-
     </body>
 </html>

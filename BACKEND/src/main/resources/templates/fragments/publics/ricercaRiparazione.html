@@ -1,0 +1,57 @@
+<th:block th:fragment="cercaRiparazioneForm">
+    <form
+        id="cercaRiparazioneForm"
+        th:action="@{/public/process_cerca_riparazione}"
+        method="get"
+        th:object="${cercaRiparazioneDto}">
+
+        <div class="form-group">
+            <label for="codiceServizio">Codice servizio:</label>
+            <input type="text" th:field="*{codiceServizio}" id="codiceServizio"
+                name="codiceServizio" minlength="6" maxlength="25">
+            <p
+                th:if="${#fields.hasErrors('codiceServizio')}"
+                th:errors="*{codiceServizio}"
+                id="codiceServizioError"
+                class="error"></p>
+        </div>
+        <div class="form-group">
+            <label for="targa">Targa:</label>
+            <input type="text" th:field="*{targa}" id="targa"
+                name="targa" minlength="6" maxlength="8" required>
+            <p
+                th:if="${#fields.hasErrors('targa')}"
+                th:errors="*{targa}"
+                id="targaError"
+                class="error"></p>
+        </div>
+
+        <button type="submit">Cerca</button>
+    </form>
+</th:block>
+
+<th:block th:fragment="riparazioneDettagliGenerali">
+    <div id="tableRiparazioneDettagliGenerali">
+        <h3>Dettagli Riparazione</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Codice servizio</th>
+                    <th>Targa</th>
+                    <th>Stato</th>
+                    <th>Data inizio lavori</th>
+                    <th>Data consegna prevista</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="riparazione : ${riparazioneDatiGenerali}">
+                    <td th:text="${riparazione.codiceServizio}"></td>
+                    <td th:text="${riparazione.targa}"></td>
+                    <td th:text="${riparazione.stato}"></td>
+                    <td th:text="${riparazione.dataInizio}"></td>
+                    <td th:text="${riparazione.dataFine}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</th:block>

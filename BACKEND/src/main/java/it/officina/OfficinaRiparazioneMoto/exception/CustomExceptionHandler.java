@@ -19,4 +19,7 @@ public class CustomExceptionHandler {
 
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
+
+    //qua è possibile gestire gli errori generici cosi per non farli uscire e fare scoppiare il sito
+    //cosi facendo mando un errore personalizzato e non faccio vedere il vero errore
 }

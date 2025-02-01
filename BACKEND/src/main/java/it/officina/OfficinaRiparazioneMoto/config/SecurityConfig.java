@@ -31,10 +31,9 @@ public class SecurityConfig {
 					"/css/**",
 					"/js/**",
 					"/images/**",
-					"/public/**",
-					"/admin/**"
+					"/public/**"
 					).permitAll()
-	            //.requestMatchers("/admin/**").hasRole("ADMIN")
+	            .requestMatchers("/admin/**").hasRole("ADMIN")
 	            .anyRequest().authenticated()
 	        )
 	        .formLogin(form -> form

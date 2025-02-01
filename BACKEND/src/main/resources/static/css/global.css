@@ -116,6 +116,10 @@ header h1 {
   color: white !important;
 }
 
+.modal-header {
+  border-bottom: none !important; 
+}
+
 /* Posiziona la modale sulla destra */
 .modal-dialog {
   margin-right: 0 !important;

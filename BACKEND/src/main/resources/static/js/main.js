@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Mappa dei moduli con funzioni da eseguire dopo l'import
     const modules = {
-        registration: () => import("./forms/registrazione_utente.js").then(module => module.handleRegistrationForm()),
+        registration: () => import("./forms/admin/registrazione_utente.js").then(module => module.handleRegistrationForm()),
+        riparazione: () => import("./forms/publics/cerca_riparazione.js").then(module => module.handleCercaRiparazioneForm()),
     };
 
     if (modules[page]) {

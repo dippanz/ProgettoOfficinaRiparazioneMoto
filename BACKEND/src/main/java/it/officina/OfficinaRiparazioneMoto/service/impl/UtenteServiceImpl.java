@@ -6,11 +6,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import it.officina.OfficinaRiparazioneMoto.dao.UtenteDao;
-import it.officina.OfficinaRiparazioneMoto.dto.RegistrazioneUtenteDto;
+import it.officina.OfficinaRiparazioneMoto.dto.admin.RegistrazioneUtenteDto;
+import it.officina.OfficinaRiparazioneMoto.dto.admin.UtenteDto;
 import it.officina.OfficinaRiparazioneMoto.exception.BadRequestException;
 import it.officina.OfficinaRiparazioneMoto.model.Utente;
 import it.officina.OfficinaRiparazioneMoto.service.UtenteService;
-import it.officina.OfficinaRiparazioneMoto.shared.Constants;
 import it.officina.OfficinaRiparazioneMoto.shared.Constants.ErrorManager;
 
 @Service
@@ -25,7 +25,7 @@ public class UtenteServiceImpl implements UtenteService{
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    public Utente registraUtente(RegistrazioneUtenteDto utenteDto) throws BadRequestException {
+    public UtenteDto registraUtente(RegistrazioneUtenteDto utenteDto) throws BadRequestException {
         if (utenteDao.existsByEmail(utenteDto.getEmail())) {
             throw new BadRequestException(ErrorManager.EMAIL_ALREADY_EXISTS);
         }
@@ -39,6 +39,7 @@ public class UtenteServiceImpl implements UtenteService{
 
         // Hash della password
         utente.setHashPassword(passwordEncoder.encode(utenteDto.getHashPassword()));
-        return utenteDao.save(utente);
+        //ritorno un oggetto UtenteDto per non esporre troppi dati
+        return modelMapper.map(utenteDao.save(utente), UtenteDto.class);
     }
 }

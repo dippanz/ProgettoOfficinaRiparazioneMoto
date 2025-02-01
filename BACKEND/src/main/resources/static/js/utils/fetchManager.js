@@ -16,6 +16,8 @@ export function handleFetchResponse(response) {
     return Promise.reject("Redirecting..."); // Interrompe il flusso della Promise
   }
 
+  console.log(response);
+
   if (response.ok) {
     return response.text(); // Restituisce il contenuto della risposta
   }
