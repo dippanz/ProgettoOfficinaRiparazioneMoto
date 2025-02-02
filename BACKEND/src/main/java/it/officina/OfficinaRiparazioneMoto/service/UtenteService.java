@@ -1,5 +1,7 @@
 package it.officina.OfficinaRiparazioneMoto.service;
 
+import java.util.List;
+
 import it.officina.OfficinaRiparazioneMoto.dto.admin.RegistrazioneUtenteDto;
 import it.officina.OfficinaRiparazioneMoto.dto.admin.UtenteDto;
 import it.officina.OfficinaRiparazioneMoto.model.Utente;
@@ -10,4 +12,6 @@ import it.officina.OfficinaRiparazioneMoto.model.Utente;
 public interface UtenteService {
 
     UtenteDto registraUtente(RegistrazioneUtenteDto utenteDto);
+
+    List<String> getRuoliUtente();
 }

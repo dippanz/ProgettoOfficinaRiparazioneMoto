@@ -1,7 +1,10 @@
 package it.officina.OfficinaRiparazioneMoto.dto.admin;
 
+import java.util.List;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
@@ -26,8 +29,8 @@ public class RegistrazioneUtenteDto {
 	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,64}$", message = "La password non rispetta i criteri richiesti! Es. Password123@")
 	private String hashPassword;
 
-	// @NotEmpty(message = "Deve essere assegnato almeno un ruolo")
-	// private List<String> ruoli;
+	@NotEmpty(message = "Deve essere assegnato almeno un ruolo")
+	private List<String> ruoli;
 
 	public String getNome() {
 		return nome;
@@ -75,5 +78,13 @@ public class RegistrazioneUtenteDto {
 
 	public void setHashPassword(String hashPassword) {
 		this.hashPassword = hashPassword;
+	}
+
+	public List<String> getRuoli() {
+		return ruoli;
+	}
+
+	public void setRuoli(List<String> ruoli) {
+		this.ruoli = ruoli;
 	}
 }

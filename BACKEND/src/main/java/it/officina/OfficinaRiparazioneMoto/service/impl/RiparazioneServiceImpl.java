@@ -31,7 +31,7 @@ public class RiparazioneServiceImpl implements RiparazioneService {
 
         if (codiceServizio != null) {
 
-            Riparazione riparazione = riparazioneDao.findByCodiceServizioWithMoto(codiceServizio)
+            Riparazione riparazione = riparazioneDao.findByCodiceServizioAndTargaWithMoto(codiceServizio, targa)
                     .orElseThrow(() -> new BadRequestException(ErrorManager.RIPARAZIONE_NON_TROVATA_COD_SERVIZIO));
 
             // puo essere semplificata ma per chiarezza ho diviso le due operazioni

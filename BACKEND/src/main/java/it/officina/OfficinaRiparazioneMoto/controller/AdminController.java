@@ -32,6 +32,7 @@ public class AdminController {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("registrazioneUtenteDto", utente);
+            model.addAttribute("listaRuoli", utenteService.getRuoliUtente());
             return "fragments/admin/registrazioneForm :: registrazioneForm";
         }
 
@@ -42,6 +43,7 @@ public class AdminController {
     @GetMapping("/registra_utente")
     public String getRegistraUtente(Model model) {
         model.addAttribute("registrazioneUtenteDto", new RegistrazioneUtenteDto());
+        model.addAttribute("listaRuoli", utenteService.getRuoliUtente());
         return "admin/registrazione_utente";
     }
 }

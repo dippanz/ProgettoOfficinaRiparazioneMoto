@@ -8,6 +8,9 @@ export function handleRegistrationForm() {
   const formContainer = document.getElementById("formContainer");
 
   if (formContainer) {
+    //inzializzazione selectpicker
+    $("#selectRuoli").selectpicker("refresh");
+
     formContainer.addEventListener("submit", function (event) {
       if (event.target && event.target.id === "registrationForm") {
         event.preventDefault(); // Previeni l'invio standard del form
@@ -28,6 +31,7 @@ export function handleRegistrationForm() {
           .then(handleFetchResponse)
           .then((html) => {
             updateInnerHTML("formContainer", html);
+            $("#selectRuoli").selectpicker("refresh");
           })
           .catch(handleFetchError)
           .finally(() => {

@@ -39,7 +39,12 @@ export function handleCercaRiparazioneForm() {
               updateInnerHTML("tableContainer", html);
             }
           })
-          .catch(handleFetchError)
+          .catch((error) => {
+            handleFetchError(error);
+
+            // Ripristino il form originale
+            updateInnerHTML("tableContainer", null);
+          })
           .finally(() => {
             submitButton.disabled = false;
           });
