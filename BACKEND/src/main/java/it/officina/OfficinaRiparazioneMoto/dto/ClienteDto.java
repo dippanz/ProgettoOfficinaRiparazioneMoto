@@ -1,16 +1,22 @@
-package it.officina.OfficinaRiparazioneMoto.dto.admin;
+package it.officina.OfficinaRiparazioneMoto.dto;
 
-import java.util.List;
+import java.util.UUID;
 
-public class UtenteDto {
+public class ClienteDto {
     
-    private String nome;
+	private UUID id;
+	private String nome;
 	private String cognome;
 	private String telefono;
 	private String email;
-	private String username;
-	private List<String> ruoli;
+	private UUID utenteReg;
 
+    public UUID getId() {
+        return id;
+    }
+    public void setId(UUID id) {
+        this.id = id;
+    }
     public String getNome() {
         return nome;
     }
@@ -35,16 +41,10 @@ public class UtenteDto {
     public void setEmail(String email) {
         this.email = email;
     }
-    public String getUsername() {
-        return username;
+    public UUID getUtenteReg() {
+        return utenteReg;
     }
-    public void setUsername(String username) {
-        this.username = username;
-    }
-    public List<String> getRuoli() {
-        return ruoli;
-    }
-    public void setRuoli(List<String> ruoli) {
-        this.ruoli = ruoli;
+    public void setUtenteReg(UUID utenteReg) {
+        this.utenteReg = utenteReg;
     }
 }

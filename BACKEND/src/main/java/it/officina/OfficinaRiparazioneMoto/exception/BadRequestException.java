@@ -1,6 +1,6 @@
 package it.officina.OfficinaRiparazioneMoto.exception;
 
-import it.officina.OfficinaRiparazioneMoto.shared.Constants.ErrorManager;
+import it.officina.OfficinaRiparazioneMoto.utils.Constants.ErrorManager;
 
 public class BadRequestException extends RuntimeException{
 

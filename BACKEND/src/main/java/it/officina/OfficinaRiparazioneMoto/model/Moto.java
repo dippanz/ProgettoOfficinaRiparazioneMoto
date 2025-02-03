@@ -32,12 +32,10 @@ public class Moto {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 	
-	@Size(min = 2, max = 80, message = "Il modello non può superare i 80 caratteri")
 	@Column(length = 256)
 	private String modello;
 	
 	@NotBlank(message = "Targa obbligatoria")
-	@Pattern(regexp = "^[A-Z]{1,3}[0-9]{1,4}[A-Z]{1,3}$|^[A-Z]{1,3}-[0-9]{1,4}-[A-Z]{1,3}$|^[A-Z0-9]{6,8}$", message = "La targa può contenere solo lettere, numeri e trattini")
 	@Column(length = 20, unique = true, nullable = false)
 	private String targa;
 	

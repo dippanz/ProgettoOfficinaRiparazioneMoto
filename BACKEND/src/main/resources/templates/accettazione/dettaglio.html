@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dettaglio Riparazione</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <h2>Dettaglio Riparazione</h2>
+
+        <p><strong>Codice Servizio:</strong> <span th:text="${riparazione.codice}"></span></p>
+        <p><strong>Targa:</strong> <span th:text="${riparazione.targa}"></span></p>
+        <p><strong>Cliente:</strong> <span th:text="${riparazione.cliente}"></span></p>
+        <p><strong>Stato:</strong> <span th:text="${riparazione.stato}"></span></p>
+        <p><strong>Data Ingresso:</strong> <span th:text="${riparazione.dataIngresso}"></span></p>
+        <p><strong>Data Prevista Consegna:</strong> <span th:text="${riparazione.dataPrevistaConsegna}"></span></p>
+        <p><strong>Note:</strong> <span th:text="${riparazione.note}"></span></p>
+
+        <a href="/accettazione">Torna alla Lista</a>
+    </div>
+</body>
+</html>

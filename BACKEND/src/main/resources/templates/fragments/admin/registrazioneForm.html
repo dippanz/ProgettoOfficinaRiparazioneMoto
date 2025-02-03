@@ -1,111 +1,114 @@
 <!-- inserisco th:object="${registrazioneUtenteDto}" per visualizzazione errori dinamicamente -->
-<form
-    th:fragment="registrazioneForm"
-    id="registrationForm"
-    th:action="@{/admin/process_registra_utente}"
-    method="post"
-    th:object="${registrazioneUtenteDto}">
+<th:block th:fragment="registrazioneForm">
+    <form
+        id="registrationForm"
+        th:action="@{/admin/process_registra_utente}"
+        method="post"
+        th:object="${registrazioneUtenteDto}">
 
-    <div class="form-group">
-        <label for="nome">Nome:</label>
-        <input type="text" th:field="*{nome}" id="nome"
-            name="nome" minlength="2" maxlength="50">
-        <p
-            th:if="${#fields.hasErrors('nome')}"
-            th:errors="*{nome}"
-            id="nomeError"
-            class="error"></p>
-    </div>
-    <div class="form-group">
-        <label for="cognome">Cognome:</label>
-        <input type="text" th:field="*{cognome}" id="cognome"
-            name="cognome" minlength="2" maxlength="50">
-        <p
-            th:if="${#fields.hasErrors('cognome')}"
-            th:errors="*{cognome}"
-            id="cognomeError"
-            class="error"></p>
-    </div>
-    <div class="form-group">
-        <label for="telefono">Telefono:</label>
-        <input type="text" th:field="*{telefono}" id="telefono"
-            name="telefono"
-            pattern="^\+?[0-9]{1,3}?\s?[0-9]{5,10}$">
-        <p
-            th:if="${#fields.hasErrors('telefono')}"
-            th:errors="*{telefono}"
-            id="telefonoError"
-            class="error"></p>
-    </div>
-    <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" th:field="*{username}" id="username"
-            name="username" minlength="4" maxlength="50">
-        <p
-            th:if="${#fields.hasErrors('username')}"
-            th:errors="*{username}"
-            id="usernameError"
-            class="error"></p>
-    </div>
+        <div class="form-group">
+            <label for="nome">Nome:</label>
+            <input type="text" th:field="*{nome}" id="nome"
+                name="nome" minlength="2" maxlength="50">
+            <p
+                th:if="${#fields.hasErrors('nome')}"
+                th:errors="*{nome}"
+                id="nomeError"
+                class="error"></p>
+        </div>
+        <div class="form-group">
+            <label for="cognome">Cognome:</label>
+            <input type="text" th:field="*{cognome}" id="cognome"
+                name="cognome" minlength="2" maxlength="50">
+            <p
+                th:if="${#fields.hasErrors('cognome')}"
+                th:errors="*{cognome}"
+                id="cognomeError"
+                class="error"></p>
+        </div>
+        <div class="form-group">
+            <label for="telefono">Telefono:</label>
+            <input type="text" th:field="*{telefono}" id="telefono"
+                name="telefono"
+                pattern="^\+?[0-9]{1,3}?\s?[0-9]{5,10}$">
+            <p
+                th:if="${#fields.hasErrors('telefono')}"
+                th:errors="*{telefono}"
+                id="telefonoError"
+                class="error"></p>
+        </div>
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" th:field="*{username}" id="username"
+                name="username" minlength="4" maxlength="50">
+            <p
+                th:if="${#fields.hasErrors('username')}"
+                th:errors="*{username}"
+                id="usernameError"
+                class="error"></p>
+        </div>
 
-    <div class="form-group">
-        <label for="email">Email *:</label>
-        <input type="email" th:field="*{email}" id="email"
-            name="email" required>
-        <p
-            th:if="${#fields.hasErrors('email')}"
-            th:errors="*{email}"
-            id="emailError"
-            class="error"></p>
-    </div>
+        <div class="form-group">
+            <label for="email">Email *:</label>
+            <input type="email" th:field="*{email}" id="email"
+                name="email" required>
+            <p
+                th:if="${#fields.hasErrors('email')}"
+                th:errors="*{email}"
+                id="emailError"
+                class="error"></p>
+        </div>
 
-    <div class="form-group">
-        <label for="hashPassword">Password *:</label>
-        <input
-            type="password"
-            th:field="*{hashPassword}"
-            id="hashPassword"
-            name="hashPassword"
-            minlength="8"
-            maxlength="64"
-            required>
-        <!-- pattern="" -->
-        <p
-            th:if="${#fields.hasErrors('hashPassword')}"
-            th:errors="*{hashPassword}"
-            id="hashPasswordError"
-            class="error"></p>
-    </div>
+        <div class="form-group">
+            <label for="hashPassword">Password *:</label>
+            <input
+                type="password"
+                th:field="*{hashPassword}"
+                id="hashPassword"
+                name="hashPassword"
+                minlength="8"
+                maxlength="64"
+                required>
+            <!-- pattern="" -->
+            <p
+                th:if="${#fields.hasErrors('hashPassword')}"
+                th:errors="*{hashPassword}"
+                id="hashPasswordError"
+                class="error"></p>
+        </div>
 
-    <!-- <div class="form-group">
-        <label for="selectRuoli">Ruolo:</label>
-        <select class="form-select" id="selectRuoli" name="ruoli" th:field="*{ruoli}" required>
-            <option value="" selected>Scegli un ruolo...</option>
-            <option th:each="role : ${listaRuoli}" th:value="${role}" th:text="${role}"></option>
-        </select>
-        <p
-            th:if="${#fields.hasErrors('ruoli')}"
-            th:errors="*{ruoli}"
-            id="ruoliError"
-            class="error"></p>        
-    </div> -->
+        <!-- 
+        versione con bootstrap 5 senza selezione multipla
+        <div class="form-group">
+            <label for="selectRuoli">Ruolo:</label>
+            <select class="form-select" id="selectRuoli" name="ruoli" th:field="*{ruoli}" required>
+                <option value="" selected>Scegli un ruolo...</option>
+                <option th:each="role : ${listaRuoli}" th:value="${role}" th:text="${role}"></option>
+            </select>
+            <p
+                th:if="${#fields.hasErrors('ruoli')}"
+                th:errors="*{ruoli}"
+                id="ruoliError"
+                class="error"></p>        
+        </div> -->
 
-    <div class="form-group mb-3">
-        <label for="selectRuoli" class="form-label">Ruoli:</label>
-        <select id="selectRuoli"
-            name="ruoli"
-            class="selectpicker form-control"
-            th:field="*{ruoli}"
-            data-live-search="true"
-            title="Scegli uno o più ruoli..."
-            multiple
-            required>
-            <option th:each="role : ${listaRuoli}" th:value="${role}"
-                th:text="${role}"></option>
-        </select>
-        <p th:if="${#fields.hasErrors('ruoli')}" th:errors="*{ruoli}"
-            class="error" id="ruoliError"></p>
-    </div>
+        <div class="form-group mb-3">
+            <label for="selectRuoli" class="form-label">Ruoli:</label>
+            <select id="selectRuoli"
+                name="ruoli"
+                class="selectpicker form-control"
+                th:field="*{ruoli}"
+                data-live-search="true"
+                title="Scegli uno o più ruoli..."
+                multiple
+                required>
+                <option th:each="role : ${listaRuoli}" th:value="${role}"
+                    th:text="${role}"></option>
+            </select>
+            <p th:if="${#fields.hasErrors('ruoli')}" th:errors="*{ruoli}"
+                class="error" id="ruoliError"></p>
+        </div>
 
-    <button type="submit">Registrati</button>
-</form>
+        <button type="submit">Registrati</button>
+    </form>
+</th:block>

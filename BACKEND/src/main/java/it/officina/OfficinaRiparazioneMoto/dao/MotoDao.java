@@ -25,4 +25,5 @@ public interface MotoDao extends JpaRepository<Moto, UUID> {
 
 	@Query("SELECT m FROM Moto m JOIN FETCH m.riparazioni WHERE m.targa = :targa")
 	Optional<Moto> findByTargaWithRiparazioni(@Param("targa") String targa);
+    boolean existsByTarga(String targa);
 }

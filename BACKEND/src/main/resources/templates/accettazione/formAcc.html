@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accettazione Veicoli</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 18px;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #333;
+        }
+
+        input[type="text"], input[type="email"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-section h3 {
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <h1>Accettazione Veicoli</h1>
+            <nav>
+                <a href="/home">Home</a>
+                <a href="/logout">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <h2>Modulo di Accettazione</h2>
+        <p>Compila i seguenti campi per registrare un nuovo veicolo o cliente nel sistema.</p>
+
+        <form th:action="@{/acceptance/submit}" method="post">
+            <!-- Sezione Cliente -->
+            <div class="form-section">
+                <h3>Dati Cliente</h3>
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" placeholder="Inserisci il nome del cliente" required>
+
+                <label for="cognome">Cognome:</label>
+                <input type="text" id="cognome" name="cognome" placeholder="Inserisci il cognome del cliente" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Inserisci l'email del cliente" required>
+
+                <label for="telefono">Telefono:</label>
+                <input type="text" id="telefono" name="telefono" placeholder="Inserisci il numero di telefono" required>
+            </div>
+
+            <!-- Sezione Veicolo -->
+            <div class="form-section">
+                <h3>Dati Veicolo</h3>
+                <label for="targa">Targa:</label>
+                <input type="text" id="targa" name="targa" placeholder="Inserisci la targa del veicolo" required>
+
+                <label for="modello">Modello:</label>
+                <input type="text" id="modello" name="modello" placeholder="Inserisci il modello del veicolo" required>
+
+                <label for="descrizione">Descrizione Problema:</label>
+                <input type="text" id="descrizione" name="descrizione" placeholder="Descrivi il problema segnalato" required>
+            </div>
+
+            <!-- Pulsante Invio -->
+            <button type="submit">Registra Veicolo</button>
+        </form>
+    </main>
+
+    <footer>
+        &copy; 2025 Officina Riparazioni Moto. Tutti i diritti riservati.
+    </footer>
+</body>
+</html>

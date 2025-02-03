@@ -28,8 +28,6 @@ public class AdminController {
             BindingResult bindingResult,
             Model model) {
 
-                // AGGIUNGERE RUOLI NELLA REGISTRAZIONE UTENTE
-
         if (bindingResult.hasErrors()) {
             model.addAttribute("registrazioneUtenteDto", utente);
             model.addAttribute("listaRuoli", utenteService.getRuoliUtente());

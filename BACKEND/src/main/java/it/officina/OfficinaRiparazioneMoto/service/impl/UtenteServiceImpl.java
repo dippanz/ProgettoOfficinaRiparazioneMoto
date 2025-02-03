@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 
 import it.officina.OfficinaRiparazioneMoto.dao.RuoloDao;
 import it.officina.OfficinaRiparazioneMoto.dao.UtenteDao;
+import it.officina.OfficinaRiparazioneMoto.dto.UtenteDto;
 import it.officina.OfficinaRiparazioneMoto.dto.admin.RegistrazioneUtenteDto;
-import it.officina.OfficinaRiparazioneMoto.dto.admin.UtenteDto;
 import it.officina.OfficinaRiparazioneMoto.exception.BadRequestException;
 import it.officina.OfficinaRiparazioneMoto.model.Ruolo;
 import it.officina.OfficinaRiparazioneMoto.model.Utente;
 import it.officina.OfficinaRiparazioneMoto.service.UtenteService;
-import it.officina.OfficinaRiparazioneMoto.shared.Constants.ErrorManager;
+import it.officina.OfficinaRiparazioneMoto.utils.Constants.ErrorManager;
 
 @Service
 public class UtenteServiceImpl implements UtenteService {
@@ -34,6 +34,7 @@ public class UtenteServiceImpl implements UtenteService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Override
     public UtenteDto registraUtente(RegistrazioneUtenteDto utenteDto) throws BadRequestException {
         if (utenteDao.existsByEmail(utenteDto.getEmail())) {
             throw new BadRequestException(ErrorManager.EMAIL_ALREADY_EXISTS);

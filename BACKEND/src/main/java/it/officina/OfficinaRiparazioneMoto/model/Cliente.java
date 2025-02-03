@@ -18,6 +18,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -33,20 +34,16 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 	
-	@Size(min = 2, max = 50, message = "Il nome non può superare i 50 caratteri")
 	@Column(length = 256)
 	private String nome;
 	
-	@Size(min = 2, max = 50, message = "Il cognome non può superare i 50 caratteri")
 	@Column(length = 256)
 	private String cognome;
 	
-	@Pattern(regexp = "^\\+?[0-9]{1,3}?\\s?[0-9]{6,10}$", message = "Formato del telefono non valido")
 	@Column(length = 256)
 	private String telefono;
 	
-	@NotNull(message = "Email obbligatoria")
-	@Email
+	@NotBlank(message = "Email obbligatoria")
 	@Column(length = 256, unique = true, nullable = false)
 	private String email;
 	
