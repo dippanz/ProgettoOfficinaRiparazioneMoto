@@ -62,6 +62,4 @@ public class RiparazioneDto {
     public void setStatoRiparazione(String statoRiparazione) {
         this.statoRiparazione = statoRiparazione;
     }
-    
-    
 }

@@ -47,7 +47,7 @@ public class ClienteMapper implements BaseMapper<Cliente, ClienteDto> {
     }
 
     @Override
-    public ClienteDto mapToEntity(Object entity) {
+    public ClienteDto mapEntityToDto(Object entity) {
         return modelMapper.map(entity, ClienteDto.class);
     }
 

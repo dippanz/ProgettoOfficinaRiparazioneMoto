@@ -1,5 +1,8 @@
 package it.officina.OfficinaRiparazioneMoto.service.impl;
 
+import java.util.List;
+import java.util.UUID;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,9 +11,11 @@ import it.officina.OfficinaRiparazioneMoto.dao.ClienteDao;
 import it.officina.OfficinaRiparazioneMoto.dao.MotoDao;
 import it.officina.OfficinaRiparazioneMoto.dto.MotoDto;
 import it.officina.OfficinaRiparazioneMoto.exception.BadRequestException;
+import it.officina.OfficinaRiparazioneMoto.mapper.MotoMapper;
 import it.officina.OfficinaRiparazioneMoto.model.Cliente;
 import it.officina.OfficinaRiparazioneMoto.model.Moto;
 import it.officina.OfficinaRiparazioneMoto.service.AuthService;
+import it.officina.OfficinaRiparazioneMoto.service.ClienteService;
 import it.officina.OfficinaRiparazioneMoto.service.MotoService;
 import it.officina.OfficinaRiparazioneMoto.utils.Constants.ErrorManager;
 
@@ -21,10 +26,10 @@ public class MotoServiceImpl implements MotoService {
     private MotoDao motoDao;
 
     @Autowired
-    private ClienteDao clienteDao;
+    private ClienteService clienteService;
 
     @Autowired
-    private ModelMapper modelMapper;
+    private MotoMapper mapper;
 
     @Autowired
     private AuthService authService;
@@ -35,16 +40,26 @@ public class MotoServiceImpl implements MotoService {
             throw new BadRequestException(ErrorManager.MOTO_TARGA_ESISTENTE);
         }
 
-        Cliente clienteMoto = clienteDao.findById(moto.getIdCliente())
-                .orElseThrow(() -> new BadRequestException(ErrorManager.CLIENTE_NON_ASSEGNATO_MOTO));
+        Cliente clienteMoto;
+        try {
+            clienteMoto = clienteService.getClienteById(moto.getIdCliente());
+            
+        } catch (BadRequestException e) {
+            throw new BadRequestException(ErrorManager.CLIENTE_NON_ASSEGNATO_MOTO);
+        }
+            
+        Moto motoDb = motoDao.save(mapper.toEntity(moto, clienteMoto, authService.getUtenteAutenticato()));
+        return mapper.toDto(motoDb);
+    }
 
-        Moto motoDb = modelMapper.map(moto, Moto.class);
-        motoDb.setCliente(clienteMoto);
-        motoDb.setUtenteReg(authService.getUtenteAutenticato());
-        motoDb = motoDao.save(motoDb);
+    @Override
+    public List<MotoDto> getAllMoto() {
+        return mapper.toDtoList(motoDao.findAll());
+    }
 
-        // se serve inserire idCliente nel ritorno
-        return modelMapper.map(motoDb, MotoDto.class);
+    @Override
+    public MotoDto getMotoDtoById(UUID id) throws BadRequestException{
+        return mapper.toDto(motoDao.findById(id).orElseThrow(() -> new BadRequestException(ErrorManager.MOTO_NON_TROVATA)));
     }
 
 }

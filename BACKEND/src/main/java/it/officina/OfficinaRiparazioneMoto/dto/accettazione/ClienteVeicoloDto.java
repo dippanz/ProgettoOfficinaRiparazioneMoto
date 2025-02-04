@@ -1,5 +1,8 @@
 package it.officina.OfficinaRiparazioneMoto.dto.accettazione;
 
+import java.util.UUID;
+
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -13,7 +16,6 @@ public class ClienteVeicoloDto {
     @Size(min = 2, max = 50, message = "Il cognome non può superare i 50 caratteri")
     private String cognome;
 
-    @NotBlank(message = "Email obbligatoria")
     @Email(message = "Formato dell'email non valido")
     private String email;
 
@@ -29,6 +31,21 @@ public class ClienteVeicoloDto {
 
     @Size(max = 500, message = "La descrizione non può superare i 500 caratteri")
     private String descrizione;
+
+    private UUID idCliente;
+
+    @AssertTrue(message = "La email è obbligatoria se non hai selezionato un cliente esistente")
+    public boolean isEmailValid() {
+        return idCliente != null || (email != null && !email.isBlank());
+    }
+
+    public UUID getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(UUID idCliente) {
+        this.idCliente = idCliente;
+    }
 
     public String getNome() {
         return nome;

@@ -1,24 +1,113 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dettaglio Riparazione</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-</head>
-<body>
-    <div class="container">
-        <h2>Dettaglio Riparazione</h2>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dettaglio Riparazione</title>
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+    </head>
+    <body>
+        <div class="container">
+            <h2>Dettaglio Riparazione</h2>
 
-        <p><strong>Codice Servizio:</strong> <span th:text="${riparazione.codice}"></span></p>
-        <p><strong>Targa:</strong> <span th:text="${riparazione.targa}"></span></p>
-        <p><strong>Cliente:</strong> <span th:text="${riparazione.cliente}"></span></p>
-        <p><strong>Stato:</strong> <span th:text="${riparazione.stato}"></span></p>
-        <p><strong>Data Ingresso:</strong> <span th:text="${riparazione.dataIngresso}"></span></p>
-        <p><strong>Data Prevista Consegna:</strong> <span th:text="${riparazione.dataPrevistaConsegna}"></span></p>
-        <p><strong>Note:</strong> <span th:text="${riparazione.note}"></span></p>
+            <!-- Sezione Riparazione -->
+            <h5>Riparazione</h5>
+            <div class="row">
+                <div class="col-4">
+                    <strong>Codice Servizio:</strong>
+                </div>
+                <div class="col-4">
+                    <span th:text="${dettaglioRiparazione.codiceServizio}"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <strong>Descrizione:</strong>
+                </div>
+                <div class="col-4">
+                    <span th:text="${dettaglioRiparazione.descrizione}"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <strong>Data Inizio:</strong>
+                </div>
+                <div class="col-4">
+                    <span th:text="${dettaglioRiparazione.dataInizio}"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <strong>Data Fine:</strong>
+                </div>
+                <div class="col-4">
+                    <span th:text="${dettaglioRiparazione.dataFine}"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <strong>Stato Riparazione:</strong>
+                </div>
+                <div class="col-4">
+                    <span th:text="${dettaglioRiparazione.statoRiparazione}"></span>
+                </div>
+            </div>
 
-        <a href="/accettazione">Torna alla Lista</a>
-    </div>
-</body>
+            <!-- Sezione Moto -->
+            <h5>Moto</h5>
+            <div class="row">
+                <div class="col-4">
+                    <strong>Modello:</strong>
+                </div>
+                <div class="col-4">
+                    <span th:text="${dettaglioRiparazione.modello}"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <strong>Targa:</strong>
+                </div>
+                <div class="col-4">
+                    <span th:text="${dettaglioRiparazione.targa}"></span>
+                </div>
+            </div>
+
+            <!-- Sezione Cliente -->
+            <h5>Cliente</h5>
+            <div class="row">
+                <div class="col-4">
+                    <strong>Nome:</strong>
+                </div>
+                <div class="col-4">
+                    <span th:text="${dettaglioRiparazione.nome}"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <strong>Cognome:</strong>
+                </div>
+                <div class="col-4">
+                    <span th:text="${dettaglioRiparazione.cognome}"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <strong>Telefono:</strong>
+                </div>
+                <div class="col-4">
+                    <span th:text="${dettaglioRiparazione.telefono}"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <strong>Email:</strong>
+                </div>
+                <div class="col-4">
+                    <span th:text="${dettaglioRiparazione.email}"></span>
+                </div>
+            </div>
+
+            <a href="/accettazione">Torna alla Lista</a>
+        </div>
+    </body>
 </html>

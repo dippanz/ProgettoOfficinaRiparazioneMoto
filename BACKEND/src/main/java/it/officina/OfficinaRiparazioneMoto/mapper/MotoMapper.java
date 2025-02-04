@@ -60,7 +60,7 @@ public class MotoMapper implements BaseMapper<Moto, MotoDto> {
     }
 
     @Override
-    public MotoDto mapToEntity(Object entity) {
+    public MotoDto mapEntityToDto(Object entity) {
         return modelMapper.map(entity, MotoDto.class);
     }
 }

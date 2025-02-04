@@ -15,7 +15,7 @@ public interface BaseMapper<E, D> {
     D toDto(E entity);
     E toEntity(D dto);
     <T> T map(E entity, Class<T> destinationClass);
-    D mapToEntity(Object entity);
+    D mapEntityToDto(Object entity);
 
     default List<D> toDtoList(List<E> entityList) {
         return entityList.stream().map(this::toDto).collect(Collectors.toList());

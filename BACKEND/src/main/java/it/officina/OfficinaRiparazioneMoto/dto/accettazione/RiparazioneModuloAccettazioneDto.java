@@ -1,23 +1,26 @@
 package it.officina.OfficinaRiparazioneMoto.dto.accettazione;
 
-public class RiparazioniModuloAccettazioneDto {
+import java.util.UUID;
+
+public class RiparazioneModuloAccettazioneDto {
     
+    private UUID idRiparazione;
     private String codice;
     private String targa;
     private String emailCliente;
     private String stato;
 
-    public RiparazioniModuloAccettazioneDto(String codice, String targa, String emailCliente, String stato) {
+    public RiparazioneModuloAccettazioneDto(UUID idRiparazione, String codice, String targa, String emailCliente, String stato) {
+        this.idRiparazione = idRiparazione;
         this.codice = codice;
         this.targa = targa;
         this.emailCliente = emailCliente;
         this.stato = stato;
     }
 
-    public RiparazioniModuloAccettazioneDto() {
+    public RiparazioneModuloAccettazioneDto() {
     }
 
-    // Getters and Setters
     public String getCodice() {
         return codice;
     }
@@ -48,5 +51,13 @@ public class RiparazioniModuloAccettazioneDto {
 
     public void setStato(String stato) {
         this.stato = stato;
+    }
+
+    public UUID getIdRiparazione() {
+        return idRiparazione;
+    }
+
+    public void setIdRiparazione(UUID idRiparazione) {
+        this.idRiparazione = idRiparazione;
     }
 }

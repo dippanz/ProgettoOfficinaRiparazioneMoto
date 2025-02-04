@@ -132,3 +132,9 @@ header h1 {
 .modal-backdrop {
   display: none;
 }
+
+.error {
+  color: red;
+  text-size-adjust: 12px;
+  margin-bottom: 15px;
+}

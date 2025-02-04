@@ -119,7 +119,7 @@
                                 <td th:text="${riparazione.emailCliente}"></td>
                                 <td th:text="${riparazione.stato}"></td>
                                 <td>
-                                    <a th:href="@{/accettazione/dettaglio/{id}(id=${riparazione.id})}" class="btn">Dettagli</a>
+                                    <a th:href="@{/accettazione/dettaglio/{id}(id=${riparazione.idRiparazione})}" class="btn">Dettagli</a>
                                 </td>
                             </tr>
                         </tbody>

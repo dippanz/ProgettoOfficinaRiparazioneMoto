@@ -63,7 +63,9 @@ public class RiparazioneMapper implements BaseMapper<Riparazione, RiparazioneDto
     }
 
     @Override
-    public RiparazioneDto mapToEntity(Object entity) {
+    public RiparazioneDto mapEntityToDto(Object entity) {
         return modelMapper.map(entity, RiparazioneDto.class);
     }
+
+    
 }

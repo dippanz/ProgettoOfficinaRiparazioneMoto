@@ -5,6 +5,7 @@ package it.officina.OfficinaRiparazioneMoto.controller;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -20,11 +21,13 @@ import it.officina.OfficinaRiparazioneMoto.dto.ClienteDto;
 import it.officina.OfficinaRiparazioneMoto.dto.MotoDto;
 import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneDto;
 import it.officina.OfficinaRiparazioneMoto.dto.accettazione.ClienteVeicoloDto;
-import it.officina.OfficinaRiparazioneMoto.dto.accettazione.RiparazioniModuloAccettazioneDto;
+import it.officina.OfficinaRiparazioneMoto.dto.accettazione.DettaglioAccettazioneDto;
+import it.officina.OfficinaRiparazioneMoto.dto.accettazione.RiparazioneModuloAccettazioneDto;
 import it.officina.OfficinaRiparazioneMoto.mapper.ClienteMapper;
 import it.officina.OfficinaRiparazioneMoto.mapper.MotoMapper;
 import it.officina.OfficinaRiparazioneMoto.mapper.RiparazioneMapper;
 import it.officina.OfficinaRiparazioneMoto.model.Cliente;
+import it.officina.OfficinaRiparazioneMoto.service.AccettazioneService;
 import it.officina.OfficinaRiparazioneMoto.service.ClienteService;
 import it.officina.OfficinaRiparazioneMoto.service.MotoService;
 import it.officina.OfficinaRiparazioneMoto.service.RiparazioneService;
@@ -41,22 +44,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class AccettazioneController {
 
     @Autowired
-    private MotoMapper motoMapper;
-
-    @Autowired
-    private ClienteMapper clienteMapper;
-    
-    @Autowired
-    private RiparazioneMapper riparazioneMapper;
-
-    @Autowired
-    private ClienteService clienteService;
-
-    @Autowired
-    private MotoService motoService;
-
-    @Autowired
-    private RiparazioneService riparazioneService;
+    private AccettazioneService accettazioneService;
 
     @GetMapping("")
     public String index() {
@@ -69,8 +57,9 @@ public class AccettazioneController {
         return "accettazione/moduloAccettazione";
     }
 
-    @GetMapping("/index4")
-    public String index4() {
+    @GetMapping("/dettaglio/{id}")
+    public String dettaglio(@Param("id") String idRiparazione, Model model) {
+        model.addAttribute("dettaglioRiparazione", accettazioneService.getDettaglioAccettazione(idRiparazione));
         return "accettazione/dettaglio";
     }
 
@@ -85,33 +74,8 @@ public class AccettazioneController {
             return "fragments/accettazione/moduloAccettazioneForm :: moduloAccettazioneForm";
         }
 
-        // CASO IN CUI CLIENTE NON ESISTA
-
-        // salvo il cliente (dovrebbe essere opzionale se gia presente)
-        ClienteDto cliente = clienteService.salvaCliente(clienteMapper.mapToEntity(request));
-
-        // salvo il veicolo (dovrebbe essere opzionale se gia presente)
-        MotoDto moto = motoMapper.mapToEntity(request);
-        moto.setIdCliente(cliente.getId());
-        moto = motoService.salvaMoto(moto);
-
-        // salvo la riparazione come accettata
-        RiparazioneDto riparazione = riparazioneMapper.mapToEntity(request);
-        riparazione.setIdMoto(moto.getId());
-        riparazione = riparazioneService.salvaRiparazioneAccettata(riparazione);
-
-        // CASO IN CUI CLIENTE ESISTA E MOTO NO
-
-        // CASO IN CUI CLIENTE E MOTO ESISTONO
-
-        // PASSO OGGETTI DIRETTAMENTE AL REDIRECT
-
-        // quando torno alla pagina precedente inserisco i dati che ho caricato nel db
-        RiparazioniModuloAccettazioneDto riparazioneAttribute = new RiparazioniModuloAccettazioneDto(
-                riparazione.getCodiceServizio(), moto.getTarga(), cliente.getEmail(),
-                riparazione.getStatoRiparazione());
-        redirectAttributes.addAttribute("riparazioni", riparazioneAttribute);
-
+        RiparazioneModuloAccettazioneDto riparazioneAttribute = accettazioneService.salvaAccettazione(request);
+        redirectAttributes.addFlashAttribute("riparazioni", riparazioneAttribute);
         return "redirect:/accettazione";
     }
 

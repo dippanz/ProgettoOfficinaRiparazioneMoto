@@ -1,5 +1,9 @@
 package it.officina.OfficinaRiparazioneMoto.service.impl;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +37,21 @@ public class ClienteServiceImpl implements ClienteService {
 
         Cliente clienteDb = clienteDao.save(mapper.toEntity(cliente, authService.getUtenteAutenticato()));
         return mapper.toDto(clienteDb);
+    }
+
+    @Override
+    public List<ClienteDto> getAllClienti() {
+        return mapper.toDtoList(clienteDao.findAll());
+    }
+
+    @Override
+    public ClienteDto getClienteDtoById(UUID id) {
+        return mapper.toDto(clienteDao.findById(id).orElseThrow(() -> new BadRequestException(ErrorManager.CLIENTE_NON_TROVATO)));
+    }
+
+    @Override
+    public Cliente getClienteById(UUID id) throws BadRequestException{
+        return clienteDao.findById(id).orElseThrow(() -> new BadRequestException(ErrorManager.CLIENTE_NON_TROVATO));
     }
 
 }
