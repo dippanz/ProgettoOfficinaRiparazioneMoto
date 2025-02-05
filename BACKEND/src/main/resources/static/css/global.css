@@ -118,6 +118,21 @@ header h1 {
 
 .modal-header {
   border-bottom: none !important; 
+  padding: 0 !important;
+  padding-top: 1rem !important;
+  padding-right: 1rem !important;
+
+}
+
+.modal-header button{
+  background-color: transparent;
+  color: black;
+  border: none;
+  border-radius: 5px;
+}
+
+.modal-header button:hover{
+  background-color: transparent;
 }
 
 /* Posiziona la modale sulla destra */

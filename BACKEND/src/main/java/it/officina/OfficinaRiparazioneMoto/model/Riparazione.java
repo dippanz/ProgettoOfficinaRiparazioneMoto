@@ -32,7 +32,7 @@ public class Riparazione {
 	
 	private String descrizione;
 	
-	@Column(name = "\"dataInizio\"", updatable = false)
+	@Column(name = "\"dataInizio\"", updatable = false, insertable = false)
 	private LocalDateTime dataInizio;
 	
 	@Column(name = "\"dataFine\"")

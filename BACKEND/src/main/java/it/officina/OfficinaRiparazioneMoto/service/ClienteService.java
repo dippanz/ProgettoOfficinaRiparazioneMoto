@@ -19,5 +19,4 @@ public interface ClienteService {
     ClienteDto salvaCliente(ClienteDto cliente);
     List<ClienteDto> getAllClienti();
     ClienteDto getClienteDtoById(UUID id);
-    Cliente getClienteById(UUID id);
 }

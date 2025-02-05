@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import it.officina.OfficinaRiparazioneMoto.dto.admin.RegistrazioneUtenteDto;
 import it.officina.OfficinaRiparazioneMoto.dto.publics.CercaRiparazioneDto;
 import it.officina.OfficinaRiparazioneMoto.model.Utente;
+import it.officina.OfficinaRiparazioneMoto.service.PublicService;
 import it.officina.OfficinaRiparazioneMoto.service.RiparazioneService;
 import it.officina.OfficinaRiparazioneMoto.service.UtenteService;
 import jakarta.validation.Valid;
@@ -30,7 +31,7 @@ import java.util.Collection;
 public class PublicController {
 
     @Autowired
-    private RiparazioneService riparazioneService;
+    private PublicService publicService;
 
     @GetMapping("/")
     public String redirectToHome() {
@@ -66,7 +67,7 @@ public class PublicController {
 
         // carico i dettagli della riparazione
         model.addAttribute("riparazioneDatiGenerali",
-                riparazioneService.getRiparazioneDettaglioGenerale(cercaRiparazioneDto.getCodiceServizio(),
+                publicService.getRiparazioneDettaglioGenerale(cercaRiparazioneDto.getCodiceServizio(),
                         cercaRiparazioneDto.getTarga()));
 
         return "fragments/publics/ricercaRiparazione :: riparazioneDettagliGenerali";

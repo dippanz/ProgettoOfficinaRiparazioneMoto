@@ -66,16 +66,14 @@ public class AccettazioneController {
     @PostMapping("/process_modulo_accettazione")
     public String postModuloAccettazione(@Valid @ModelAttribute("clienteVeicoloDto") ClienteVeicoloDto request,
             BindingResult bindingResult,
-            Model model,
-            RedirectAttributes redirectAttributes) {
+            Model model) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("clienteVeicoloDto", request);
             return "fragments/accettazione/moduloAccettazioneForm :: moduloAccettazioneForm";
         }
 
-        RiparazioneModuloAccettazioneDto riparazioneAttribute = accettazioneService.salvaAccettazione(request);
-        redirectAttributes.addFlashAttribute("riparazioni", riparazioneAttribute);
+        accettazioneService.salvaAccettazione(request);
         return "redirect:/accettazione";
     }
 

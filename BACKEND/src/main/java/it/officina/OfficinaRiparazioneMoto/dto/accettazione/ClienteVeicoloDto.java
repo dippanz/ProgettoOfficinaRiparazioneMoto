@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
@@ -22,7 +21,6 @@ public class ClienteVeicoloDto {
     @Pattern(regexp = "^\\+?[0-9]{1,3}?\\s?[0-9]{6,10}$", message = "Formato del telefono non valido")
     private String telefono;
 
-    @NotBlank(message = "Targa obbligatoria")
     @Pattern(regexp = "^[A-Z]{1,3}[0-9]{1,4}[A-Z]{1,3}$|^[A-Z]{1,3}-[0-9]{1,4}-[A-Z]{1,3}$|^[A-Z0-9]{6,8}$", message = "La targa può contenere solo lettere, numeri e trattini")
     private String targa;
 
@@ -33,10 +31,16 @@ public class ClienteVeicoloDto {
     private String descrizione;
 
     private UUID idCliente;
+    private UUID idMoto;
 
     @AssertTrue(message = "La email è obbligatoria se non hai selezionato un cliente esistente")
     public boolean isEmailValid() {
-        return idCliente != null || (email != null && !email.isBlank());
+        return idCliente != null || idMoto != null || (email != null && !email.isBlank());
+    }
+
+    @AssertTrue(message = "La targa è obbligatoria se non hai selezionato un veicolo esistente")
+    public boolean isTargaValid() {
+        return idMoto != null || (targa != null && !targa.isBlank());
     }
 
     public UUID getIdCliente() {
@@ -101,5 +105,13 @@ public class ClienteVeicoloDto {
 
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
+    }
+    
+    public UUID getIdMoto() {
+        return idMoto;
+    }
+
+    public void setIdMoto(UUID idMoto) {
+        this.idMoto = idMoto;
     }
 }

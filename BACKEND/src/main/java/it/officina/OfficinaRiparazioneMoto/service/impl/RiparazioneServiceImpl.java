@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.ObjectUtils.Null;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.internal.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +15,20 @@ import org.springframework.stereotype.Service;
 import it.officina.OfficinaRiparazioneMoto.dao.MotoDao;
 import it.officina.OfficinaRiparazioneMoto.dao.RiparazioneDao;
 import it.officina.OfficinaRiparazioneMoto.dao.StatoRiparazioneDao;
+import it.officina.OfficinaRiparazioneMoto.dto.MotoDto;
 import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneDto;
+import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneMotoClienteDto;
+import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneMotoDto;
+import it.officina.OfficinaRiparazioneMoto.dto.accettazione.RiparazioneModuloAccettazioneDto;
 import it.officina.OfficinaRiparazioneMoto.dto.publics.RiparazioneDettaglioGeneraleDto;
 import it.officina.OfficinaRiparazioneMoto.exception.BadRequestException;
+import it.officina.OfficinaRiparazioneMoto.mapper.MotoMapper;
 import it.officina.OfficinaRiparazioneMoto.mapper.RiparazioneMapper;
 import it.officina.OfficinaRiparazioneMoto.model.Moto;
 import it.officina.OfficinaRiparazioneMoto.model.Riparazione;
 import it.officina.OfficinaRiparazioneMoto.model.StatoRiparazione;
+import it.officina.OfficinaRiparazioneMoto.service.AuthService;
+import it.officina.OfficinaRiparazioneMoto.service.MotoService;
 import it.officina.OfficinaRiparazioneMoto.service.RiparazioneService;
 import it.officina.OfficinaRiparazioneMoto.utils.Constants.ErrorManager;
 import it.officina.OfficinaRiparazioneMoto.utils.Constants.StatoRiparazioni;
@@ -30,33 +38,28 @@ public class RiparazioneServiceImpl implements RiparazioneService {
 
     @Autowired
     private RiparazioneDao riparazioneDao;
-
-    @Autowired
-    private MotoDao motoDao;
-
     @Autowired
     private StatoRiparazioneDao statoRiparazioneDao;
+    
+    @Autowired
+    private AuthService authService;
+    @Autowired
+    private MotoService motoService;
 
     @Autowired
     private RiparazioneMapper mapper;
 
     @Override
-    public List<RiparazioneDettaglioGeneraleDto> getRiparazioneDettaglioGenerale(String codiceServizio, String targa)
+    public List<RiparazioneMotoDto> getRiparazioneWithMoto(String codiceServizio, String targa)
             throws BadRequestException {
 
-        List<RiparazioneDettaglioGeneraleDto> response = new ArrayList<>();
-        ;
+        List<RiparazioneMotoDto> response = new ArrayList<>();
 
         if (codiceServizio != null) {
-
             Riparazione riparazione = riparazioneDao.findByCodiceServizioAndTargaWithMoto(codiceServizio, targa)
                     .orElseThrow(() -> new BadRequestException(ErrorManager.RIPARAZIONE_NON_TROVATA_COD_SERVIZIO));
 
-            // puo essere semplificata ma per chiarezza ho diviso le due operazioni
-            RiparazioneDettaglioGeneraleDto tmp = mapper.map(riparazione, RiparazioneDettaglioGeneraleDto.class);
-            tmp.setTarga(riparazione.getMoto().getTarga());
-            response.add(tmp);
-
+            response.add(mapper.entityToRiparazioneMotoDto(riparazione));
         } else {
             List<Riparazione> riparazioni = riparazioneDao.findRiparazioniByTarga(targa);
 
@@ -64,11 +67,7 @@ public class RiparazioneServiceImpl implements RiparazioneService {
                 throw new BadRequestException(ErrorManager.RIPARAZIONE_NON_TROVATA_TARGA);
             }
 
-            riparazioni.forEach(rip -> {
-                RiparazioneDettaglioGeneraleDto tmp = mapper.map(rip, RiparazioneDettaglioGeneraleDto.class);
-                tmp.setTarga(rip.getMoto().getTarga());
-                response.add(tmp);
-            });
+            response.addAll(mapper.entityToListRiparazioneMotoDto(riparazioni));
         }
 
         return response;
@@ -79,8 +78,7 @@ public class RiparazioneServiceImpl implements RiparazioneService {
 
         riparazione.setCodiceServizio(generaCodiceServizio());
 
-        Moto moto = motoDao.findById(riparazione.getIdMoto())
-                .orElseThrow(() -> new BadRequestException(ErrorManager.MOTO_NON_TROVATA));
+        MotoDto moto = motoService.getMotoDtoById(riparazione.getIdMoto());
 
         StatoRiparazione stato = statoRiparazioneDao.findById(StatoRiparazioni.ACCETTATO)
                 .orElseThrow(() -> new BadRequestException(ErrorManager.STATO_RIPARAZIONE_NON_TROVATO));
@@ -108,6 +106,15 @@ public class RiparazioneServiceImpl implements RiparazioneService {
         }
 
         return codice.toString();
+    }
+
+    @Override
+    public List<RiparazioneMotoClienteDto> getRiparazioneWithMotoAndCliente() {
+
+        List<Riparazione> listaRiparazioni = riparazioneDao
+                .findAllByUtenteRegWithMotoAndCliente(authService.getUtenteDtoAutenticato().getId());
+
+        return mapper.entityToListRiparazioneMotoClienteDto(listaRiparazioni);
     }
 
 }

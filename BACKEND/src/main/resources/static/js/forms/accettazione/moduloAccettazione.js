@@ -35,6 +35,7 @@ function toggleMotoSection() {
   let $motoEsistenteSection = $("#motoEsistenteSection");
   let $motoSelectedContainer = $("#motoSelected");
 
+  let $email = $("#email");
   let $targa = $("#targa");
   let $selectMoto = $("#selectMoto");
 
@@ -45,7 +46,7 @@ function toggleMotoSection() {
     $motoSelectedContainer.hide();
 
     // Rimuove required dai campi della nuova moto
-    $targa.prop("required", false);
+    $targa.add($email).prop("required", false);
 
     // Aggiunge required alla select delle moto
     $selectMoto.prop("required", true);
@@ -56,7 +57,7 @@ function toggleMotoSection() {
     $motoSelectedContainer.show();
 
     // Aggiunge required ai campi della nuova moto
-    $targa.prop("required", true);
+    $targa.add($email).prop("required", true);
 
     // Rimuove il required dalla select delle moto
     $selectMoto.prop("required", false);
@@ -74,19 +75,7 @@ function getClienti() {
         listaClienti.forEach((cliente) => {
           let option = document.createElement("option");
           option.value = cliente.id;
-          const nomeMaxLength = 15;
-          const cognomeMaxLength = 15;
-
-          let nome = cliente.nome.length > nomeMaxLength ? "" : cliente.nome;
-          let cognome =
-            cliente.cognome.length > cognomeMaxLength ? "" : cliente.cognome;
-
-          // Se nome e cognome sono entrambi troppo lunghi, mostra solo l'email
-          if (!nome && !cognome) {
-            option.textContent = `${cliente.email}`;
-          } else {
-            option.textContent = `${nome} ${cognome} (${cliente.email})`.trim();
-          }
+          option.textContent = `${cliente.email}`;
           selectClienti.appendChild(option);
         });
 
@@ -135,15 +124,6 @@ export function handleModuloAccettazioneForm() {
     const form = event.target;
     const formData = new FormData(form);
 
-    if ($("#clienteEsistenteCheckbox").is(":checked")) {
-      formData.delete("nome");
-      formData.delete("cognome");
-      formData.delete("email");
-      formData.delete("telefono");
-    } else {
-      formData.delete("idCliente");
-    }
-
     if ($("#motoEsistenteCheckbox").is(":checked")) {
       formData.delete("targa");
       formData.delete("modello");
@@ -152,8 +132,15 @@ export function handleModuloAccettazioneForm() {
       formData.delete("email");
       formData.delete("telefono");
       formData.delete("idCliente");
+    } else if ($("#clienteEsistenteCheckbox").is(":checked")) {
+      formData.delete("nome");
+      formData.delete("cognome");
+      formData.delete("email");
+      formData.delete("telefono");
+      formData.delete("idMoto");
     } else {
-      formData.delete("moto");
+      formData.delete("idCliente");
+      formData.delete("idMoto");
     }
 
     // Disabilita il pulsante di invio per evitare doppie richieste

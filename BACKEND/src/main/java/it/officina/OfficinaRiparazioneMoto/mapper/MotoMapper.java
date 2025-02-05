@@ -4,8 +4,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import jakarta.annotation.PostConstruct;
-
+import it.officina.OfficinaRiparazioneMoto.dto.ClienteDto;
 import it.officina.OfficinaRiparazioneMoto.dto.MotoDto;
+import it.officina.OfficinaRiparazioneMoto.dto.UtenteDto;
 import it.officina.OfficinaRiparazioneMoto.model.Cliente;
 import it.officina.OfficinaRiparazioneMoto.model.Moto;
 import it.officina.OfficinaRiparazioneMoto.model.Utente;
@@ -15,6 +16,10 @@ public class MotoMapper implements BaseMapper<Moto, MotoDto> {
 
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private ClienteMapper clienteMapper;
+    @Autowired
+    private UtenteMapper utenteMapper;
 
     @PostConstruct
     public void configureMappings() {
@@ -35,21 +40,21 @@ public class MotoMapper implements BaseMapper<Moto, MotoDto> {
         return modelMapper.map(dto, Moto.class);
     }
 
-    public Moto toEntity(MotoDto dto, Utente utenteReg) {
+    public Moto toEntity(MotoDto dto, UtenteDto utenteReg) {
         return toEntity(dto, null, utenteReg);
     }
 
-    public Moto toEntity(MotoDto dto, Cliente cliente) {
+    public Moto toEntity(MotoDto dto, ClienteDto cliente) {
         return toEntity(dto, cliente, null);
     }
 
-    public Moto toEntity(MotoDto dto, Cliente cliente, Utente utenteReg) {
-        Moto moto = modelMapper.map(dto, Moto.class);
+    public Moto toEntity(MotoDto dto, ClienteDto cliente, UtenteDto utenteReg) {
+        Moto moto = toEntity(dto);
         if (cliente != null) {
-            moto.setCliente(cliente);
+            moto.setCliente(clienteMapper.toEntity(cliente));
         }
         if (utenteReg != null) {
-            moto.setUtenteReg(utenteReg);
+            moto.setUtenteReg(utenteMapper.toEntity(utenteReg));
         }
         return moto;
     }

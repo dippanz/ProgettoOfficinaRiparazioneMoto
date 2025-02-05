@@ -31,11 +31,15 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public ClienteDto salvaCliente(ClienteDto cliente) throws BadRequestException {
+        if(cliente.getEmail() == null){
+            throw new BadRequestException(ErrorManager.CLIENTE_EMAIL_NON_PRESENTE);
+        }
+
         if (clienteDao.existsByEmail(cliente.getEmail())) {
             throw new BadRequestException(ErrorManager.CLIENTE_EMAIL_ESISTENTE);
         }
-
-        Cliente clienteDb = clienteDao.save(mapper.toEntity(cliente, authService.getUtenteAutenticato()));
+        
+        Cliente clienteDb = clienteDao.save(mapper.toEntity(cliente, authService.getUtenteDtoAutenticato()));
         return mapper.toDto(clienteDb);
     }
 
@@ -47,11 +51,6 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public ClienteDto getClienteDtoById(UUID id) {
         return mapper.toDto(clienteDao.findById(id).orElseThrow(() -> new BadRequestException(ErrorManager.CLIENTE_NON_TROVATO)));
-    }
-
-    @Override
-    public Cliente getClienteById(UUID id) throws BadRequestException{
-        return clienteDao.findById(id).orElseThrow(() -> new BadRequestException(ErrorManager.CLIENTE_NON_TROVATO));
     }
 
 }

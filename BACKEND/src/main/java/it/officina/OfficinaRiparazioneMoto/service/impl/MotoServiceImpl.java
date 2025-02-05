@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import it.officina.OfficinaRiparazioneMoto.dao.ClienteDao;
 import it.officina.OfficinaRiparazioneMoto.dao.MotoDao;
+import it.officina.OfficinaRiparazioneMoto.dto.ClienteDto;
 import it.officina.OfficinaRiparazioneMoto.dto.MotoDto;
 import it.officina.OfficinaRiparazioneMoto.exception.BadRequestException;
 import it.officina.OfficinaRiparazioneMoto.mapper.MotoMapper;
@@ -36,19 +37,23 @@ public class MotoServiceImpl implements MotoService {
 
     @Override
     public MotoDto salvaMoto(MotoDto moto) throws BadRequestException {
+        if(moto.getTarga() == null){
+            throw new BadRequestException(ErrorManager.MOTO_TARGA_NON_PRESENTE);
+        }
+
         if (motoDao.existsByTarga(moto.getTarga())) {
             throw new BadRequestException(ErrorManager.MOTO_TARGA_ESISTENTE);
         }
 
-        Cliente clienteMoto;
+        ClienteDto clienteMoto;
         try {
-            clienteMoto = clienteService.getClienteById(moto.getIdCliente());
+            clienteMoto = clienteService.getClienteDtoById(moto.getIdCliente());
             
         } catch (BadRequestException e) {
             throw new BadRequestException(ErrorManager.CLIENTE_NON_ASSEGNATO_MOTO);
         }
             
-        Moto motoDb = motoDao.save(mapper.toEntity(moto, clienteMoto, authService.getUtenteAutenticato()));
+        Moto motoDb = motoDao.save(mapper.toEntity(moto, clienteMoto, authService.getUtenteDtoAutenticato()));
         return mapper.toDto(motoDb);
     }
 

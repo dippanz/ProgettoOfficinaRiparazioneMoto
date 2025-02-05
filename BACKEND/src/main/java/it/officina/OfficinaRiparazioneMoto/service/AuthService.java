@@ -14,5 +14,4 @@ import it.officina.OfficinaRiparazioneMoto.model.Utente;
 public interface AuthService extends UserDetailsService{
 
     UtenteDto getUtenteDtoAutenticato();
-    Utente getUtenteAutenticato();
 }

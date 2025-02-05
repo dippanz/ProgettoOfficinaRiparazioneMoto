@@ -48,7 +48,7 @@
                     <label for="telefono">Telefono:</label>
                     <input type="text" th:field="*{telefono}" id="telefono"
                         name="telefono"
-                        pattern="^\\+?[0-9]{1,3}?\\s?[0-9]{6,10}$"
+                        pattern="^\+?[0-9]{1,3}?\s?[0-9]{6,10}$"
                         placeholder="Inserisci il numero di telefono">
                     <p th:if="${#fields.hasErrors('telefono')}"
                         th:errors="*{telefono}" class="error"></p>
@@ -85,6 +85,9 @@
                     <p th:if="${#fields.hasErrors('targa')}"
                         th:errors="*{targa}"
                         class="error"></p>
+                    <p th:if="${#fields.hasErrors('targaValid')}"
+                        th:errors="*{targaValid}"
+                        class="error"></p>
                 </div>
 
                 <div class="form-group mb-3">
@@ -103,7 +106,7 @@
                     <label for="selectMoto" class="form-label">
                         Seleziona una moto:</label>
                     <select id="selectMoto"
-                        name="moto"
+                        name="idMoto"
                         class="selectpicker"
                         data-live-search="true"
                         title="Scegli una moto...">

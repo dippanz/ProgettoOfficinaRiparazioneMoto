@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import jakarta.annotation.PostConstruct;
 
 import it.officina.OfficinaRiparazioneMoto.dto.ClienteDto;
+import it.officina.OfficinaRiparazioneMoto.dto.UtenteDto;
 import it.officina.OfficinaRiparazioneMoto.model.Cliente;
 import it.officina.OfficinaRiparazioneMoto.model.Utente;
 
@@ -14,6 +15,8 @@ public class ClienteMapper implements BaseMapper<Cliente, ClienteDto> {
 
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private UtenteMapper utenteMapper;
 
     @PostConstruct
     public void configureMappings() {
@@ -33,10 +36,10 @@ public class ClienteMapper implements BaseMapper<Cliente, ClienteDto> {
         return modelMapper.map(dto, Cliente.class);
     }
 
-    public Cliente toEntity(ClienteDto dto, Utente utenteReg) {
-        Cliente cliente = modelMapper.map(dto, Cliente.class);
+    public Cliente toEntity(ClienteDto dto, UtenteDto utenteReg) {
+        Cliente cliente = toEntity(dto);
         if (utenteReg != null) {
-            cliente.setUtenteReg(utenteReg);
+            cliente.setUtenteReg(utenteMapper.toEntity(utenteReg));
         }
         return cliente;
     }

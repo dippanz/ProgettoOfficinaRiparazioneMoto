@@ -65,18 +65,18 @@ public class AuthServiceImpl implements AuthService {
         return modelMapper.map(utente, UtenteDto.class);
     }
 
-    @Override
-    public Utente getUtenteAutenticato() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    // @Override
+    // public Utente getUtenteAutenticato() {
+    //     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication == null || !(authentication.getPrincipal() instanceof User)) {
-            throw new BadRequestException(ErrorManager.UTENTE_NON_LOGGATO);
-        }
+    //     if (authentication == null || !(authentication.getPrincipal() instanceof User)) {
+    //         throw new BadRequestException(ErrorManager.UTENTE_NON_LOGGATO);
+    //     }
 
-        String emailUtente = ((User) authentication.getPrincipal()).getUsername();
+    //     String emailUtente = ((User) authentication.getPrincipal()).getUsername();
 
-        return utenteDao.findByEmail(emailUtente)
-                .orElseThrow(() -> new BadRequestException("Utente non trovato"));
-    }
+    //     return utenteDao.findByEmail(emailUtente)
+    //             .orElseThrow(() -> new BadRequestException("Utente non trovato"));
+    // }
 
 }
