@@ -137,6 +137,8 @@ ALTER TABLE IF EXISTS public."RIPARAZIONE"
 
 INSERT INTO public."STATO_RIPARAZIONE" ("stato")
 VALUES
+    ('Registrato'),
+    ('In fase di accettazione'),
     ('Accettato'),
     ('In lavorazione'),
     ('Completata');
@@ -156,7 +158,16 @@ VALUES
     ('ADDETTO_ACCETTAZIONE');  -- Ruolo addetto_accettazione con livello di accesso "user"
 	-- ('utente_generico');
 
+INSERT INTO public."UTENTE" ("email", "username", "hashPassword")
+VALUES ('admin@admin.it', 'admin', '$2a$12$AiXIMBFu4qQa65z9oWRVBO8fL4wX4wtlnzg/bXWZr5yKiWhl.n3Ee'); -- pass: Prova@123
 
+INSERT INTO public."UTENTE_RUOLO" ("id_utente", "id_ruolo")
+VALUES (
+  (SELECT ID FROM public."UTENTE" WHERE username='admin'),
+  (SELECT ID FROM public."RUOLO" WHERE nome='ADMIN')
+);
+
+s
 
 
 	
