@@ -31,7 +31,7 @@ public class SecurityConfig {
 					"/css/**",
 					"/js/**",
 					"/images/**",
-					"/accettazione/**",
+					"/admin/**",
 					"/public/**"
 					).permitAll()
 	            .requestMatchers("/admin/**").hasRole("ADMIN")

@@ -2,8 +2,12 @@ package it.officina.OfficinaRiparazioneMoto.service.impl;
 
 import java.util.Optional;
 
+import javax.security.sasl.AuthenticationException;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -50,33 +54,19 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public UtenteDto getUtenteDtoAutenticato() {
+    public UtenteDto getUtenteDtoAutenticato()
+            throws AuthenticationCredentialsNotFoundException, InsufficientAuthenticationException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null || !(authentication.getPrincipal() instanceof User)) {
-            throw new BadRequestException(ErrorManager.CLIENTE_EMAIL_ESISTENTE);
+            throw new InsufficientAuthenticationException("Utente non loggato");
         }
 
         String emailUtente = ((User) authentication.getPrincipal()).getUsername();
 
         Utente utente = utenteDao.findByEmail(emailUtente)
-                .orElseThrow(() -> new BadRequestException("Utente non trovato"));
+                .orElseThrow(() -> new AuthenticationCredentialsNotFoundException("Utente non loggato"));
 
         return modelMapper.map(utente, UtenteDto.class);
     }
-
-    // @Override
-    // public Utente getUtenteAutenticato() {
-    //     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-    //     if (authentication == null || !(authentication.getPrincipal() instanceof User)) {
-    //         throw new BadRequestException(ErrorManager.UTENTE_NON_LOGGATO);
-    //     }
-
-    //     String emailUtente = ((User) authentication.getPrincipal()).getUsername();
-
-    //     return utenteDao.findByEmail(emailUtente)
-    //             .orElseThrow(() -> new BadRequestException("Utente non trovato"));
-    // }
-
 }

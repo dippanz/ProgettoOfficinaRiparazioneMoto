@@ -101,8 +101,8 @@
                 </div>
 
                 <div class="table-container">
-                    <h3>Riparazioni Accettate</h3>
-                    <table th:if="${not #lists.isEmpty(riparazioni)}">
+                    <h3>Riparazioni Registrate</h3>
+                    <table th:if="${not #lists.isEmpty(listaRiparazioni)}">
                         <thead>
                             <tr>
                                 <th>Codice Servizio</th>
@@ -113,7 +113,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="riparazione : ${riparazioni}">
+                            <tr th:each="riparazione : ${listaRiparazioni}">
                                 <td th:text="${riparazione.codice}"></td>
                                 <td th:text="${riparazione.targa}"></td>
                                 <td th:text="${riparazione.emailCliente}"></td>
@@ -124,7 +124,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <p class="no-data" th:if="${#lists.isEmpty(riparazioni)}">Ancora nessun veicolo accettato.</p>
+                    <p class="no-data" th:if="${#lists.isEmpty(listaRiparazioni)}">Ancora nessun veicolo accettato.</p>
                 </div>
             </div>
         </main>

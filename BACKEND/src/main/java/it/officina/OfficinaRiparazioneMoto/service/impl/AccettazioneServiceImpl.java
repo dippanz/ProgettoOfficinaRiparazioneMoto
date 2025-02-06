@@ -76,7 +76,7 @@ public class AccettazioneServiceImpl implements AccettazioneService {
     }
 
     @Override
-    public List<RiparazioneModuloAccettazioneDto> getAccettazioniUtenteAutenticato() {
+    public List<RiparazioneModuloAccettazioneDto> getListaRiparazioniModuloAccettazioneDto() {
 
         List<RiparazioneMotoClienteDto> listaRiparazioni = riparazioneService.getRiparazioneWithMotoAndCliente();
 

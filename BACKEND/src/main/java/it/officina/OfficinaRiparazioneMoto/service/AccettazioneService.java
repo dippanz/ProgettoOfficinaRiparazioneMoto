@@ -10,5 +10,5 @@ public interface AccettazioneService {
 
     void salvaAccettazione(ClienteVeicoloDto request);
     DettaglioAccettazioneDto getDettaglioAccettazione(String idRiparazione);
-    List<RiparazioneModuloAccettazioneDto> getAccettazioniUtenteAutenticato();
+    List<RiparazioneModuloAccettazioneDto> getListaRiparazioniModuloAccettazioneDto();
 }

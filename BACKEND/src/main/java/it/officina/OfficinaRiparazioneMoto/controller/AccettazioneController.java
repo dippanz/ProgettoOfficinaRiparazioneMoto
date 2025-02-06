@@ -3,6 +3,8 @@
  */
 package it.officina.OfficinaRiparazioneMoto.controller;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -47,7 +49,10 @@ public class AccettazioneController {
     private AccettazioneService accettazioneService;
 
     @GetMapping("")
-    public String index() {
+    public String index(Model model) {
+        List<RiparazioneModuloAccettazioneDto> listaRiparazioni = accettazioneService
+                .getListaRiparazioniModuloAccettazioneDto();
+        model.addAttribute("listaRiparazioni", listaRiparazioni);
         return "accettazione/index";
     }
 
