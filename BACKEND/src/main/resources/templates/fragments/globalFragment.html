@@ -14,7 +14,7 @@
             <li><a href="/" th:href="@{/}">Home</a></li>
             <li><a href="/public/cerca_riparazione"
                     th:href="@{/public/cerca_riparazione}">Cerca Riparazione</a></li>
-            <li><a href="/accettazione"
+            <li sec:authorize="hasRole('ADDETTO_ACCETTAZIONE')"><a href="/accettazione"
                     th:href="@{/accettazione}">Accettazione</a></li>
             <li sec:authorize="hasRole('ADMIN')">
                 <a href="/admin/registra_utente"

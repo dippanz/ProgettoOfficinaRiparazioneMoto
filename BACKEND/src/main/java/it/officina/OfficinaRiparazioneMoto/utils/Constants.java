@@ -55,9 +55,11 @@ public class Constants {
     }
 
     public static class StatoRiparazioni {
-        public static final int ACCETTATO = 1;
-        public static final int IN_LAVORAZIONE = 2;
-        public static final int COMPLETATA = 3;
+        public static final int REGISTRATO = 1;
+        public static final int IN_ACCETTAZIONE = 2;
+        public static final int ACCETTATO = 3;
+        public static final int IN_LAVORAZIONE = 4;
+        public static final int COMPLETATA = 5;
 
     }
 }

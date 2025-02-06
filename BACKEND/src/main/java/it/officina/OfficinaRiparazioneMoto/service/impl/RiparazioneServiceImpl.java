@@ -80,7 +80,7 @@ public class RiparazioneServiceImpl implements RiparazioneService {
 
         MotoDto moto = motoService.getMotoDtoById(riparazione.getIdMoto());
 
-        StatoRiparazione stato = statoRiparazioneDao.findById(StatoRiparazioni.ACCETTATO)
+        StatoRiparazione stato = statoRiparazioneDao.findById(StatoRiparazioni.REGISTRATO)
                 .orElseThrow(() -> new BadRequestException(ErrorManager.STATO_RIPARAZIONE_NON_TROVATO));
 
         Riparazione riparazioneDb = mapper.toEntity(riparazione, moto, stato);

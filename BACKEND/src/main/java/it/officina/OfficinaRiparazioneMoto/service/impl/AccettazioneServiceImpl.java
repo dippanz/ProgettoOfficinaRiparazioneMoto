@@ -34,8 +34,6 @@ public class AccettazioneServiceImpl implements AccettazioneService {
     @Autowired
     private RiparazioneService riparazioneService;
     @Autowired
-    private AuthService authService;
-    @Autowired
     private ClienteMapper clienteMapper;
     @Autowired
     private MotoMapper motoMapper;

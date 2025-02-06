@@ -22,6 +22,6 @@ public interface RiparazioneDao extends JpaRepository<Riparazione, UUID> {
     @Query("SELECT r FROM Riparazione r JOIN FETCH r.moto WHERE r.moto.targa = :targa")
     List<Riparazione> findRiparazioniByTarga(@Param("targa") String targa);
 
-    @Query("SELECT r FROM Riparazione r JOIN FETCH r.moto m JOIN FETCH m.cliente c WHERE m.utenteReg = :idUtenteReg")
+    @Query("SELECT r FROM Riparazione r JOIN FETCH r.moto m JOIN FETCH m.cliente c WHERE m.utenteReg.id = :idUtenteReg")
     List<Riparazione> findAllByUtenteRegWithMotoAndCliente(@Param("idUtenteReg") UUID idUtenteReg);
 }

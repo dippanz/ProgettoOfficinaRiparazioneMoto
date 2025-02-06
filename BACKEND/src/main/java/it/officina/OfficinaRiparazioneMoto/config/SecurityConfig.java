@@ -31,10 +31,10 @@ public class SecurityConfig {
 					"/css/**",
 					"/js/**",
 					"/images/**",
-					"/admin/**",
 					"/public/**"
 					).permitAll()
 	            .requestMatchers("/admin/**").hasRole("ADMIN")
+	            .requestMatchers("/accettazione/**").hasRole("ADDETTO_ACCETTAZIONE")
 	            .anyRequest().authenticated()
 	        )
 	        .formLogin(form -> form

@@ -92,12 +92,12 @@
             <div>
                 <h2>Gestione Accettazioni</h2>
                 <p class="description">
-                    Benvenuto nella tua area di gestione. Qui puoi visualizzare tutte le riparazioni accettate,
-                    controllare il loro stato e aggiungere nuovi veicoli per la riparazione.
+                    Benvenuto nella tua area di gestione. Qui puoi visualizzare tutte le riparazioni registrate da te,
+                    controllarne lo stato e aggiungere nuovi veicoli e clienti per le riparazioni.
                 </p>
 
                 <div class="button-container">
-                    <a href="/accettazione/inserisci" class="btn">Aggiungi Nuova Accettazione</a>
+                    <a href="/accettazione/inserisci" class="btn">Nuova registrazione</a>
                 </div>
 
                 <div class="table-container">
@@ -120,6 +120,7 @@
                                 <td th:text="${riparazione.stato}"></td>
                                 <td>
                                     <a th:href="@{/accettazione/dettaglio/{id}(id=${riparazione.idRiparazione})}" class="btn">Dettagli</a>
+                                    <button class="btn" th:if="${riparazione.stato == 'Registrato'}">Accetta</button>
                                 </td>
                             </tr>
                         </tbody>
