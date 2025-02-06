@@ -137,7 +137,6 @@ ALTER TABLE IF EXISTS public."RIPARAZIONE"
 
 INSERT INTO public."STATO_RIPARAZIONE" ("stato")
 VALUES
-    ('Registrato'),
     ('In fase di accettazione'),
     ('Accettato'),
     ('In lavorazione'),
