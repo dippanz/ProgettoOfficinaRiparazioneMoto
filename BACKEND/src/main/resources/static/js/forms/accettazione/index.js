@@ -1,6 +1,10 @@
-export function handleIndexPage() {
- 
+import {
+  handleFetchError,
+  handleFetchResponse,
+} from "../../utils/fetchManager.js";
+import { updateInnerHTML } from "../../utils/domManager.js";
 
+export function handleIndexPage() {
   $("#formContainer").on("submit", "#moduloAccettazioneForm", function (event) {
     event.preventDefault(); // Previeni l'invio standard del form
 
@@ -44,5 +48,17 @@ export function handleIndexPage() {
       .finally(() => {
         submitButton.disabled = false;
       });
+  });
+
+  $("#accettaRiparazione").on("click", function (event) {
+    event.preventDefault(); // Previeni l'invio standard del form
+
+    let idRiparazione = $(this).attr("data-id");
+
+    fetch(`accettazione/process_update_status_riparazione?id=${idRiparazione}`, {
+      method: "PATCH",
+    })
+      .then(handleFetchResponse)
+      .catch(handleFetchError);
   });
 }

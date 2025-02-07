@@ -20,7 +20,7 @@ public class PublicServiceImpl implements PublicService{
     @Override
     public List<RiparazioneDettaglioGeneraleDto> getRiparazioneDettaglioGenerale(String codiceServizio, String targa) {
 
-        List<RiparazioneMotoDto> listaRiparazioni = riparazioneService.getRiparazioneWithMoto(codiceServizio, targa);
+        List<RiparazioneMotoDto> listaRiparazioni = riparazioneService.getListaRiparazioneMotoDto(codiceServizio, targa);
         List<RiparazioneDettaglioGeneraleDto> response = new ArrayList<>();
 
         for (RiparazioneMotoDto rip : listaRiparazioni) {

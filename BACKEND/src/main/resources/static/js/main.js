@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
         registration: () => import("./forms/admin/registrazione_utente.js").then(module => module.handleRegistrationForm()),
         riparazione: () => import("./forms/publics/cerca_riparazione.js").then(module => module.handleCercaRiparazioneForm()),
         moduloAccettazione: () => import("./forms/accettazione/moduloAccettazione.js").then(module => module.handleModuloAccettazioneForm()),
+        indexAccettazione: () => import("./forms/accettazione/index.js").then(module => module.handleIndexPage()),
     };
 
     if (modules[page]) {

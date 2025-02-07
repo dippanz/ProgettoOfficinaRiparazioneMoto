@@ -38,15 +38,23 @@ public class RiparazioneMapper implements BaseMapper<Riparazione, RiparazioneDto
         });
 
         modelMapper.typeMap(Riparazione.class, RiparazioneMotoDto.class).addMappings(mapper -> {
-            mapper.map(src -> src.getStato().getStato(),
-                    RiparazioneMotoDto::setStatoRiparazione);
-            mapper.map(src -> src.getUtenteMec().getId(),
-                    RiparazioneMotoDto::setIdUtenteMec);
-            mapper.map(src -> src.getMoto().getModello(),
-                    RiparazioneMotoDto::setModello);
-            mapper.map(src -> src.getMoto().getTarga(),
-                    RiparazioneMotoDto::setTarga);
+            mapper.map(src -> src.getStato().getStato(), RiparazioneMotoDto::setStatoRiparazione);
+            mapper.map(src -> src.getUtenteMec().getId(), RiparazioneMotoDto::setIdUtenteMec);
+            mapper.map(src -> src.getMoto().getModello(), RiparazioneMotoDto::setModello);
+            mapper.map(src -> src.getMoto().getTarga(), RiparazioneMotoDto::setTarga);
             mapper.map(src -> src.getMoto().getUtenteReg().getId(), RiparazioneMotoDto::setIdUtenteReg);
+        });
+
+        modelMapper.typeMap(Riparazione.class, RiparazioneMotoClienteDto.class).addMappings(mapper -> {
+            mapper.map(src -> src.getUtenteMec().getId(), RiparazioneMotoClienteDto::setIdUtenteMec);
+            mapper.map(src -> src.getStato().getStato(), RiparazioneMotoClienteDto::setStatoRiparazione);
+            mapper.map(src -> src.getMoto().getModello(), RiparazioneMotoClienteDto::setModello);
+            mapper.map(src -> src.getMoto().getTarga(), RiparazioneMotoClienteDto::setTarga);
+            mapper.map(src -> src.getMoto().getUtenteReg().getId(), RiparazioneMotoClienteDto::setIdUtenteReg);
+            mapper.map(src -> src.getMoto().getCliente().getNome(), RiparazioneMotoClienteDto::setNome);
+            mapper.map(src -> src.getMoto().getCliente().getCognome(), RiparazioneMotoClienteDto::setCognome);
+            mapper.map(src -> src.getMoto().getCliente().getTelefono(), RiparazioneMotoClienteDto::setTelefono);
+            mapper.map(src -> src.getMoto().getCliente().getEmail(), RiparazioneMotoClienteDto::setEmail);
         });
     }
 
@@ -93,33 +101,37 @@ public class RiparazioneMapper implements BaseMapper<Riparazione, RiparazioneDto
         List<RiparazioneMotoClienteDto> listaDto = new ArrayList<>();
 
         for (Riparazione rip : listaRiparazioni) {
-            RiparazioneMotoClienteDto dto = new RiparazioneMotoClienteDto();
+            // RiparazioneMotoClienteDto dto = new RiparazioneMotoClienteDto();
 
-            dto.setId(rip.getId());
-            dto.setDescrizione(rip.getDescrizione());
-            dto.setDataInizio(rip.getDataInizio());
-            dto.setDataFine(rip.getDataFine());
-            dto.setCodiceServizio(rip.getCodiceServizio());
-            dto.setIdUtenteMec(rip.getUtenteMec() != null ? rip.getUtenteMec().getId() : null);
-            dto.setStatoRiparazione(rip.getStato() != null ? rip.getStato().getStato() : null);
+            // dto.setId(rip.getId());
+            // dto.setDescrizione(rip.getDescrizione());
+            // dto.setDataInizio(rip.getDataInizio());
+            // dto.setDataFine(rip.getDataFine());
+            // dto.setCodiceServizio(rip.getCodiceServizio());
+            // dto.setIdUtenteMec(rip.getUtenteMec() != null ? rip.getUtenteMec().getId() : null);
+            // dto.setStatoRiparazione(rip.getStato() != null ? rip.getStato().getStato() : null);
 
-            if (rip.getMoto() != null) {
-                dto.setModello(rip.getMoto().getModello());
-                dto.setTarga(rip.getMoto().getTarga());
-                dto.setIdUtenteReg(rip.getMoto().getUtenteReg() != null ? rip.getMoto().getUtenteReg().getId() : null);
+            // if (rip.getMoto() != null) {
+            //     dto.setModello(rip.getMoto().getModello());
+            //     dto.setTarga(rip.getMoto().getTarga());
+            //     dto.setIdUtenteReg(rip.getMoto().getUtenteReg() != null ? rip.getMoto().getUtenteReg().getId() : null);
 
-                if (rip.getMoto().getCliente() != null) {
-                    dto.setNome(rip.getMoto().getCliente().getNome());
-                    dto.setCognome(rip.getMoto().getCliente().getCognome());
-                    dto.setTelefono(rip.getMoto().getCliente().getTelefono());
-                    dto.setEmail(rip.getMoto().getCliente().getEmail());
-                }
-            }
+            //     if (rip.getMoto().getCliente() != null) {
+            //         dto.setNome(rip.getMoto().getCliente().getNome());
+            //         dto.setCognome(rip.getMoto().getCliente().getCognome());
+            //         dto.setTelefono(rip.getMoto().getCliente().getTelefono());
+            //         dto.setEmail(rip.getMoto().getCliente().getEmail());
+            //     }
+            // }
 
-            listaDto.add(dto);
+            listaDto.add(modelMapper.map(rip, RiparazioneMotoClienteDto.class));
         }
 
         return listaDto;
+    }
+
+    public RiparazioneMotoClienteDto entityToListRiparazioneMotoClienteDto(Riparazione rip) {
+        return modelMapper.map(rip, RiparazioneMotoClienteDto.class);
     }
 
     public RiparazioneMotoDto entityToRiparazioneMotoDto(Riparazione riparazione) {

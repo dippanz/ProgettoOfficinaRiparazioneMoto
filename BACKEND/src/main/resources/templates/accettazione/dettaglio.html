@@ -1,113 +1,99 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Dettaglio Riparazione</title>
-        <link rel="stylesheet" th:href="@{/css/style.css}">
+        <th:block th:replace="~{fragments/globalFragment :: head}"></th:block>
+        <script type="text/javascript"
+            th:src="@{/js/main.js}"></script>
+        <link rel="stylesheet" th:href="@{/css/global.css}">
     </head>
     <body>
-        <div class="container">
-            <h2>Dettaglio Riparazione</h2>
 
-            <!-- Sezione Riparazione -->
-            <h5>Riparazione</h5>
-            <div class="row">
-                <div class="col-4">
-                    <strong>Codice Servizio:</strong>
-                </div>
-                <div class="col-4">
-                    <span th:text="${dettaglioRiparazione.codiceServizio}"></span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4">
-                    <strong>Descrizione:</strong>
-                </div>
-                <div class="col-4">
-                    <span th:text="${dettaglioRiparazione.descrizione}"></span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4">
-                    <strong>Data Inizio:</strong>
-                </div>
-                <div class="col-4">
-                    <span th:text="${dettaglioRiparazione.dataInizio}"></span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4">
-                    <strong>Data Fine:</strong>
-                </div>
-                <div class="col-4">
-                    <span th:text="${dettaglioRiparazione.dataFine}"></span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4">
-                    <strong>Stato Riparazione:</strong>
-                </div>
-                <div class="col-4">
-                    <span th:text="${dettaglioRiparazione.statoRiparazione}"></span>
-                </div>
-            </div>
+        <div th:replace="~{fragments/globalFragment :: modal}"></div>
+        <header th:insert="~{fragments/globalFragment :: header}"></header>
 
-            <!-- Sezione Moto -->
-            <h5>Moto</h5>
-            <div class="row">
-                <div class="col-4">
-                    <strong>Modello:</strong>
-                </div>
-                <div class="col-4">
-                    <span th:text="${dettaglioRiparazione.modello}"></span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4">
-                    <strong>Targa:</strong>
-                </div>
-                <div class="col-4">
-                    <span th:text="${dettaglioRiparazione.targa}"></span>
-                </div>
-            </div>
+        <main>
+            <div class="container mt-5">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h2>Dettaglio Riparazione</h2>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="text-primary">🔧 Riparazione</h4>
+                        <table class="table table-striped">
+                            <tr>
+                                <td class="col-4"><strong>Codice Servizio:</strong></td>
+                                <td class="col-7"
+                                    th:text="${dettaglioRiparazione.codiceServizio}"></td>
+                            </tr>
+                            <tr>
+                                <td class="col-4"><strong>Descrizione:</strong></td>
+                                <td class="col-7"
+                                    th:text="${dettaglioRiparazione.descrizione}"></td>
+                            </tr>
+                            <tr>
+                                <td class="col-4"><strong>Data Inizio:</strong></td>
+                                <td class="col-7"
+                                    th:text="${dettaglioRiparazione.dataInizio}"></td>
+                            </tr>
+                            <tr>
+                                <td class="col-4"><strong>Data Fine:</strong></td>
+                                <td class="col-7"
+                                    th:text="${dettaglioRiparazione.dataFine}"></td>
+                            </tr>
+                            <tr>
+                                <td class="col-4"><strong>Stato Riparazione:</strong></td>
+                                <td class="col-7"><span class="badge bg-info text-dark"
+                                        th:text="${dettaglioRiparazione.statoRiparazione}"></span></td>
+                            </tr>
+                        </table>
 
-            <!-- Sezione Cliente -->
-            <h5>Cliente</h5>
-            <div class="row">
-                <div class="col-4">
-                    <strong>Nome:</strong>
-                </div>
-                <div class="col-4">
-                    <span th:text="${dettaglioRiparazione.nome}"></span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4">
-                    <strong>Cognome:</strong>
-                </div>
-                <div class="col-4">
-                    <span th:text="${dettaglioRiparazione.cognome}"></span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4">
-                    <strong>Telefono:</strong>
-                </div>
-                <div class="col-4">
-                    <span th:text="${dettaglioRiparazione.telefono}"></span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4">
-                    <strong>Email:</strong>
-                </div>
-                <div class="col-4">
-                    <span th:text="${dettaglioRiparazione.email}"></span>
-                </div>
-            </div>
+                        <h4 class="text-primary">🏍 Moto</h4>
+                        <table class="table table-striped">
+                            <tr>
+                                <td class="col-4"><strong>Modello:</strong></td>
+                                <td class="col-7"
+                                    th:text="${dettaglioRiparazione.modello}"></td>
+                            </tr>
+                            <tr>
+                                <td class="col-4"><strong>Targa:</strong></td>
+                                <td class="col-7"
+                                    th:text="${dettaglioRiparazione.targa}"></td>
+                            </tr>
+                        </table>
 
-            <a href="/accettazione">Torna alla Lista</a>
-        </div>
+                        <h4 class="text-primary">👤 Cliente</h4>
+                        <table class="table table-striped">
+                            <tr>
+                                <td class="col-4"><strong>Nome:</strong></td>
+                                <td class="col-7" th:text="${dettaglioRiparazione.nome}"></td>
+                            </tr>
+                            <tr>
+                                <td class="col-4"><strong>Cognome:</strong></td>
+                                <td class="col-7"
+                                    th:text="${dettaglioRiparazione.cognome}"></td>
+                            </tr>
+                            <tr>
+                                <td class="col-4"><strong>Telefono:</strong></td>
+                                <td class="col-7"
+                                    th:text="${dettaglioRiparazione.telefono}"></td>
+                            </tr>
+                            <tr>
+                                <td class="col-4"><strong>Email:</strong></td>
+                                <td class="col-7"
+                                    th:text="${dettaglioRiparazione.email}"></td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                    <div class="card-footer text-right">
+                        <button type="button" class="btn btn-secondary mr-1"
+                            onclick="window.history.back()">🔙Torna alla
+                            Lista</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer th:insert="~{fragments/globalFragment :: footer}"></footer>
     </body>
 </html>

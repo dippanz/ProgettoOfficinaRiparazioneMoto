@@ -4,6 +4,7 @@
 package it.officina.OfficinaRiparazioneMoto.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneDto;
 import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneMotoClienteDto;
@@ -16,7 +17,9 @@ import it.officina.OfficinaRiparazioneMoto.model.Riparazione;
  * 
  */
 public interface RiparazioneService {
-    List<RiparazioneMotoDto> getRiparazioneWithMoto(String codiceServizio, String targa);
+    List<RiparazioneMotoDto> getListaRiparazioneMotoDto(String codiceServizio, String targa);
     RiparazioneDto salvaRiparazioneAccettata(RiparazioneDto riparazione);
-    List<RiparazioneMotoClienteDto> getRiparazioneWithMotoAndCliente();
+    List<RiparazioneMotoClienteDto> getListaRiparazioniMotoClienteDto();
+    void aggiornaStatoRiparazione(UUID idRiparazione, int registrato);
+    RiparazioneMotoClienteDto getRiparazioneMotoClienteDto(UUID idRiparazione);
 }

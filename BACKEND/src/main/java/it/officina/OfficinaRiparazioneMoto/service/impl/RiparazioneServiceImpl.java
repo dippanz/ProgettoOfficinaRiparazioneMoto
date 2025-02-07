@@ -4,6 +4,7 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.ObjectUtils.Null;
@@ -40,7 +41,7 @@ public class RiparazioneServiceImpl implements RiparazioneService {
     private RiparazioneDao riparazioneDao;
     @Autowired
     private StatoRiparazioneDao statoRiparazioneDao;
-    
+
     @Autowired
     private AuthService authService;
     @Autowired
@@ -50,13 +51,13 @@ public class RiparazioneServiceImpl implements RiparazioneService {
     private RiparazioneMapper mapper;
 
     @Override
-    public List<RiparazioneMotoDto> getRiparazioneWithMoto(String codiceServizio, String targa)
+    public List<RiparazioneMotoDto> getListaRiparazioneMotoDto(String codiceServizio, String targa)
             throws BadRequestException {
 
         List<RiparazioneMotoDto> response = new ArrayList<>();
 
         if (codiceServizio != null) {
-            Riparazione riparazione = riparazioneDao.findByCodiceServizioAndTargaWithMoto(codiceServizio, targa)
+            Riparazione riparazione = riparazioneDao.findByCodiceServizioAndTarga(codiceServizio, targa)
                     .orElseThrow(() -> new BadRequestException(ErrorManager.RIPARAZIONE_NON_TROVATA_COD_SERVIZIO));
 
             response.add(mapper.entityToRiparazioneMotoDto(riparazione));
@@ -109,12 +110,30 @@ public class RiparazioneServiceImpl implements RiparazioneService {
     }
 
     @Override
-    public List<RiparazioneMotoClienteDto> getRiparazioneWithMotoAndCliente() {
+    public List<RiparazioneMotoClienteDto> getListaRiparazioniMotoClienteDto() {
 
         List<Riparazione> listaRiparazioni = riparazioneDao
-                .findAllByUtenteRegWithMotoAndCliente(authService.getUtenteDtoAutenticato().getId());
+                .findAllByIdUtenteReg(authService.getUtenteDtoAutenticato().getId());
 
         return mapper.entityToListRiparazioneMotoClienteDto(listaRiparazioni);
+    }
+
+    @Override
+    public void aggiornaStatoRiparazione(UUID idRiparazione, int statoRiparazioneAttuale) throws BadRequestException {
+        Riparazione riparazioneDaAggiornare = riparazioneDao.findById(idRiparazione)
+                .orElseThrow(() -> new BadRequestException(ErrorManager.RIPARAZIONE_NON_TROVATA));
+
+        StatoRiparazione stato = statoRiparazioneDao.findById(StatoRiparazioni.getNextStato(statoRiparazioneAttuale))
+                .orElseThrow(() -> new BadRequestException(ErrorManager.STATO_RIPARAZIONE_NON_TROVATO));
+
+        riparazioneDaAggiornare.setStato(stato);
+        riparazioneDao.save(riparazioneDaAggiornare);
+    }
+
+    @Override
+    public RiparazioneMotoClienteDto getRiparazioneMotoClienteDto(UUID idRiparazione) throws BadRequestException {
+        return mapper.entityToListRiparazioneMotoClienteDto(riparazioneDao.findById(idRiparazione)
+                .orElseThrow(() -> new BadRequestException(ErrorManager.RIPARAZIONE_NON_TROVATA)));
     }
 
 }

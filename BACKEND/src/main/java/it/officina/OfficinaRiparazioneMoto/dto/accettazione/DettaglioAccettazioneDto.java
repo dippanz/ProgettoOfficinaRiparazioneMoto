@@ -1,9 +1,11 @@
 package it.officina.OfficinaRiparazioneMoto.dto.accettazione;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class DettaglioAccettazioneDto {
     //riparazione
+    private UUID id;
     private String descrizione;
     private LocalDateTime dataInizio;
     private LocalDateTime dataFine;
@@ -19,6 +21,12 @@ public class DettaglioAccettazioneDto {
 	private String cognome;
 	private String telefono;
 	private String email;
+    public UUID getId() {
+        return id;
+    }
+    public void setId(UUID id) {
+        this.id = id;
+    }
     public String getDescrizione() {
         return descrizione;
     }
