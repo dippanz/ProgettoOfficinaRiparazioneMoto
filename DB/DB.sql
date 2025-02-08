@@ -1,22 +1,11 @@
--- DROP TABLE IF EXISTS public."RIPARAZIONE";
--- DROP TABLE IF EXISTS public."STATO_RIPARAZIONE";
--- DROP TABLE IF EXISTS public."MOTO";
--- DROP TABLE IF EXISTS public."CLIENTE";
--- DROP TABLE IF EXISTS public."UTENTE_RUOLO";
--- DROP TABLE IF EXISTS public."UTENTE";
--- DROP TABLE IF EXISTS public."RUOLO";
--- DROP TABLE IF EXISTS public."LIVELLO_ACCESSO";
-
--- LIVELLO DI ACCESSO
--- CREATE TABLE public."LIVELLO_ACCESSO"
--- (
---     "id" SERIAL NOT NULL ,
---     "Livello" character varying(50) NOT NULL UNIQUE,
---     PRIMARY KEY ("id")
--- );
-
--- ALTER TABLE IF EXISTS public."LIVELLO_ACCESSO"
---     OWNER to postgres;
+DROP TABLE IF EXISTS public."RIPARAZIONE_LAVORAZIONE";
+DROP TABLE IF EXISTS public."RIPARAZIONE";
+DROP TABLE IF EXISTS public."STATO_RIPARAZIONE";
+DROP TABLE IF EXISTS public."MOTO";
+DROP TABLE IF EXISTS public."CLIENTE";
+DROP TABLE IF EXISTS public."UTENTE_RUOLO";
+DROP TABLE IF EXISTS public."UTENTE";
+DROP TABLE IF EXISTS public."RUOLO";
 
 -- RUOLO
 CREATE TABLE IF NOT EXISTS public."RUOLO"
@@ -121,7 +110,7 @@ CREATE TABLE IF NOT EXISTS public."RIPARAZIONE"
     "id" uuid NOT NULL DEFAULT gen_random_uuid(),
 	"codice_servizio" character varying(30) NOT NULL UNIQUE, -- codice fornito al cliente per ricercare la sua prenotazione
     "id_stato" int,
-    "descrizione" text,
+    "descrizione_problema" text,
 	"dataInizio" TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
 	"dataFine" TIMESTAMP, 
     "id_utente_mec" uuid DEFAULT NULL, -- utente che effettua la riparazione (meccanico)
@@ -135,6 +124,23 @@ CREATE TABLE IF NOT EXISTS public."RIPARAZIONE"
 ALTER TABLE IF EXISTS public."RIPARAZIONE"
     OWNER to postgres;
 
+-- RIPARAZIONE_LAVORAZIONE indica lo storico delle lavorazioni effettuate su una riparazione 
+
+CREATE TABLE IF NOT EXISTS public."RIPARAZIONE_LAVORAZIONE"
+(
+    "id" uuid NOT NULL DEFAULT gen_random_uuid(),
+    "id_riparazione" uuid NOT NULL, -- Riparazione a cui è collegata
+    "descrizione" text NOT NULL, -- Descrizione dell'intervento del meccanico
+    "ore" decimal(5,2) NOT NULL, -- Ore lavorate con due cifre decimali (es. 1.25 per un'ora e un quarto)
+    "data_inserimento" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY ("id"),
+    CONSTRAINT fk_riparazione FOREIGN KEY ("id_riparazione") REFERENCES public."RIPARAZIONE"("id")
+);
+
+ALTER TABLE IF EXISTS public."RIPARAZIONE_LAVORAZIONE"
+    OWNER to postgres;
+
+
 INSERT INTO public."STATO_RIPARAZIONE" ("stato")
 VALUES
     ('In fase di accettazione'),
@@ -142,20 +148,12 @@ VALUES
     ('In lavorazione'),
     ('Completata');
 
--- Inserimento dei livelli di accesso
--- INSERT INTO public."LIVELLO_ACCESSO" ("Livello")
--- VALUES
---     ('admin'),
---     ('user'),
--- 	('generic');
-
 -- Inserimento dei ruoli
 INSERT INTO public."RUOLO" ("nome")
 VALUES
-	    ('ADMIN'),              -- Ruolo admin con livello di accesso "admin"
-    ('MECCANICO'),          -- Ruolo meccanico con livello di accesso "user"
-    ('ADDETTO_ACCETTAZIONE');  -- Ruolo addetto_accettazione con livello di accesso "user"
-	-- ('utente_generico');
+	('ADMIN'), 
+    ('MECCANICO'),          
+    ('ADDETTO_ACCETTAZIONE');  
 
 INSERT INTO public."UTENTE" ("email", "username", "hashPassword")
 VALUES ('admin@admin.it', 'admin', '$2a$12$AiXIMBFu4qQa65z9oWRVBO8fL4wX4wtlnzg/bXWZr5yKiWhl.n3Ee'); -- pass: Prova@123
@@ -165,8 +163,3 @@ VALUES (
   (SELECT ID FROM public."UTENTE" WHERE username='admin'),
   (SELECT ID FROM public."RUOLO" WHERE nome='ADMIN')
 );
-
-s
-
-
-	
