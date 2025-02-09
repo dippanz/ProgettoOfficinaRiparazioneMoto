@@ -4,9 +4,8 @@
         <th:block th:replace="~{fragments/globalFragment :: head}"></th:block>
         <script type="text/javascript"
             th:src="@{/js/main.js}"></script>
-        <link rel="stylesheet" th:href="@{/css/global.css}">
     </head>
-    <body>
+    <body data-page="meccanicoDettaglio">
 
         <div th:replace="~{fragments/globalFragment :: modalError}"></div>
         <header th:insert="~{fragments/globalFragment :: header}"></header>
@@ -21,28 +20,34 @@
                         <h4 class="text-primary">🔧 Riparazione</h4>
                         <table class="table table-striped">
                             <tr>
-                                <td class="col-4"><strong>Codice Servizio:</strong></td>
+                                <td class="col-4"><strong>Codice
+                                        Servizio:</strong></td>
                                 <td class="col-7"
                                     th:text="${dettaglioRiparazione.codiceServizio}"></td>
                             </tr>
                             <tr>
-                                <td class="col-4"><strong>Descrizione:</strong></td>
+                                <td
+                                    class="col-4"><strong>Descrizione:</strong></td>
                                 <td class="col-7"
-                                    th:text="${dettaglioRiparazione.descrizione}"></td>
+                                    th:text="${dettaglioRiparazione.descrizioneProblema}"></td>
                             </tr>
                             <tr>
-                                <td class="col-4"><strong>Data Inizio:</strong></td>
+                                <td class="col-4"><strong>Data
+                                        Inizio:</strong></td>
                                 <td class="col-7"
                                     th:text="${dettaglioRiparazione.dataInizio}"></td>
                             </tr>
                             <tr>
-                                <td class="col-4"><strong>Data Fine:</strong></td>
+                                <td class="col-4"><strong>Data
+                                        Fine:</strong></td>
                                 <td class="col-7"
                                     th:text="${dettaglioRiparazione.dataFine}"></td>
                             </tr>
                             <tr>
-                                <td class="col-4"><strong>Stato Riparazione:</strong></td>
-                                <td class="col-7"><span class="badge bg-info text-dark"
+                                <td class="col-4"><strong>Stato
+                                        Riparazione:</strong></td>
+                                <td class="col-7"><span
+                                        class="badge bg-info text-dark"
                                         th:text="${dettaglioRiparazione.statoRiparazione}"></span></td>
                             </tr>
                         </table>
@@ -65,7 +70,8 @@
                         <table class="table table-striped">
                             <tr>
                                 <td class="col-4"><strong>Nome:</strong></td>
-                                <td class="col-7" th:text="${dettaglioRiparazione.nome}"></td>
+                                <td class="col-7"
+                                    th:text="${dettaglioRiparazione.nome}"></td>
                             </tr>
                             <tr>
                                 <td class="col-4"><strong>Cognome:</strong></td>
@@ -73,7 +79,8 @@
                                     th:text="${dettaglioRiparazione.cognome}"></td>
                             </tr>
                             <tr>
-                                <td class="col-4"><strong>Telefono:</strong></td>
+                                <td
+                                    class="col-4"><strong>Telefono:</strong></td>
                                 <td class="col-7"
                                     th:text="${dettaglioRiparazione.telefono}"></td>
                             </tr>
@@ -83,6 +90,37 @@
                                     th:text="${dettaglioRiparazione.email}"></td>
                             </tr>
                         </table>
+
+                        <div>
+                            <div class="row d-flex justify-content-between align-items-center">
+                                <h4 class="text-primary col-auto">Manutenzioni effettuate</h4>
+                                <a id="aggiungiLavorazione" class="btn btn-success col-auto mr-3">Modifica</a>
+                            </div>
+                            
+                            <table class="table table-striped" th:if="${not #lists.isEmpty(dettaglioRiparazione.listaLavorazioni)}">
+                                <thead>
+                                    <tr>
+                                        <th class="col-4">Descrizione</th>
+                                        <th class="col-4">Ore impiegate</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="lavorazione : ${dettaglioRiparazione.listaLavorazioni}">
+                                        <td class="col-7"
+                                            th:text="${lavorazione.descrizioneLavorazione}"></td>
+                                        <td class="col-7"
+                                            th:text="${lavorazione.ore}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-4"><strong>Ore
+                                                totali:</strong></td>
+                                        <td class="col-7"
+                                            th:text="${dettaglioRiparazione.oreTotaliLavorate}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="no-data" th:if="${#lists.isEmpty(dettaglioRiparazione.listaLavorazioni)}">Ancora nessuna manutenzione effettuata.</p>
+                        </div>
 
                     </div>
 

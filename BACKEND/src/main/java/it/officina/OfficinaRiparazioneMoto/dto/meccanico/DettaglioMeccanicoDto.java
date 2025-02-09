@@ -1,28 +1,33 @@
-package it.officina.OfficinaRiparazioneMoto.dto;
+package it.officina.OfficinaRiparazioneMoto.dto.meccanico;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
-public class RiparazioneMotoClienteDto {
+public class DettaglioMeccanicoDto {
 
+    //riparazione
     private UUID id;
     private String descrizioneProblema;
     private LocalDateTime dataInizio;
     private LocalDateTime dataFine;
     private String codiceServizio;
-    private UUID idUtenteMec;
     private String statoRiparazione;
 
-    // moto
-    private String modello;
-    private String targa;
-    private UUID idUtenteReg;
+    //moto
+	private String modello;
+	private String targa;
 
-    // cliente
-    private String nome;
-    private String cognome;
-    private String telefono;
-    private String email;
+    //cliente
+	private String nome;
+	private String cognome;
+	private String telefono;
+	private String email;
+
+    //lavorazione
+    private List<RiparazioneLavorazioneDettaglioDto> listaLavorazioni;
+    private BigDecimal oreTotaliLavorate;
     
     public UUID getId() {
         return id;
@@ -33,8 +38,8 @@ public class RiparazioneMotoClienteDto {
     public String getDescrizioneProblema() {
         return descrizioneProblema;
     }
-    public void setDescrizioneProblema(String descrizione) {
-        this.descrizioneProblema = descrizione;
+    public void setDescrizioneProblema(String descrizioneProblema) {
+        this.descrizioneProblema = descrizioneProblema;
     }
     public LocalDateTime getDataInizio() {
         return dataInizio;
@@ -54,12 +59,6 @@ public class RiparazioneMotoClienteDto {
     public void setCodiceServizio(String codiceServizio) {
         this.codiceServizio = codiceServizio;
     }
-    public UUID getIdUtenteMec() {
-        return idUtenteMec;
-    }
-    public void setIdUtenteMec(UUID idUtenteMec) {
-        this.idUtenteMec = idUtenteMec;
-    }
     public String getStatoRiparazione() {
         return statoRiparazione;
     }
@@ -77,12 +76,6 @@ public class RiparazioneMotoClienteDto {
     }
     public void setTarga(String targa) {
         this.targa = targa;
-    }
-    public UUID getIdUtenteReg() {
-        return idUtenteReg;
-    }
-    public void setIdUtenteReg(UUID idUtenteReg) {
-        this.idUtenteReg = idUtenteReg;
     }
     public String getNome() {
         return nome;
@@ -107,5 +100,17 @@ public class RiparazioneMotoClienteDto {
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+    public List<RiparazioneLavorazioneDettaglioDto> getListaLavorazioni() {
+        return listaLavorazioni;
+    }
+    public void setListaLavorazioni(List<RiparazioneLavorazioneDettaglioDto> listaLavoriazioni) {
+        this.listaLavorazioni = listaLavoriazioni;
+    }
+    public BigDecimal getOreTotaliLavorate() {
+        return oreTotaliLavorate;
+    }
+    public void setOreTotaliLavorate(BigDecimal oreTotaliLavorate) {
+        this.oreTotaliLavorate = oreTotaliLavorate;
     }
 }

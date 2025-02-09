@@ -55,20 +55,20 @@ public class PublicController {
     }
 
     @GetMapping("/public/process_cerca_riparazione")
-    public String getRiparazione(@Valid @ModelAttribute("cercaRiparazioneDto") CercaRiparazioneDto cercaRiparazioneDto,
+    public String getRiparazione(@Valid @ModelAttribute("cercaRiparazioneDto") CercaRiparazioneDto request,
             BindingResult bindingResult,
             Model model) {
 
         if (bindingResult.hasErrors()) {
             // errori di validazione
-            model.addAttribute("cercaRiparazioneDto", cercaRiparazioneDto);
+            model.addAttribute("cercaRiparazioneDto", request);
             return "fragments/publics/ricercaRiparazione :: cercaRiparazioneForm";
         }
 
         // carico i dettagli della riparazione
         model.addAttribute("riparazioneDatiGenerali",
-                publicService.getRiparazioneDettaglioGenerale(cercaRiparazioneDto.getCodiceServizio(),
-                        cercaRiparazioneDto.getTarga()));
+                publicService.getRiparazioneDettaglioGenerale(request.getCodiceServizio(),
+                request.getTarga()));
 
         return "fragments/publics/ricercaRiparazione :: riparazioneDettagliGenerali";
     }

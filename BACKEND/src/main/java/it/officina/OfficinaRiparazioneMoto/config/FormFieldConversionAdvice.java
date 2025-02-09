@@ -12,12 +12,4 @@ public class FormFieldConversionAdvice {
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
     }
-
-    // Classe interna per il convertitore personalizzata
-    // static class StringTrimmerEditor extends java.beans.PropertyEditorSupport {
-    //     @Override
-    //     public void setAsText(String text) {
-    //         setValue((text == null || text.trim().isEmpty()) ? null : text.trim());
-    //     }
-    // }
 }

@@ -4,7 +4,6 @@
         <th:block th:replace="~{fragments/globalFragment :: head}"></th:block>
         <script type="text/javascript"
             th:src="@{/js/main.js}"></script>
-
             <style>
                 body {
                     font-family: Arial, sans-serif;
@@ -91,7 +90,7 @@
             </style>
     </head>
     <body data-page="indexAccettazione">
-        <div th:replace="~{fragments/globalFragment :: modal}"></div>
+        <div th:replace="~{fragments/globalFragment :: modalError}"></div>
         <header th:insert="~{fragments/globalFragment :: header}"></header>
         <main>
             <div>

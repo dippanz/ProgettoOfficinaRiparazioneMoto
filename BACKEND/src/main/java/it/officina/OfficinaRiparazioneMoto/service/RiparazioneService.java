@@ -9,9 +9,7 @@ import java.util.UUID;
 import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneDto;
 import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneMotoClienteDto;
 import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneMotoDto;
-import it.officina.OfficinaRiparazioneMoto.dto.accettazione.RiparazioneModuloAccettazioneDto;
-import it.officina.OfficinaRiparazioneMoto.dto.publics.RiparazioneDettaglioGeneraleDto;
-import it.officina.OfficinaRiparazioneMoto.model.Riparazione;
+import it.officina.OfficinaRiparazioneMoto.dto.UtenteDto;
 
 /**
  * 
@@ -19,7 +17,8 @@ import it.officina.OfficinaRiparazioneMoto.model.Riparazione;
 public interface RiparazioneService {
     List<RiparazioneMotoDto> getListaRiparazioneMotoDto(String codiceServizio, String targa);
     RiparazioneDto salvaRiparazioneAccettata(RiparazioneDto riparazione);
-    List<RiparazioneMotoClienteDto> getListaRiparazioniMotoClienteDto();
-    void aggiornaStatoRiparazione(UUID idRiparazione, int registrato);
+    List<RiparazioneMotoClienteDto> getListaRiparazioniMotoClienteDto(UUID idUtenteReg, UUID idUtenteMec, int... stati);
+    void aggiornaStatoRiparazione(UUID idRiparazione, UtenteDto utenteMec);
     RiparazioneMotoClienteDto getRiparazioneMotoClienteDto(UUID idRiparazione);
+    RiparazioneDto getRiparazioneDto(UUID idRiparazione);
 }

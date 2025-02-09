@@ -1,51 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestione Lavorazioni Meccanico</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-        }
-
-        header {
-            background-color: #333;
-            color: white;
-            padding: 10px 0;
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .navbar a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
-            font-size: 18px;
-        }
-
-        .navbar a:hover {
-            text-decoration: underline;
-        }
-
-        main {
-            padding: 20px;
-            max-width: 900px;
-            margin: 40px auto;
-            background: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
+    <head>
+        <th:block th:replace="~{fragments/globalFragment :: head}"></th:block>
+        <script type="text/javascript"
+            th:src="@{/js/main.js}"></script>
+        <style>
 
         h1, h2 {
             color: #333;
@@ -102,64 +61,69 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="navbar">
-            <h1>Gestione Lavorazioni</h1>
-            <nav>
-                <a href="/home">Home</a>
-                <a href="/logout">Logout</a>
-            </nav>
-        </div>
-    </header>
+        </style>
+    </head>
+    <body>
+        <div th:replace="~{fragments/globalFragment :: modalError}"></div>
+        <header th:insert="~{fragments/globalFragment :: header}"></header>
+        <main>
+            <h2>Gestione Riparazioni Meccaniche</h2>
+            <p class="description">
+                Benvenuto nella tua area di gestione. Qui puoi visualizzare tutte le riparazioni assegnate a te, 
+                controllarne lo stato e aggiornare le informazioni sullo svolgimento dei lavori.
+            </p>
 
-    <main>
-        <h2>Moto in Attesa di Lavorazione</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Targa</th>
-                    <th>Modello</th>
-                    <th>Stato</th>
-                    <th>Azioni</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="moto : ${motoInAttesa}">
-                    <td th:text="${moto.targa}"></td>
-                    <td th:text="${moto.modello}"></td>
-                    <td th:text="${moto.stato}"></td>
-                    <td>
-                        <form th:action="@{/mechanic/start}" method="post" style="display: inline;">
-                            <input type="hidden" th:value="${moto.id}" name="motoId">
-                            <button type="submit">Avvia Lavorazione</button>
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+            <div class="button-container">
+                <a href="/meccanico/prendi_in_carico" class="btn">Prendi in carico</a>
+            </div>
 
-        <div class="form-section">
-            <h3>Registra Lavorazione</h3>
-            <form th:action="@{/mechanic/complete}" method="post">
-                <label for="motoId">ID Moto:</label>
-                <input type="text" id="motoId" name="motoId" placeholder="Inserisci ID Moto" required>
+            <div class="table-container">
+                <h3>Riparazioni assegnate</h3>
+                <table th:if="${not #lists.isEmpty(listaRiparazioni)}">
+                    <thead>
+                        <tr>
+                            <th class="col-2">Codice Servizio</th>
+                            <th class="col-2">Targa</th>
+                            <th class="col-2">Cliente</th>
+                            <th class="col-2">Stato</th>
+                            <th class="col-3">Azioni</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="riparazione : ${listaRiparazioni}">
+                            <td th:text="${riparazione.codice}"></td>
+                            <td th:text="${riparazione.targa}"></td>
+                            <td th:text="${riparazione.emailCliente}"></td>
+                            <td th:text="${riparazione.stato}"></td>
+                            <td>
+                                <a th:href="@{/meccanico/dettaglio/{id}(id=${riparazione.idRiparazione})}" class="btn">Dettagli</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="no-data" th:if="${#lists.isEmpty(listaRiparazioni)}">Nessun veicolo in attesa di lavorazion per te.</p>
+            </div>
 
-                <label for="descrizione">Descrizione Lavorazione:</label>
-                <input type="text" id="descrizione" name="descrizione" placeholder="Descrivi la lavorazione effettuata" required>
+            <!-- <div class="form-section">
+                <h3>Registra Lavorazione</h3>
+                <form th:action="@{/mechanic/complete}" method="post">
+                    <label for="motoId">ID Moto:</label>
+                    <input type="text" id="motoId" name="motoId"
+                        placeholder="Inserisci ID Moto" required>
 
-                <label for="oreLavorate">Ore Lavorate:</label>
-                <input type="text" id="oreLavorate" name="oreLavorate" placeholder="Inserisci ore lavorate" required>
+                    <label for="descrizione">Descrizione Lavorazione:</label>
+                    <input type="text" id="descrizione" name="descrizione"
+                        placeholder="Descrivi la lavorazione effettuata"
+                        required>
 
-                <button type="submit">Registra Lavorazione</button>
-            </form>
-        </div>
-    </main>
+                    <label for="oreLavorate">Ore Lavorate:</label>
+                    <input type="text" id="oreLavorate" name="oreLavorate"
+                        placeholder="Inserisci ore lavorate" required>
 
-    <footer>
-        &copy; 2025 Officina Riparazioni Moto. Tutti i diritti riservati.
-    </footer>
-</body>
+                    <button type="submit">Registra Lavorazione</button>
+                </form>
+            </div> -->
+        </main>
+        <footer th:insert="~{fragments/globalFragment :: footer}"></footer>
+    </body>
 </html>

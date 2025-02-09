@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <th:block th:replace="~{fragments/globalFragment :: head}"></th:block>
+        <script type="text/javascript"
+            th:src="@{/js/main.js}"></script>
+
+    </head>
+    <body data-page="prendiInCarico">
+        <div th:replace="~{fragments/globalFragment :: modalError}"></div>
+        <header th:insert="~{fragments/globalFragment :: header}"></header>
+        <main>
+            <div class="table-container">
+                <h3>Riparazioni disponibili</h3>
+                <form 
+                    th:if="${not #lists.isEmpty(listaRiparazioni)}"
+                    id="formPresaInCarico"
+                    th:action="@{/meccanico/salva-prese-in-carico}"
+                    method="post">
+                    <table >
+                        <thead>
+                            <tr>
+                                <th class="col-2">Codice Servizio</th>
+                                <th class="col-2">Targa</th>
+                                <th class="col-2">Cliente</th>
+                                <th class="col-2">Stato</th>
+                                <th class="col-3">Azioni</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="riparazione : ${listaRiparazioni}">
+
+                                <td th:text="${riparazione.codice}"></td>
+                                <td th:text="${riparazione.targa}"></td>
+                                <td th:text="${riparazione.emailCliente}"></td>
+                                <td th:text="${riparazione.stato}"></td>
+                                <td>
+                                    <a
+                                        th:href="@{/meccanico/dettaglio/{id}(id=${riparazione.idRiparazione})}"
+                                        class="btn">Dettagli</a>
+                                    <button class="btn btn-add" type="button">+</button>
+                                    <button class="btn btn-danger btn-cancel" type="button"
+                                        style="display: none;">x</button>
+                                </td>
+
+                                <input type="hidden" name="presaInCarico"
+                                    th:value="${riparazione.idRiparazione}" disabled>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <button id="saveButton" type="submit" class="btn" disabled>salva</button>
+                </form>
+                <p class="no-data"
+                    th:if="${#lists.isEmpty(listaRiparazioni)}">Nessun veicolo
+                    in attesa di lavorazion per te.</p>
+            </div>
+        </main>
+        <footer th:insert="~{fragments/globalFragment :: footer}"></footer>
+    </body>
+</html>

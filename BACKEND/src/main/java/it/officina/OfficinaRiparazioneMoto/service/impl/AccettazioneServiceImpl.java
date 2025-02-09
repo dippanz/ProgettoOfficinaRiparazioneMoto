@@ -37,6 +37,8 @@ public class AccettazioneServiceImpl implements AccettazioneService {
     @Autowired
     private RiparazioneService riparazioneService;
     @Autowired
+    private AuthService authService;
+    @Autowired
     private ClienteMapper clienteMapper;
     @Autowired
     private MotoMapper motoMapper;
@@ -77,7 +79,7 @@ public class AccettazioneServiceImpl implements AccettazioneService {
 
         DettaglioAccettazioneDto response = new DettaglioAccettazioneDto();
         response.setId(riparazione.getId());
-        response.setDescrizione(riparazione.getDescrizione());
+        response.setDescrizione(riparazione.getDescrizioneProblema());
         response.setDataInizio(riparazione.getDataInizio());
         response.setDataFine(riparazione.getDataFine());
         response.setCodiceServizio(riparazione.getCodiceServizio());
@@ -95,7 +97,7 @@ public class AccettazioneServiceImpl implements AccettazioneService {
     @Override
     public List<RiparazioneModuloAccettazioneDto> getListaRiparazioniModuloAccettazioneDto() {
 
-        List<RiparazioneMotoClienteDto> listaRiparazioni = riparazioneService.getListaRiparazioniMotoClienteDto();
+        List<RiparazioneMotoClienteDto> listaRiparazioni = riparazioneService.getListaRiparazioniMotoClienteDto(authService.getUtenteDtoAutenticato().getId(), null);
 
         List<RiparazioneModuloAccettazioneDto> response = new ArrayList<>();
 
@@ -114,6 +116,6 @@ public class AccettazioneServiceImpl implements AccettazioneService {
 
     @Override
     public void accettaRiparazione(UUID idRiparazione) {
-        riparazioneService.aggiornaStatoRiparazione(idRiparazione, StatoRiparazioni.REGISTRATO);
+        riparazioneService.aggiornaStatoRiparazione(idRiparazione, null);
     }
 }

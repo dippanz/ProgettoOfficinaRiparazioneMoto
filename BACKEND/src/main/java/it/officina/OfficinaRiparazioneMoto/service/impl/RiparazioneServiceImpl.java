@@ -3,32 +3,24 @@ package it.officina.OfficinaRiparazioneMoto.service.impl;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.ObjectUtils.Null;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.internal.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import it.officina.OfficinaRiparazioneMoto.dao.MotoDao;
 import it.officina.OfficinaRiparazioneMoto.dao.RiparazioneDao;
 import it.officina.OfficinaRiparazioneMoto.dao.StatoRiparazioneDao;
 import it.officina.OfficinaRiparazioneMoto.dto.MotoDto;
 import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneDto;
 import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneMotoClienteDto;
 import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneMotoDto;
-import it.officina.OfficinaRiparazioneMoto.dto.accettazione.RiparazioneModuloAccettazioneDto;
-import it.officina.OfficinaRiparazioneMoto.dto.publics.RiparazioneDettaglioGeneraleDto;
+import it.officina.OfficinaRiparazioneMoto.dto.UtenteDto;
 import it.officina.OfficinaRiparazioneMoto.exception.BadRequestException;
-import it.officina.OfficinaRiparazioneMoto.mapper.MotoMapper;
 import it.officina.OfficinaRiparazioneMoto.mapper.RiparazioneMapper;
-import it.officina.OfficinaRiparazioneMoto.model.Moto;
+import it.officina.OfficinaRiparazioneMoto.mapper.UtenteMapper;
 import it.officina.OfficinaRiparazioneMoto.model.Riparazione;
 import it.officina.OfficinaRiparazioneMoto.model.StatoRiparazione;
-import it.officina.OfficinaRiparazioneMoto.service.AuthService;
 import it.officina.OfficinaRiparazioneMoto.service.MotoService;
 import it.officina.OfficinaRiparazioneMoto.service.RiparazioneService;
 import it.officina.OfficinaRiparazioneMoto.utils.Constants.ErrorManager;
@@ -43,12 +35,12 @@ public class RiparazioneServiceImpl implements RiparazioneService {
     private StatoRiparazioneDao statoRiparazioneDao;
 
     @Autowired
-    private AuthService authService;
-    @Autowired
     private MotoService motoService;
 
     @Autowired
     private RiparazioneMapper mapper;
+    @Autowired
+    private UtenteMapper utenteMapper;
 
     @Override
     public List<RiparazioneMotoDto> getListaRiparazioneMotoDto(String codiceServizio, String targa)
@@ -110,29 +102,60 @@ public class RiparazioneServiceImpl implements RiparazioneService {
     }
 
     @Override
-    public List<RiparazioneMotoClienteDto> getListaRiparazioniMotoClienteDto() {
+    public List<RiparazioneMotoClienteDto> getListaRiparazioniMotoClienteDto(UUID idUtenteReg, UUID idUtenteMec,
+            int... stati) {
+        if (idUtenteReg == null && idUtenteMec == null && stati.length == 0) {
+            throw new IllegalArgumentException("Entrambi gli id non posso essere null e stati vuoto");
+        }
 
-        List<Riparazione> listaRiparazioni = riparazioneDao
-                .findAllByIdUtenteReg(authService.getUtenteDtoAutenticato().getId());
+        List<Riparazione> listaRiparazioni;
+        if (idUtenteMec != null) {
+            // Se c'è un meccanico, filtra per meccanico e stati (se presenti)
+            listaRiparazioni = stati.length > 0
+                    ? riparazioneDao.findAllByIdUtenteMecAndStati(idUtenteMec, stati)
+                    : riparazioneDao.findAllByUtenteMecId(idUtenteMec);
+        } else if (idUtenteReg != null) {
+            // Se c'è un utente registrato, filtra per utente e stati (se presenti)
+            listaRiparazioni = stati.length > 0
+                    ? riparazioneDao.findAllByIdUtenteRegAndStati(idUtenteReg, stati)
+                    : riparazioneDao.findAllByIdUtenteReg(idUtenteReg);
+        } else {
+            // Se non ci sono ID utente, filtra solo per stati
+            listaRiparazioni = riparazioneDao.findAllByIdStati(stati);
+        }
 
         return mapper.entityToListRiparazioneMotoClienteDto(listaRiparazioni);
     }
 
     @Override
-    public void aggiornaStatoRiparazione(UUID idRiparazione, int statoRiparazioneAttuale) throws BadRequestException {
+    public void aggiornaStatoRiparazione(UUID idRiparazione, UtenteDto utenteMec) throws BadRequestException {
         Riparazione riparazioneDaAggiornare = riparazioneDao.findById(idRiparazione)
                 .orElseThrow(() -> new BadRequestException(ErrorManager.RIPARAZIONE_NON_TROVATA));
 
-        StatoRiparazione stato = statoRiparazioneDao.findById(StatoRiparazioni.getNextStato(statoRiparazioneAttuale))
+        if(riparazioneDaAggiornare.getStato().getId() == StatoRiparazioni.COMPLETATA){
+            throw new BadRequestException(ErrorManager.RIPARAZIONE_GIA_COMPLETA);
+        }
+
+        StatoRiparazione stato = statoRiparazioneDao.findById(StatoRiparazioni.getNextStato(riparazioneDaAggiornare.getStato().getId()))
                 .orElseThrow(() -> new BadRequestException(ErrorManager.STATO_RIPARAZIONE_NON_TROVATO));
 
         riparazioneDaAggiornare.setStato(stato);
+        if(utenteMec != null && utenteMec.getId() != null){
+            // se presente inserisco nella riparazione anche l'utente meccanico che ha preso in carico la riparazione
+            riparazioneDaAggiornare.setUtenteMec(utenteMapper.toEntity(utenteMec));
+        }
         riparazioneDao.save(riparazioneDaAggiornare);
     }
 
     @Override
     public RiparazioneMotoClienteDto getRiparazioneMotoClienteDto(UUID idRiparazione) throws BadRequestException {
         return mapper.entityToListRiparazioneMotoClienteDto(riparazioneDao.findById(idRiparazione)
+                .orElseThrow(() -> new BadRequestException(ErrorManager.RIPARAZIONE_NON_TROVATA)));
+    }
+
+    @Override
+    public RiparazioneDto getRiparazioneDto(UUID idRiparazione) {
+        return mapper.toDto(riparazioneDao.findById(idRiparazione)
                 .orElseThrow(() -> new BadRequestException(ErrorManager.RIPARAZIONE_NON_TROVATA)));
     }
 

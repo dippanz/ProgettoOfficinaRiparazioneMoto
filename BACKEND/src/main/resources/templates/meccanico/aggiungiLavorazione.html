@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <th:block th:replace="~{fragments/globalFragment :: head}"></th:block>
+        <script type="text/javascript"
+            th:src="@{/js/main.js}"></script>
+        <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 0;
+                    padding: 0;
+                    background-color: #f5f5f5;
+                }
+
+                header, footer {
+                    background-color: #333;
+                    color: #fff;
+                    padding: 1rem;
+                    text-align: center;
+                }
+
+                main {
+                    padding: 2rem;
+                }
+
+                #formContainer {
+                    background-color: #fff;
+                    padding: 1.5rem;
+                    border-radius: 4px;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                    margin-bottom: 2rem;
+                }
+
+                form div {
+                    margin-bottom: 1rem;
+                }
+
+                label {
+                    display: block;
+                    margin-bottom: 0.5rem;
+                    font-weight: bold;
+                }
+
+                input[type="text"],
+                input[type="number"] {
+                    width: 100%;
+                    padding: 0.5rem;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    box-sizing: border-box;
+                }
+
+                .table-container {
+                    background-color: #fff;
+                    padding: 1.5rem;
+                    border-radius: 4px;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                }
+
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 1rem;
+                }
+
+                th, td {
+                    padding: 0.75rem;
+                    text-align: left;
+                    border-bottom: 1px solid #ddd;
+                }
+
+                th {
+                    background-color: #f5f5f5;
+                    font-weight: bold;
+                }
+
+                .no-data {
+                    text-align: center;
+                    color: #777;
+                    padding: 1rem;
+                }
+            </style>
+    </head>
+    <body data-page="meccanicoAggiungiLavorazione">
+        <div th:replace="~{fragments/globalFragment :: modalError}"></div>
+        <header th:insert="~{fragments/globalFragment :: header}"></header>
+
+        <main>
+            <div 
+                class="form-container"
+                id="formContainer"
+                th:insert="~{fragments/meccanico/aggiungiLavorazione :: aggiungiLavorazioneForm}">
+            </div>
+
+            <div 
+                class="table-container"
+                id="tableContainer"
+                th:insert="~{fragments/meccanico/aggiungiLavorazione :: listaLavorazioni}">
+            </div>
+        </main>
+        <footer th:insert="~{fragments/globalFragment :: footer}"></footer>
+    </body>
+</html>

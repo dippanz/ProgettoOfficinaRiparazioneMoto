@@ -13,8 +13,10 @@
         <ul class="left">
             <li><a href="/" th:href="@{/}">Home</a></li>
             <li><a href="/public/cerca_riparazione"
-                    th:href="@{/public/cerca_riparazione}">Cerca Riparazione</a></li>
-            <li sec:authorize="hasRole('ADDETTO_ACCETTAZIONE')"><a href="/accettazione"
+                    th:href="@{/public/cerca_riparazione}">Cerca
+                    Riparazione</a></li>
+            <li sec:authorize="hasRole('ADDETTO_ACCETTAZIONE')"><a
+                    href="/accettazione"
                     th:href="@{/accettazione}">Accettazione</a></li>
             <li sec:authorize="hasRole('ADMIN')">
                 <a href="/admin/registra_utente"
@@ -71,10 +73,9 @@
         src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-
 </th:block>
 
-<th:block th:fragment="modal">
+<th:block th:fragment="modalError">
     <!-- Modale di errore bootstrap 5-->
     <!-- <div class="modal fade" id="modalError" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -94,17 +95,35 @@
     <!-- Modale di errore bootstrap 4 -->
     <div class="modal fade" id="modalError" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
-          <div class="modal-content p-3">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+            <div class="modal-content modalError p-3">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="contentModalError" class="mb-1"></p>
+                </div>
             </div>
-            <div class="modal-body">
-              <p id="contentModalError" class="mb-1"></p>
-            </div>
-          </div>
         </div>
-      </div>
+    </div>
+</th:block>
 
+<th:block th:fragment="modalSuccess">
+    <div class="modal fade" id="modalSuccess" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content modalSuccess p-3">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="contentModalSuccess" class="mb-1"></p>
+                </div>
+            </div>
+        </div>
+    </div>
 </th:block>

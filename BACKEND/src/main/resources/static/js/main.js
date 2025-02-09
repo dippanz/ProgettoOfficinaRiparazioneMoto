@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded", function () {
         riparazione: () => import("./forms/publics/cerca_riparazione.js").then(module => module.handleCercaRiparazioneForm()),
         moduloAccettazione: () => import("./forms/accettazione/moduloAccettazione.js").then(module => module.handleModuloAccettazioneForm()),
         indexAccettazione: () => import("./forms/accettazione/index.js").then(module => module.handleIndexPage()),
+        prendiInCarico: () => import("./forms/meccanico/prendiInCarico.js").then(module => module.handlePrendiInCaricoPage()),
+        meccanicoDettaglio: () => import("./forms/meccanico/dettaglio.js").then(module => module.handleDettaglioPage()),
+        meccanicoAggiungiLavorazione: () => import("./forms/meccanico/aggiungiLavorazione.js").then(module => module.handleAggiungiLavorazioneForm()),
     };
 
     if (modules[page]) {

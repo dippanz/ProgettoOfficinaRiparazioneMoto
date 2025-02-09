@@ -4,6 +4,7 @@
 package it.officina.OfficinaRiparazioneMoto.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.CascadeType;
@@ -15,6 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -30,7 +32,8 @@ public class Riparazione {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 	
-	private String descrizione;
+	@Column(name = "descrizione_problema")
+	private String descrizioneProblema;
 	
 	@Column(name = "\"dataInizio\"", updatable = false, insertable = false)
 	private LocalDateTime dataInizio;
@@ -57,6 +60,9 @@ public class Riparazione {
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_stato", nullable = false)
 	private StatoRiparazione stato;
+
+	@OneToMany(mappedBy = "riparazione", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	private List<RiparazioneLavorazione> lavorazioni;
 	
 	public UUID getId() {
 		return id;
@@ -64,17 +70,14 @@ public class Riparazione {
 	public void setId(UUID id) {
 		this.id = id;
 	}
-	public String getDescrizione() {
-		return descrizione;
+	public String getDescrizioneProblema() {
+		return descrizioneProblema;
 	}
-	public void setDescrizione(String descrizione) {
-		this.descrizione = descrizione;
+	public void setDescrizioneProblema(String descrizioneProblema) {
+		this.descrizioneProblema = descrizioneProblema;
 	}
 	public LocalDateTime getDataInizio() {
 		return dataInizio;
-	}
-	public void setDataInizio(LocalDateTime dataInizio) {
-		this.dataInizio = dataInizio;
 	}
 	public LocalDateTime getDataFine() {
 		return dataFine;
@@ -105,5 +108,11 @@ public class Riparazione {
 	}
 	public void setCodiceServizio(String codiceServizio) {
 		this.codiceServizio = codiceServizio;
+	}
+	public List<RiparazioneLavorazione> getLavorazioni() {
+		return lavorazioni;
+	}
+	public void setLavorazioni(List<RiparazioneLavorazione> lavorazioni) {
+		this.lavorazioni = lavorazioni;
 	}
 }

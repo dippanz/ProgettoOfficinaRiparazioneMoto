@@ -19,6 +19,10 @@ public class Constants {
         // Riparazione section
         public static final String RIPARAZIONE_NON_TROVATA = "00014";
         public static final String STATO_RIPARAZIONE_NON_TROVATO = "00010";
+        public static final String RIPARAZIONE_GIA_COMPLETA = "00016";
+
+        // Lavorazione section
+        public static final String LAVORAZIONE_NON_TROVATA = "00017";
 
         // Admin section
         public static final String USERNAME_ALREADY_EXISTS = "00001";
@@ -31,8 +35,10 @@ public class Constants {
         // Accettazione section
         public static final String MOTO_TARGA_ESISTENTE = "00006";
         public static final String CLIENTE_NON_ASSEGNATO_MOTO = "00007";
-        
 
+        // Meccanico section
+        public static final String NESSUN_ID_PRESA_IN_CARICO = "00015";
+        
         // Auth section
         public static final String UTENTE_NON_LOGGATO = "00008";
 
@@ -50,6 +56,9 @@ public class Constants {
                 Map.entry(CLIENTE_EMAIL_NON_PRESENTE, "L'email per il cliente è obbligatoria"),
                 Map.entry(MOTO_TARGA_NON_PRESENTE, "La targa per i veicoli è obbligatoria"),
                 Map.entry(RIPARAZIONE_NON_TROVATA, "Riparazione con l'id specificato non trovata"),
+                Map.entry(NESSUN_ID_PRESA_IN_CARICO, "Specificare alemno un id per la presa in carico"),
+                Map.entry(RIPARAZIONE_GIA_COMPLETA, "Non è possibile aggiornare una riparazione gia completa"),
+                Map.entry(LAVORAZIONE_NON_TROVATA, "Lavorazione con l'id specificato non trovato"),
                 Map.entry(RIPARAZIONE_NON_TROVATA_TARGA, "Riparazioni non trovate con la targa specificata")
             );
 
