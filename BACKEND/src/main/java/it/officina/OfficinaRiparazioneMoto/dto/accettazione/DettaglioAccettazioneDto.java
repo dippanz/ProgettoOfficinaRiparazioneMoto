@@ -6,7 +6,7 @@ import java.util.UUID;
 public class DettaglioAccettazioneDto {
     //riparazione
     private UUID id;
-    private String descrizione;
+    private String descrizioneProblema;
     private LocalDateTime dataInizio;
     private LocalDateTime dataFine;
     private String codiceServizio;
@@ -27,11 +27,11 @@ public class DettaglioAccettazioneDto {
     public void setId(UUID id) {
         this.id = id;
     }
-    public String getDescrizione() {
-        return descrizione;
+    public String getDescrizioneProblema() {
+        return descrizioneProblema;
     }
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
+    public void setDescrizioneProblema(String descrizione) {
+        this.descrizioneProblema = descrizione;
     }
     public LocalDateTime getDataInizio() {
         return dataInizio;

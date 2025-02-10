@@ -3,8 +3,6 @@ package it.officina.OfficinaRiparazioneMoto.mapper;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,7 +11,6 @@ import it.officina.OfficinaRiparazioneMoto.dto.MotoDto;
 import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneDto;
 import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneMotoClienteDto;
 import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneMotoDto;
-import it.officina.OfficinaRiparazioneMoto.model.Moto;
 import it.officina.OfficinaRiparazioneMoto.model.Riparazione;
 import it.officina.OfficinaRiparazioneMoto.model.StatoRiparazione;
 import jakarta.annotation.PostConstruct;

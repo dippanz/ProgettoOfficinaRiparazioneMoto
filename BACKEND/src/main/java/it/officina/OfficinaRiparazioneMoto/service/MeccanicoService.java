@@ -7,10 +7,11 @@ import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneLavorazioneDto;
 import it.officina.OfficinaRiparazioneMoto.dto.meccanico.AggiungiLavorazioneDto;
 import it.officina.OfficinaRiparazioneMoto.dto.meccanico.DettaglioMeccanicoDto;
 import it.officina.OfficinaRiparazioneMoto.dto.meccanico.RiparazioneMeccanicoDto;
+import it.officina.OfficinaRiparazioneMoto.utils.Constants.EnumStatoRiparazione;
 
 public interface MeccanicoService {
 
-    List<RiparazioneMeccanicoDto> getListaRiparazioneMeccanicoDto(boolean isPresaInCarico);
+    List<RiparazioneMeccanicoDto> getListaRiparazioneMeccanicoDto(EnumStatoRiparazione stato);
 
     DettaglioMeccanicoDto getDettaglioRiparazione(UUID idRiparazione);
 

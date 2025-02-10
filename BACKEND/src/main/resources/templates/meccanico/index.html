@@ -63,66 +63,30 @@
         }
         </style>
     </head>
-    <body>
+    <body data-page="meccanicoIndex">
         <div th:replace="~{fragments/globalFragment :: modalError}"></div>
         <header th:insert="~{fragments/globalFragment :: header}"></header>
         <main>
             <h2>Gestione Riparazioni Meccaniche</h2>
             <p class="description">
-                Benvenuto nella tua area di gestione. Qui puoi visualizzare tutte le riparazioni assegnate a te, 
-                controllarne lo stato e aggiornare le informazioni sullo svolgimento dei lavori.
+                Benvenuto nella tua area di gestione. Qui puoi visualizzare
+                tutte le riparazioni assegnate a te,
+                controllarne lo stato e aggiornare le informazioni sullo
+                svolgimento dei lavori.
             </p>
 
             <div class="button-container">
-                <a href="/meccanico/prendi_in_carico" class="btn">Prendi in carico</a>
+                <a href="/meccanico/prendi_in_carico" class="btn">Prendi in
+                    carico</a>
+                <a href="/meccanico/storico" class="btn">Visualizza storico</a>
             </div>
 
-            <div class="table-container">
-                <h3>Riparazioni assegnate</h3>
-                <table th:if="${not #lists.isEmpty(listaRiparazioni)}">
-                    <thead>
-                        <tr>
-                            <th class="col-2">Codice Servizio</th>
-                            <th class="col-2">Targa</th>
-                            <th class="col-2">Cliente</th>
-                            <th class="col-2">Stato</th>
-                            <th class="col-3">Azioni</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="riparazione : ${listaRiparazioni}">
-                            <td th:text="${riparazione.codice}"></td>
-                            <td th:text="${riparazione.targa}"></td>
-                            <td th:text="${riparazione.emailCliente}"></td>
-                            <td th:text="${riparazione.stato}"></td>
-                            <td>
-                                <a th:href="@{/meccanico/dettaglio/{id}(id=${riparazione.idRiparazione})}" class="btn">Dettagli</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <p class="no-data" th:if="${#lists.isEmpty(listaRiparazioni)}">Nessun veicolo in attesa di lavorazion per te.</p>
+            <h3>Riparazioni assegnate</h3>
+            <div
+                class="table-container"
+                th:insert="~{fragments/meccanico/index :: tableRiparazioniMeccanico}">
+                
             </div>
-
-            <!-- <div class="form-section">
-                <h3>Registra Lavorazione</h3>
-                <form th:action="@{/mechanic/complete}" method="post">
-                    <label for="motoId">ID Moto:</label>
-                    <input type="text" id="motoId" name="motoId"
-                        placeholder="Inserisci ID Moto" required>
-
-                    <label for="descrizione">Descrizione Lavorazione:</label>
-                    <input type="text" id="descrizione" name="descrizione"
-                        placeholder="Descrivi la lavorazione effettuata"
-                        required>
-
-                    <label for="oreLavorate">Ore Lavorate:</label>
-                    <input type="text" id="oreLavorate" name="oreLavorate"
-                        placeholder="Inserisci ore lavorate" required>
-
-                    <button type="submit">Registra Lavorazione</button>
-                </form>
-            </div> -->
         </main>
         <footer th:insert="~{fragments/globalFragment :: footer}"></footer>
     </body>

@@ -2,7 +2,7 @@ import {
   handleFetchError,
   handleFetchResponse,
 } from "../../utils/fetchManager.js";
-import { updateInnerHTML } from "../../utils/domManager.js";
+import { updateInnerHTML, showSuccessModal } from "../../utils/domManager.js";
 
 export function handleAggiungiLavorazioneForm() {
   $("#formContainer").on(
@@ -26,7 +26,6 @@ export function handleAggiungiLavorazioneForm() {
       })
         .then(handleFetchResponse)
         .then((html) => {
-          console.log(html);
           let tempDiv = document.createElement("div");
           tempDiv.innerHTML = html;
 
@@ -34,6 +33,8 @@ export function handleAggiungiLavorazioneForm() {
             updateInnerHTML("formContainer", html);
           } else {
             updateInnerHTML("tableContainer", html);
+            showSuccessModal("Lavarazione e ore annotate correttamente");
+            addDeleteListener();
           }
         })
         .catch(handleFetchError)
@@ -43,11 +44,13 @@ export function handleAggiungiLavorazioneForm() {
     }
   );
 
+  addDeleteListener();
+}
+
+function addDeleteListener() {
   document.querySelectorAll(".btn-elimina").forEach((button) => {
     button.addEventListener("click", function () {
-      const idLavorazione = $(this).data("id")
-
-      console.log(idLavorazione)
+      const idLavorazione = $(this).data("id");
 
       if (!confirm("Sei sicuro di voler eliminare questa riparazione?")) {
         return;
@@ -58,9 +61,9 @@ export function handleAggiungiLavorazioneForm() {
       })
         .then(handleFetchResponse)
         .then((isDeleted) => {
-          if(isDeleted){
+          if (isDeleted) {
             location.reload();
-            //mostra modale di successo
+            showSuccessModal("Lavarazione e ore eliminate correttamente", true);
           }
         })
         .catch(handleFetchError);

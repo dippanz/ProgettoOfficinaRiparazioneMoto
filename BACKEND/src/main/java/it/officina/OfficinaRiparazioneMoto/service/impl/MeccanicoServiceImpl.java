@@ -18,7 +18,7 @@ import it.officina.OfficinaRiparazioneMoto.service.AuthService;
 import it.officina.OfficinaRiparazioneMoto.service.MeccanicoService;
 import it.officina.OfficinaRiparazioneMoto.service.RiparazioneLavorazioneService;
 import it.officina.OfficinaRiparazioneMoto.service.RiparazioneService;
-import it.officina.OfficinaRiparazioneMoto.utils.Constants.StatoRiparazioni;
+import it.officina.OfficinaRiparazioneMoto.utils.Constants.EnumStatoRiparazione;
 
 @Service
 public class MeccanicoServiceImpl implements MeccanicoService {
@@ -31,13 +31,28 @@ public class MeccanicoServiceImpl implements MeccanicoService {
     private RiparazioneLavorazioneService riparazioneLavorazioneService;
 
     @Override
-    public List<RiparazioneMeccanicoDto> getListaRiparazioneMeccanicoDto(boolean isPresaInCarico) {
+    public List<RiparazioneMeccanicoDto> getListaRiparazioneMeccanicoDto(EnumStatoRiparazione stato) {
         List<RiparazioneMotoClienteDto> riparazioni;
-        if (isPresaInCarico) {
-            riparazioni = riparazioneService.getListaRiparazioniMotoClienteDto(null, null, StatoRiparazioni.ACCETTATO);
-        } else {
-            riparazioni = riparazioneService.getListaRiparazioniMotoClienteDto(null,
-                    authService.getUtenteDtoAutenticato().getId(), StatoRiparazioni.IN_LAVORAZIONE);
+
+        switch (stato) {
+            case EnumStatoRiparazione.ACCETTATO:
+                // usata per tornare tutte quelle accettate verso la pagina prendi in carico
+                riparazioni = riparazioneService.getListaRiparazioniMotoClienteDto(null, null, stato.getValue());
+                break;
+
+            case EnumStatoRiparazione.IN_LAVORAZIONE:
+                // usata per ritornare tutte le riparazioni in lavorazione di un meccanico
+                riparazioni = riparazioneService.getListaRiparazioniMotoClienteDto(null,
+                        authService.getUtenteDtoAutenticato().getId(), stato.getValue());
+                break;
+
+            case EnumStatoRiparazione.COMPLETATA:
+                // usata per tornare lo storico di tutte le riparazioni di un meccanico
+                riparazioni = riparazioneService.getListaRiparazioniMotoClienteDto(null,
+                        authService.getUtenteDtoAutenticato().getId(), stato.getValue());
+                break;
+            default:
+                throw new IllegalArgumentException("Stato inserito non valido o non gestito");
         }
 
         return riparazioni.stream().map(rip -> {
@@ -80,7 +95,7 @@ public class MeccanicoServiceImpl implements MeccanicoService {
 
         // BigDecimal oreTotali = BigDecimal.ZERO;
         // for (RiparazioneLavorazioneDto lav : lavorazioni) {
-        //     oreTotali = oreTotali.add(lav.getOre());
+        // oreTotali = oreTotali.add(lav.getOre());
         // }
         // altrimenti
         BigDecimal oreTotali = lavorazioni.stream().map(lav -> {

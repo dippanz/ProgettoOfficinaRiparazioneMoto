@@ -4,11 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import it.officina.OfficinaRiparazioneMoto.dto.MotoDto;
-import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneDto;
 import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneLavorazioneDto;
-import it.officina.OfficinaRiparazioneMoto.model.Moto;
-import it.officina.OfficinaRiparazioneMoto.model.Riparazione;
 import it.officina.OfficinaRiparazioneMoto.model.RiparazioneLavorazione;
 import jakarta.annotation.PostConstruct;
 

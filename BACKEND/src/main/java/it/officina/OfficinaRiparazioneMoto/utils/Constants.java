@@ -1,6 +1,5 @@
 package it.officina.OfficinaRiparazioneMoto.utils;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class Constants {
@@ -67,19 +66,72 @@ public class Constants {
         }
     }
 
-    public static class StatoRiparazioni {
-        public static final int REGISTRATO = 1;
-        public static final int ACCETTATO = 2;
-        public static final int IN_LAVORAZIONE = 3;
-        public static final int COMPLETATA = 4;
+    // public static class StatoRiparazioni {
+    //     public static final int REGISTRATO = 1;
+    //     public static final int ACCETTATO = 2;
+    //     public static final int IN_LAVORAZIONE = 3;
+    //     public static final int COMPLETATA = 4;
 
-        public static int getNextStato(int statoAttuale) {
+    //     public static int getNextStato(int statoAttuale) {
+    //         return switch (statoAttuale) {
+    //             case StatoRiparazioni.REGISTRATO -> StatoRiparazioni.ACCETTATO;
+    //             case StatoRiparazioni.ACCETTATO -> StatoRiparazioni.IN_LAVORAZIONE;
+    //             case StatoRiparazioni.IN_LAVORAZIONE -> StatoRiparazioni.COMPLETATA;
+    //             default -> -1;
+    //         };
+    //     }
+
+    //     public static boolean haveThisState(int stato){
+            
+    //     }
+    // }
+
+    public enum EnumStatoRiparazione {
+        REGISTRATO(1),
+        ACCETTATO(2),
+        IN_LAVORAZIONE(3),
+        COMPLETATA(4);
+    
+        private final int valore;
+    
+        EnumStatoRiparazione(int valore) {
+            this.valore = valore;
+        }
+    
+        public int getValue() {
+            return valore;
+        }
+    
+        // Metodo per ottenere lo stato successivo
+        public static EnumStatoRiparazione getNextStato(int stato) {
+            EnumStatoRiparazione statoAttuale = fromValore(stato);
             return switch (statoAttuale) {
-                case StatoRiparazioni.REGISTRATO -> StatoRiparazioni.ACCETTATO;
-                case StatoRiparazioni.ACCETTATO -> StatoRiparazioni.IN_LAVORAZIONE;
-                case StatoRiparazioni.IN_LAVORAZIONE -> StatoRiparazioni.COMPLETATA;
-                default -> -1;
+                case REGISTRATO -> ACCETTATO;
+                case ACCETTATO -> IN_LAVORAZIONE;
+                case IN_LAVORAZIONE -> COMPLETATA;
+                default -> null;
             };
         }
+    
+        // Controlla se un valore esiste tra gli stati validi
+        public static boolean haveThisState(int stato) {
+            for (EnumStatoRiparazione s : EnumStatoRiparazione.values()) {
+                if (s.getValue() == stato) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    
+        // Converte un valore numerico nello stato corrispondente
+        public static EnumStatoRiparazione fromValore(int valore) {
+            for (EnumStatoRiparazione stato : EnumStatoRiparazione.values()) {
+                if (stato.getValue() == valore) {
+                    return stato;
+                }
+            }
+            throw new IllegalArgumentException("Stato non valido: " + valore);
+        }
     }
+    
 }

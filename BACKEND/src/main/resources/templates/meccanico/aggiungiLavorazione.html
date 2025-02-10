@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
     <head>
         <th:block th:replace="~{fragments/globalFragment :: head}"></th:block>
         <script type="text/javascript"
@@ -83,6 +83,7 @@
     </head>
     <body data-page="meccanicoAggiungiLavorazione">
         <div th:replace="~{fragments/globalFragment :: modalError}"></div>
+        <div th:replace="~{fragments/globalFragment :: modalSuccess}"></div>
         <header th:insert="~{fragments/globalFragment :: header}"></header>
 
         <main>

@@ -1,7 +1,5 @@
 package it.officina.OfficinaRiparazioneMoto.controller;
 
-import java.io.IOException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import it.officina.OfficinaRiparazioneMoto.dto.admin.RegistrazioneUtenteDto;
 import it.officina.OfficinaRiparazioneMoto.service.UtenteService;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 @Controller

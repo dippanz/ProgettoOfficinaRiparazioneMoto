@@ -23,8 +23,8 @@ import it.officina.OfficinaRiparazioneMoto.model.Riparazione;
 import it.officina.OfficinaRiparazioneMoto.model.StatoRiparazione;
 import it.officina.OfficinaRiparazioneMoto.service.MotoService;
 import it.officina.OfficinaRiparazioneMoto.service.RiparazioneService;
+import it.officina.OfficinaRiparazioneMoto.utils.Constants.EnumStatoRiparazione;
 import it.officina.OfficinaRiparazioneMoto.utils.Constants.ErrorManager;
-import it.officina.OfficinaRiparazioneMoto.utils.Constants.StatoRiparazioni;
 
 @Service
 public class RiparazioneServiceImpl implements RiparazioneService {
@@ -73,7 +73,7 @@ public class RiparazioneServiceImpl implements RiparazioneService {
 
         MotoDto moto = motoService.getMotoDtoById(riparazione.getIdMoto());
 
-        StatoRiparazione stato = statoRiparazioneDao.findById(StatoRiparazioni.REGISTRATO)
+        StatoRiparazione stato = statoRiparazioneDao.findById(EnumStatoRiparazione.REGISTRATO.getValue())
                 .orElseThrow(() -> new BadRequestException(ErrorManager.STATO_RIPARAZIONE_NON_TROVATO));
 
         Riparazione riparazioneDb = mapper.toEntity(riparazione, moto, stato);
@@ -132,16 +132,22 @@ public class RiparazioneServiceImpl implements RiparazioneService {
         Riparazione riparazioneDaAggiornare = riparazioneDao.findById(idRiparazione)
                 .orElseThrow(() -> new BadRequestException(ErrorManager.RIPARAZIONE_NON_TROVATA));
 
-        if(riparazioneDaAggiornare.getStato().getId() == StatoRiparazioni.COMPLETATA){
+        if (EnumStatoRiparazione.fromValore(riparazioneDaAggiornare.getStato().getId()) == EnumStatoRiparazione.COMPLETATA) {
             throw new BadRequestException(ErrorManager.RIPARAZIONE_GIA_COMPLETA);
         }
 
-        StatoRiparazione stato = statoRiparazioneDao.findById(StatoRiparazioni.getNextStato(riparazioneDaAggiornare.getStato().getId()))
+        if (EnumStatoRiparazione.fromValore(riparazioneDaAggiornare.getStato().getId()) == EnumStatoRiparazione.IN_LAVORAZIONE && utenteMec != null) {
+           throw new IllegalArgumentException("Non è possibile settare un utente meccanico se si avanza verso completata");
+        }
+
+        StatoRiparazione stato = statoRiparazioneDao
+                .findById(EnumStatoRiparazione.getNextStato(riparazioneDaAggiornare.getStato().getId()).getValue())
                 .orElseThrow(() -> new BadRequestException(ErrorManager.STATO_RIPARAZIONE_NON_TROVATO));
 
         riparazioneDaAggiornare.setStato(stato);
-        if(utenteMec != null && utenteMec.getId() != null){
-            // se presente inserisco nella riparazione anche l'utente meccanico che ha preso in carico la riparazione
+        if (utenteMec != null && utenteMec.getId() != null) {
+            // se presente inserisco nella riparazione anche l'utente meccanico che ha preso
+            // in carico la riparazione
             riparazioneDaAggiornare.setUtenteMec(utenteMapper.toEntity(utenteMec));
         }
         riparazioneDao.save(riparazioneDaAggiornare);
@@ -158,5 +164,4 @@ public class RiparazioneServiceImpl implements RiparazioneService {
         return mapper.toDto(riparazioneDao.findById(idRiparazione)
                 .orElseThrow(() -> new BadRequestException(ErrorManager.RIPARAZIONE_NON_TROVATA)));
     }
-
 }

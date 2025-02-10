@@ -3,17 +3,14 @@ package it.officina.OfficinaRiparazioneMoto.service.impl;
 import java.util.List;
 import java.util.UUID;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import it.officina.OfficinaRiparazioneMoto.dao.ClienteDao;
 import it.officina.OfficinaRiparazioneMoto.dao.MotoDao;
 import it.officina.OfficinaRiparazioneMoto.dto.ClienteDto;
 import it.officina.OfficinaRiparazioneMoto.dto.MotoDto;
 import it.officina.OfficinaRiparazioneMoto.exception.BadRequestException;
 import it.officina.OfficinaRiparazioneMoto.mapper.MotoMapper;
-import it.officina.OfficinaRiparazioneMoto.model.Cliente;
 import it.officina.OfficinaRiparazioneMoto.model.Moto;
 import it.officina.OfficinaRiparazioneMoto.service.AuthService;
 import it.officina.OfficinaRiparazioneMoto.service.ClienteService;

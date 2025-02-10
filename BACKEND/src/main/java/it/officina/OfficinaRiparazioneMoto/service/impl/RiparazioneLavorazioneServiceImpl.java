@@ -7,20 +7,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.officina.OfficinaRiparazioneMoto.dao.RiparazioneLavorazioneDao;
-import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneDto;
 import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneLavorazioneDto;
 import it.officina.OfficinaRiparazioneMoto.dto.meccanico.AggiungiLavorazioneDto;
 import it.officina.OfficinaRiparazioneMoto.exception.BadRequestException;
 import it.officina.OfficinaRiparazioneMoto.mapper.RiparazioneLavorazioneMapper;
 import it.officina.OfficinaRiparazioneMoto.mapper.RiparazioneMapper;
-import it.officina.OfficinaRiparazioneMoto.model.Riparazione;
 import it.officina.OfficinaRiparazioneMoto.model.RiparazioneLavorazione;
 import it.officina.OfficinaRiparazioneMoto.service.RiparazioneLavorazioneService;
 import it.officina.OfficinaRiparazioneMoto.service.RiparazioneService;
 import it.officina.OfficinaRiparazioneMoto.utils.Constants.ErrorManager;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 
 @Service
 public class RiparazioneLavorazioneServiceImpl implements RiparazioneLavorazioneService {
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Autowired
     private RiparazioneLavorazioneDao riparazioneLavorazioneDao;
@@ -38,6 +41,7 @@ public class RiparazioneLavorazioneServiceImpl implements RiparazioneLavorazione
         return mapper.toDtoList(riparazioneLavorazioneDao.findAllByRiparazioneId(idRiparazione));
     }
 
+    @Transactional
     @Override
     public void aggiungiLavorazione(AggiungiLavorazioneDto aggiungiLavorazioneDto) {
         RiparazioneLavorazione riparazioneLavorazione = new RiparazioneLavorazione();
@@ -46,7 +50,7 @@ public class RiparazioneLavorazioneServiceImpl implements RiparazioneLavorazione
         riparazioneLavorazione.setRiparazione(riparazioneMapper.toEntity(
                 riparazioneService.getRiparazioneDto(aggiungiLavorazioneDto.getIdRiparazione())));
 
-        riparazioneLavorazioneDao.save(riparazioneLavorazione);
+        entityManager.refresh(riparazioneLavorazioneDao.saveAndFlush(riparazioneLavorazione));
     }
 
     @Override

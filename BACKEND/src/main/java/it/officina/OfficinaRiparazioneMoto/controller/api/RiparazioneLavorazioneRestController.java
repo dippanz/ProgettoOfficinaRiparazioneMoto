@@ -20,8 +20,9 @@ public class RiparazioneLavorazioneRestController {
     private RiparazioneLavorazioneService service;
 
     @DeleteMapping("/elimina/{id}")
-    public ResponseEntity<Void> elimina(@PathVariable UUID id) throws BadRequestException{
+    public ResponseEntity<Boolean> elimina(@PathVariable UUID id) throws BadRequestException{
         service.eliminaLavorazione(id);
-        return ResponseEntity.noContent().build();
+        // se non arriva un eccezzione allora è stato eliminato correttamente
+        return ResponseEntity.ok(true);
     }
 }

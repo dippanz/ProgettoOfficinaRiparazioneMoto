@@ -10,6 +10,7 @@ import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneDto;
 import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneMotoClienteDto;
 import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneMotoDto;
 import it.officina.OfficinaRiparazioneMoto.dto.UtenteDto;
+import it.officina.OfficinaRiparazioneMoto.utils.Constants.EnumStatoRiparazione;
 
 /**
  * 

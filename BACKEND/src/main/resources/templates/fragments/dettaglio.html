@@ -1,0 +1,132 @@
+<th:block th:fragment="cardDettaglioRiparazione(mostraManutenzioni)">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center">
+            <h2>Dettaglio Riparazione</h2>
+        </div>
+        <div class="card-body">
+            <h4 class="text-primary">🔧 Riparazione</h4>
+            <table class="table table-striped">
+                <tr>
+                    <td class="col-4"><strong>Codice
+                            Servizio:</strong></td>
+                    <td class="col-7"
+                        th:text="${dettaglioRiparazione.codiceServizio}"></td>
+                </tr>
+                <tr>
+                    <td
+                        class="col-4"><strong>Descrizione:</strong></td>
+                    <td class="col-7"
+                        th:text="${dettaglioRiparazione.descrizioneProblema}"></td>
+                </tr>
+                <tr>
+                    <td class="col-4"><strong>Data
+                            Inizio:</strong></td>
+                    <td class="col-7"
+                        th:text="${dettaglioRiparazione.dataInizio}"></td>
+                </tr>
+                <tr>
+                    <td class="col-4"><strong>Data
+                            Fine:</strong></td>
+                    <td class="col-7"
+                        th:text="${dettaglioRiparazione.dataFine}"></td>
+                </tr>
+                <tr>
+                    <td class="col-4"><strong>Stato
+                            Riparazione:</strong></td>
+                    <td class="col-7"><span
+                            class="badge bg-info text-dark"
+                            th:text="${dettaglioRiparazione.statoRiparazione}"></span></td>
+                </tr>
+            </table>
+
+            <h4 class="text-primary">🏍 Moto</h4>
+            <table class="table table-striped">
+                <tr>
+                    <td class="col-4"><strong>Modello:</strong></td>
+                    <td class="col-7"
+                        th:text="${dettaglioRiparazione.modello}"></td>
+                </tr>
+                <tr>
+                    <td class="col-4"><strong>Targa:</strong></td>
+                    <td class="col-7"
+                        th:text="${dettaglioRiparazione.targa}"></td>
+                </tr>
+            </table>
+
+            <h4 class="text-primary">👤 Cliente</h4>
+            <table class="table table-striped">
+                <tr>
+                    <td class="col-4"><strong>Nome:</strong></td>
+                    <td class="col-7"
+                        th:text="${dettaglioRiparazione.nome}"></td>
+                </tr>
+                <tr>
+                    <td class="col-4"><strong>Cognome:</strong></td>
+                    <td class="col-7"
+                        th:text="${dettaglioRiparazione.cognome}"></td>
+                </tr>
+                <tr>
+                    <td
+                        class="col-4"><strong>Telefono:</strong></td>
+                    <td class="col-7"
+                        th:text="${dettaglioRiparazione.telefono}"></td>
+                </tr>
+                <tr>
+                    <td class="col-4"><strong>Email:</strong></td>
+                    <td class="col-7"
+                        th:text="${dettaglioRiparazione.email}"></td>
+                </tr>
+            </table>
+
+            <th:block
+                th:if="${mostraManutenzioni}">
+                <div>
+                    <div
+                        class="row d-flex justify-content-between align-items-center">
+                        <h4 class="text-primary col-auto">Manutenzioni
+                            effettuate</h4>
+                        <a
+                            th:if="${dettaglioRiparazione.statoRiparazione == 'In lavorazione'}"
+                            id="aggiungiLavorazione"
+                            class="btn btn-success col-auto mr-3">Modifica</a>
+                    </div>
+
+                    <table class="table table-striped"
+                        th:if="${dettaglioRiparazione.listaLavorazioni != null and not #lists.isEmpty(dettaglioRiparazione.listaLavorazioni)}">
+                        <thead>
+                            <tr>
+                                <th class="col-4">Descrizione</th>
+                                <th class="col-4">Ore impiegate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                th:each="lavorazione : ${dettaglioRiparazione.listaLavorazioni}">
+                                <td class="col-7"
+                                    th:text="${lavorazione.descrizioneLavorazione}"></td>
+                                <td class="col-7"
+                                    th:text="${lavorazione.ore}"></td>
+                            </tr>
+                            <tr>
+                                <td class="col-4"><strong>Ore
+                                        totali:</strong></td>
+                                <td class="col-7"
+                                    th:text="${dettaglioRiparazione.oreTotaliLavorate}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="no-data"
+                        th:if="${dettaglioRiparazione.listaLavorazioni == null or #lists.isEmpty(dettaglioRiparazione.listaLavorazioni)}">Ancora
+                        nessuna manutenzione effettuata.</p>
+                </div>
+            </th:block>
+
+        </div>
+
+        <div class="card-footer text-right">
+            <button type="button" class="btn btn-secondary mr-1"
+                onclick="window.history.back()">🔙Torna alla
+                Lista</button>
+        </div>
+    </div>
+</th:block>

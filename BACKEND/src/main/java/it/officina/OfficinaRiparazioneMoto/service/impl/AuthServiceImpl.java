@@ -2,8 +2,6 @@ package it.officina.OfficinaRiparazioneMoto.service.impl;
 
 import java.util.Optional;
 
-import javax.security.sasl.AuthenticationException;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -18,10 +16,8 @@ import org.springframework.stereotype.Service;
 
 import it.officina.OfficinaRiparazioneMoto.dao.UtenteDao;
 import it.officina.OfficinaRiparazioneMoto.dto.UtenteDto;
-import it.officina.OfficinaRiparazioneMoto.exception.BadRequestException;
 import it.officina.OfficinaRiparazioneMoto.model.Utente;
 import it.officina.OfficinaRiparazioneMoto.service.AuthService;
-import it.officina.OfficinaRiparazioneMoto.utils.Constants.ErrorManager;
 
 @Service
 public class AuthServiceImpl implements AuthService {

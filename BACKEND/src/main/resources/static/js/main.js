@@ -5,13 +5,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Mappa dei moduli con funzioni da eseguire dopo l'import
     const modules = {
-        registration: () => import("./forms/admin/registrazione_utente.js").then(module => module.handleRegistrationForm()),
-        riparazione: () => import("./forms/publics/cerca_riparazione.js").then(module => module.handleCercaRiparazioneForm()),
-        moduloAccettazione: () => import("./forms/accettazione/moduloAccettazione.js").then(module => module.handleModuloAccettazioneForm()),
-        indexAccettazione: () => import("./forms/accettazione/index.js").then(module => module.handleIndexPage()),
-        prendiInCarico: () => import("./forms/meccanico/prendiInCarico.js").then(module => module.handlePrendiInCaricoPage()),
-        meccanicoDettaglio: () => import("./forms/meccanico/dettaglio.js").then(module => module.handleDettaglioPage()),
-        meccanicoAggiungiLavorazione: () => import("./forms/meccanico/aggiungiLavorazione.js").then(module => module.handleAggiungiLavorazioneForm()),
+        registration: () => import("./pages/admin/registrazione_utente.js").then(module => module.handleRegistrationForm()),
+        riparazione: () => import("./pages/publics/cerca_riparazione.js").then(module => module.handleCercaRiparazioneForm()),
+        moduloAccettazione: () => import("./pages/accettazione/moduloAccettazione.js").then(module => module.handleModuloAccettazioneForm()),
+        indexAccettazione: () => import("./pages/accettazione/index.js").then(module => module.handleIndexPage()),
+        prendiInCarico: () => import("./pages/meccanico/prendiInCarico.js").then(module => module.handlePrendiInCaricoPage()),
+        meccanicoDettaglio: () => import("./pages/meccanico/dettaglio.js").then(module => module.handleDettaglioPage()),
+        meccanicoAggiungiLavorazione: () => import("./pages/meccanico/aggiungiLavorazione.js").then(module => module.handleAggiungiLavorazioneForm()),
+        meccanicoIndex: () => import("./pages/meccanico/index.js").then(module => module.handleIndexPage()),
     };
 
     if (modules[page]) {

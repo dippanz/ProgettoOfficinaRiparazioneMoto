@@ -4,7 +4,6 @@ import java.util.List;
 
 import it.officina.OfficinaRiparazioneMoto.dto.UtenteDto;
 import it.officina.OfficinaRiparazioneMoto.dto.admin.RegistrazioneUtenteDto;
-import it.officina.OfficinaRiparazioneMoto.model.Utente;
 
 /**
  * 

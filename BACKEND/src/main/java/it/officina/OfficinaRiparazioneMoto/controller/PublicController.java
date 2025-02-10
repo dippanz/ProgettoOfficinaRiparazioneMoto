@@ -1,31 +1,14 @@
 package it.officina.OfficinaRiparazioneMoto.controller;
 
-import java.net.http.HttpResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import it.officina.OfficinaRiparazioneMoto.dto.admin.RegistrazioneUtenteDto;
 import it.officina.OfficinaRiparazioneMoto.dto.publics.CercaRiparazioneDto;
-import it.officina.OfficinaRiparazioneMoto.model.Utente;
 import it.officina.OfficinaRiparazioneMoto.service.PublicService;
-import it.officina.OfficinaRiparazioneMoto.service.RiparazioneService;
-import it.officina.OfficinaRiparazioneMoto.service.UtenteService;
 import jakarta.validation.Valid;
-
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.GrantedAuthority;
-import java.util.Collection;
 
 @Controller
 public class PublicController {

@@ -11,8 +11,6 @@ import it.officina.OfficinaRiparazioneMoto.model.RiparazioneLavorazione;
 
 public interface RiparazioneLavorazioneDao extends JpaRepository<RiparazioneLavorazione, UUID> {
 
-    // @Query("SELECT rl FROM RiparazioneLavorazione rl WHERE rl.riparazione.id = :idRiparazione")
-    // RiparazioneLavorazione findByIdRiparazione(@Param("idRiparazione") UUID idRiparazione);
     List<RiparazioneLavorazione> findAllByRiparazioneId(UUID idRiparazione);
 
     @Query("SELECT rl FROM RiparazioneLavorazione rl JOIN FETCH Riparazione r WHERE r.utenteMec.id = :idUtenteMec")

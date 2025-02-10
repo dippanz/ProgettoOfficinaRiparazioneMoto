@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,6 @@ import it.officina.OfficinaRiparazioneMoto.dao.UtenteDao;
 import it.officina.OfficinaRiparazioneMoto.dto.UtenteDto;
 import it.officina.OfficinaRiparazioneMoto.dto.admin.RegistrazioneUtenteDto;
 import it.officina.OfficinaRiparazioneMoto.exception.BadRequestException;
-import it.officina.OfficinaRiparazioneMoto.model.Ruolo;
 import it.officina.OfficinaRiparazioneMoto.model.Utente;
 import it.officina.OfficinaRiparazioneMoto.service.UtenteService;
 import it.officina.OfficinaRiparazioneMoto.utils.Constants.ErrorManager;

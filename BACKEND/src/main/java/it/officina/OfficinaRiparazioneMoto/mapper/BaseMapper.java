@@ -3,9 +3,6 @@ package it.officina.OfficinaRiparazioneMoto.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-
 /**
  * Interfaccia base per tutti i mapper.
  * @param <E> Model (Entity)

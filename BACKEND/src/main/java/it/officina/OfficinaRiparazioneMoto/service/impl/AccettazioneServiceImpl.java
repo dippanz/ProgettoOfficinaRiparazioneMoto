@@ -17,14 +17,12 @@ import it.officina.OfficinaRiparazioneMoto.dto.accettazione.RiparazioneModuloAcc
 import it.officina.OfficinaRiparazioneMoto.mapper.ClienteMapper;
 import it.officina.OfficinaRiparazioneMoto.mapper.MotoMapper;
 import it.officina.OfficinaRiparazioneMoto.mapper.RiparazioneMapper;
-import it.officina.OfficinaRiparazioneMoto.model.Riparazione;
-import it.officina.OfficinaRiparazioneMoto.model.StatoRiparazione;
 import it.officina.OfficinaRiparazioneMoto.service.AccettazioneService;
 import it.officina.OfficinaRiparazioneMoto.service.AuthService;
 import it.officina.OfficinaRiparazioneMoto.service.ClienteService;
 import it.officina.OfficinaRiparazioneMoto.service.MotoService;
 import it.officina.OfficinaRiparazioneMoto.service.RiparazioneService;
-import it.officina.OfficinaRiparazioneMoto.utils.Constants.StatoRiparazioni;
+import it.officina.OfficinaRiparazioneMoto.utils.Constants.EnumStatoRiparazione;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -79,7 +77,7 @@ public class AccettazioneServiceImpl implements AccettazioneService {
 
         DettaglioAccettazioneDto response = new DettaglioAccettazioneDto();
         response.setId(riparazione.getId());
-        response.setDescrizione(riparazione.getDescrizioneProblema());
+        response.setDescrizioneProblema(riparazione.getDescrizioneProblema());
         response.setDataInizio(riparazione.getDataInizio());
         response.setDataFine(riparazione.getDataFine());
         response.setCodiceServizio(riparazione.getCodiceServizio());
@@ -97,7 +95,7 @@ public class AccettazioneServiceImpl implements AccettazioneService {
     @Override
     public List<RiparazioneModuloAccettazioneDto> getListaRiparazioniModuloAccettazioneDto() {
 
-        List<RiparazioneMotoClienteDto> listaRiparazioni = riparazioneService.getListaRiparazioniMotoClienteDto(authService.getUtenteDtoAutenticato().getId(), null);
+        List<RiparazioneMotoClienteDto> listaRiparazioni = riparazioneService.getListaRiparazioniMotoClienteDto(null, null, EnumStatoRiparazione.REGISTRATO.getValue());
 
         List<RiparazioneModuloAccettazioneDto> response = new ArrayList<>();
 
