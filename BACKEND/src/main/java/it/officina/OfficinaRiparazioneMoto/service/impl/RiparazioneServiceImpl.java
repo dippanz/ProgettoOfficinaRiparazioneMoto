@@ -90,7 +90,7 @@ public class RiparazioneServiceImpl implements RiparazioneService {
         SecureRandom random = new SecureRandom();
 
         // Genera una stringa casuale di lettere maiuscole e numeri
-        StringBuilder codice = new StringBuilder(RandomStringUtils.random(LUNGHEZZA_CODICE, CARATTERI));
+        StringBuilder codice = new StringBuilder(RandomStringUtils.random(LUNGHEZZA_CODICE, 0, 0, false, false, CARATTERI.toCharArray(), random));
 
         // Prende gli ultimi 3 caratteri del timestamp attuale
         String timestamp = String.valueOf(System.currentTimeMillis());

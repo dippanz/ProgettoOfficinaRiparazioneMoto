@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/globalFragment :: head}"></th:block>
+</head>
+<body>
+    <header th:insert="~{fragments/globalFragment :: header}"></header>
+    <main>
+        <div class="container text-center mt-5">
+            <h1>Oops! Errore <span th:text="${errorCode}"></span> 😢</h1>
+            <p th:text="${errorMessage}">Si è verificato un errore imprevisto.</p>
+            <a href="/" class="btn btn-primary">Torna alla Home</a>
+        </div>
+    </main>
+    <footer th:insert="~{fragments/globalFragment :: footer}"></footer>
+</body>
+</html>

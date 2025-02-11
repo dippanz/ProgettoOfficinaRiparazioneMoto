@@ -1,7 +1,4 @@
-import {
-  handleFetchError,
-  handleFetchResponse,
-} from "../../utils/fetchManager.js";
+import { fetchHandled } from "../../utils/fetchManager.js";
 
 export function handlePrendiInCaricoPage() {
   const riparazioniSelezionate = new Set();
@@ -63,11 +60,9 @@ export function handlePrendiInCaricoPage() {
     //   console.log(key, value);
     // }
 
-    fetch(form.action, {
+    fetchHandled(form.action, {
       method: "POST",
       body: formData,
-    })
-      .then(handleFetchResponse)
-      .catch(handleFetchError);
+    });
   });
 }

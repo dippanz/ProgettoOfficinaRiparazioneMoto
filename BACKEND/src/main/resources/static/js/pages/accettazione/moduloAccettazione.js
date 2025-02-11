@@ -1,3 +1,68 @@
+import { fetchHandled } from "../../utils/fetchManager.js";
+import { updateInnerHTML } from "../../utils/domManager.js";
+
+export function handleModuloAccettazioneForm() {
+  $(".selectpicker").selectpicker("refresh");
+
+  $("#formContainer").on("submit", "#moduloAccettazioneForm", function (event) {
+    event.preventDefault(); // Previeni l'invio standard del form
+
+    // Preparazione dei dati del form
+    const form = event.target;
+    const formData = new FormData(form);
+
+    if ($("#motoEsistenteCheckbox").is(":checked")) {
+      formData.delete("targa");
+      formData.delete("modello");
+      formData.delete("nome");
+      formData.delete("cognome");
+      formData.delete("email");
+      formData.delete("telefono");
+      formData.delete("idCliente");
+    } else if ($("#clienteEsistenteCheckbox").is(":checked")) {
+      formData.delete("nome");
+      formData.delete("cognome");
+      formData.delete("email");
+      formData.delete("telefono");
+      formData.delete("idMoto");
+    } else {
+      formData.delete("idCliente");
+      formData.delete("idMoto");
+    }
+
+    // Debug: mostra cosa viene inviato
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+
+    // Disabilita il pulsante di invio per evitare doppie richieste
+    const submitButton = form.querySelector("button[type='submit']");
+    submitButton.disabled = true;
+
+    // Chiamata AJAX
+    fetchHandled(form.action, {
+      method: "POST",
+      body: formData,
+    })
+      .then((html) => {
+        updateInnerHTML("formContainer", html);
+        $(".selectpicker").selectpicker("refresh");
+        $("#clienteEsistenteSection").one("mousedown", getClienti);
+        $("#motoEsistenteSection").one("mousedown", getMoto);
+        $("#motoEsistenteCheckbox").click("click", toggleMotoSection);
+        $("#clienteEsistenteCheckbox").click("click", toggleClienteSection);
+      })
+      .finally(() => {
+        submitButton.disabled = false;
+      });
+  });
+
+  $("#clienteEsistenteSection").one("mousedown", getClienti);
+  $("#motoEsistenteSection").one("mousedown", getMoto);
+  $("#motoEsistenteCheckbox").click("click", toggleMotoSection);
+  $("#clienteEsistenteCheckbox").click("click", toggleClienteSection);
+}
+
 function toggleClienteSection() {
   let $checkbox = $("#clienteEsistenteCheckbox");
   let $nuovoClienteSection = $("#nuovoClienteSection");
@@ -73,115 +138,39 @@ function toggleMotoSection() {
 }
 
 function getClienti() {
-  fetch(`/api/clienti`)
-    .then(handleFetchResponse)
-    .then((listaClienti) => {
-      const selectClienti = document.getElementById("selectClienti");
+  fetchHandled(`/api/clienti`).then((listaClienti) => {
+    const selectClienti = document.getElementById("selectClienti");
 
-      //inserisco i dati
-      if (selectClienti) {
-        listaClienti.forEach((cliente) => {
-          let option = document.createElement("option");
-          option.value = cliente.id;
-          option.textContent = `${cliente.email}`;
-          selectClienti.appendChild(option);
-        });
+    //inserisco i dati
+    if (selectClienti) {
+      listaClienti.forEach((cliente) => {
+        let option = document.createElement("option");
+        option.value = cliente.id;
+        option.textContent = `${cliente.email}`;
+        selectClienti.appendChild(option);
+      });
 
-        // Ricarica SelectPicker per aggiornare la lista
-        $(".selectpicker").selectpicker("refresh");
-      }
-    })
-    .catch(handleFetchError);
+      // Ricarica SelectPicker per aggiornare la lista
+      $(".selectpicker").selectpicker("refresh");
+    }
+  });
 }
 
 function getMoto() {
-  fetch(`/api/moto`)
-    .then(handleFetchResponse)
-    .then((listaMoto) => {
-      const selectMoto = document.getElementById("selectMoto");
+  fetchHandled(`/api/moto`).then((listaMoto) => {
+    const selectMoto = document.getElementById("selectMoto");
 
-      //inserisco i dati
-      if (selectMoto) {
-        listaMoto.forEach((moto) => {
-          let option = document.createElement("option");
-          option.value = moto.id;
-          option.textContent = moto.targa;
-          selectMoto.appendChild(option);
-        });
-
-        // Ricarica SelectPicker per aggiornare la lista
-        $(".selectpicker").selectpicker("refresh");
-      }
-    })
-    .catch(handleFetchError);
-}
-
-import {
-  handleFetchError,
-  handleFetchResponse,
-} from "../../utils/fetchManager.js";
-import { updateInnerHTML } from "../../utils/domManager.js";
-
-export function handleModuloAccettazioneForm() {
-  $(".selectpicker").selectpicker("refresh");
-
-  $("#formContainer").on("submit", "#moduloAccettazioneForm", function (event) {
-    event.preventDefault(); // Previeni l'invio standard del form
-
-    // Preparazione dei dati del form
-    const form = event.target;
-    const formData = new FormData(form);
-
-    if ($("#motoEsistenteCheckbox").is(":checked")) {
-      formData.delete("targa");
-      formData.delete("modello");
-      formData.delete("nome");
-      formData.delete("cognome");
-      formData.delete("email");
-      formData.delete("telefono");
-      formData.delete("idCliente");
-    } else if ($("#clienteEsistenteCheckbox").is(":checked")) {
-      formData.delete("nome");
-      formData.delete("cognome");
-      formData.delete("email");
-      formData.delete("telefono");
-      formData.delete("idMoto");
-    } else {
-      formData.delete("idCliente");
-      formData.delete("idMoto");
-    }
-
-    // Debug: mostra cosa viene inviato
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
-
-    // Disabilita il pulsante di invio per evitare doppie richieste
-    const submitButton = form.querySelector("button[type='submit']");
-    submitButton.disabled = true;
-
-    // Chiamata AJAX
-    fetch(form.action, {
-      method: "POST",
-      body: formData,
-    })
-      .then(handleFetchResponse)
-      .then((html) => {
-        updateInnerHTML("formContainer", html);
-        $(".selectpicker").selectpicker("refresh");
-        $("#clienteEsistenteSection").one("mousedown", getClienti);
-        $("#motoEsistenteSection").one("mousedown", getMoto);
-        $("#motoEsistenteCheckbox").click("click", toggleMotoSection);
-        $("#clienteEsistenteCheckbox").click("click", toggleClienteSection);
-      })
-      .catch(handleFetchError)
-      .finally(() => {
-        submitButton.disabled = false;
+    //inserisco i dati
+    if (selectMoto) {
+      listaMoto.forEach((moto) => {
+        let option = document.createElement("option");
+        option.value = moto.id;
+        option.textContent = moto.targa;
+        selectMoto.appendChild(option);
       });
-  });
 
-  $("#clienteEsistenteSection").one("mousedown", getClienti);
-  $("#motoEsistenteSection").one("mousedown", getMoto);
-  $("#motoEsistenteCheckbox").click("click", toggleMotoSection);
-  $("#clienteEsistenteCheckbox").click("click", toggleClienteSection);
+      // Ricarica SelectPicker per aggiornare la lista
+      $(".selectpicker").selectpicker("refresh");
+    }
+  });
 }

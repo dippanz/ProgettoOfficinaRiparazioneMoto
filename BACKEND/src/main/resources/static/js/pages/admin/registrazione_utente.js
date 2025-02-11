@@ -1,7 +1,4 @@
-import {
-  handleFetchError,
-  handleFetchResponse,
-} from "../../utils/fetchManager.js";
+import { fetchHandled } from "../../utils/fetchManager.js";
 import { updateInnerHTML } from "../../utils/domManager.js";
 
 export function handleRegistrationForm() {
@@ -24,16 +21,14 @@ export function handleRegistrationForm() {
         submitButton.disabled = true;
 
         // Chiamata AJAX
-        fetch(form.action, {
+        fetchHandled(form.action, {
           method: "POST",
           body: formData,
         })
-          .then(handleFetchResponse)
           .then((html) => {
             updateInnerHTML("formContainer", html);
             $("#selectRuoli").selectpicker("refresh");
           })
-          .catch(handleFetchError)
           .finally(() => {
             submitButton.disabled = false;
           });

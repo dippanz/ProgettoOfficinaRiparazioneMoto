@@ -1,7 +1,4 @@
-import {
-  handleFetchError,
-  handleFetchResponse,
-} from "../../utils/fetchManager.js";
+import { fetchHandled } from "../../utils/fetchManager.js";
 import { updateInnerHTML, showSuccessModal } from "../../utils/domManager.js";
 
 export function handleAggiungiLavorazioneForm() {
@@ -20,11 +17,10 @@ export function handleAggiungiLavorazioneForm() {
       submitButton.disabled = true;
 
       // Chiamata AJAX
-      fetch(form.action, {
+      fetchHandled(form.action, {
         method: "POST",
         body: formData,
       })
-        .then(handleFetchResponse)
         .then((html) => {
           let tempDiv = document.createElement("div");
           tempDiv.innerHTML = html;
@@ -37,7 +33,6 @@ export function handleAggiungiLavorazioneForm() {
             addDeleteListener();
           }
         })
-        .catch(handleFetchError)
         .finally(() => {
           submitButton.disabled = false;
         });
@@ -56,17 +51,13 @@ function addDeleteListener() {
         return;
       }
 
-      fetch(`/api/lavorazione/elimina/${idLavorazione}`, {
+      fetchHandled(`/api/lavorazione/elimina/${idLavorazione}`, {
         method: "DELETE",
-      })
-        .then(handleFetchResponse)
-        .then((isDeleted) => {
-          if (isDeleted) {
-            location.reload();
-            showSuccessModal("Lavarazione e ore eliminate correttamente", true);
-          }
-        })
-        .catch(handleFetchError);
+      }).then((isDeleted) => {
+        if (isDeleted) {
+          showSuccessModal("Lavarazione e ore eliminate correttamente", true);
+        }
+      });
     });
   });
 }

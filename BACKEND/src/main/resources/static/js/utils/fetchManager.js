@@ -3,9 +3,9 @@ import { showErrorModal } from "../utils/domManager.js";
 export function handleFetchError(error) {
   try {
     const errorParsed = JSON.parse(error.message);
-    showErrorModal(errorParsed.message); // Mostra il messaggio di errore JSON
+    showErrorModal(errorParsed.message, true); // Mostra il messaggio di errore JSON
   } catch (e) {
-    showErrorModal(); // Mostra errore generico
+    showErrorModal("Si è verificato un errore imprevisto", true); // Mostra errore generico
   }
 }
 
@@ -31,4 +31,10 @@ export function handleFetchResponse(response) {
   return response.text().then((errorText) => {
     throw new Error(errorText);
   });
+}
+
+export function fetchHandled(url, options = {}) {
+  return fetch(url, options)
+    .then(handleFetchResponse)
+    .catch(handleFetchError);
 }

@@ -5,23 +5,22 @@ export function updateInnerHTML(idELement, innerHTML) {
   }
 }
 
-export function showErrorModal(message) {
+export function showErrorModal(message, isAfertReload = false) {
+  if (isAfertReload) {
+    sessionStorage.setItem("errorMessage", message);
+    location.reload();
+    return;
+  }
   showModal(message, "modalError", "#contentModalError");
 }
 
 export function showSuccessModal(message, isAfertReload = false) {
   if (isAfertReload) {
     sessionStorage.setItem("successMessage", message);
-
-    setTimeout(() => {
-      showModal(message);
-
-      sessionStorage.removeItem("successMessage");
-    }, 500);
-    
+    location.reload();
     return;
   }
-  showModal(message, "modalSuccess", "#contentModalSuccess", 4000);
+  showModal(message, "modalSuccess", "#contentModalSuccess", 3000);
 }
 
 function showModal(message, idContainer, idContent, timeoutInMillis = 5000) {

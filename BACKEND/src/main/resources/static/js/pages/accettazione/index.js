@@ -1,7 +1,4 @@
-import {
-  handleFetchError,
-  handleFetchResponse,
-} from "../../utils/fetchManager.js";
+import { fetchHandled } from "../../utils/fetchManager.js";
 import { updateInnerHTML } from "../../utils/domManager.js";
 
 export function handleIndexPage() {
@@ -36,15 +33,13 @@ export function handleIndexPage() {
     submitButton.disabled = true;
 
     // Chiamata AJAX
-    fetch(form.action, {
+    fetchHandled(form.action, {
       method: "POST",
       body: formData,
     })
-      .then(handleFetchResponse)
       .then((html) => {
         updateInnerHTML("formContainer", html);
       })
-      .catch(handleFetchError)
       .finally(() => {
         submitButton.disabled = false;
       });
@@ -55,16 +50,16 @@ export function handleIndexPage() {
     button.addEventListener("click", function () {
       let idRiparazione = $(this).attr("data-id");
 
-      fetch(`/api/riparazione/avanza_stato_riparazione?id=${idRiparazione}`, {
-        method: "PATCH",
-      })
-        .then(handleFetchResponse)
-        .then((isUpdated) => {
-          if (isUpdated) {
-            location.reload();
-          }
-        })
-        .catch(handleFetchError);
+      fetchHandled(
+        `/api/riparazione/avanza_stato_riparazione?id=${idRiparazione}`,
+        {
+          method: "PATCH",
+        }
+      ).then((isUpdated) => {
+        if (isUpdated) {
+          location.reload();
+        }
+      });
     });
   });
 
@@ -77,16 +72,13 @@ export function handleIndexPage() {
         return;
       }
 
-      fetch(`/api/riparazione/rifiuta_riparazione?id=${idRiparazione}`, {
+      fetchHandled(`/api/riparazione/rifiuta_riparazione?id=${idRiparazione}`, {
         method: "PATCH",
-      })
-        .then(handleFetchResponse)
-        .then((isUpdated) => {
-          if (isUpdated) {
-            location.reload();
-          }
-        })
-        .catch(handleFetchError);
+      }).then((isUpdated) => {
+        if (isUpdated) {
+          location.reload();
+        }
+      });
     });
   });
 
@@ -99,16 +91,13 @@ export function handleIndexPage() {
         return;
       }
 
-      fetch(`/api/riparazione/elimina?id=${idRiparazione}`, {
+      fetchHandled(`/api/riparazione/elimina?id=${idRiparazione}`, {
         method: "DELETE",
-      })
-        .then(handleFetchResponse)
-        .then((isDeleted) => {
-          if (isDeleted) {
-            location.reload();
-          }
-        })
-        .catch(handleFetchError);
+      }).then((isDeleted) => {
+        if (isDeleted) {
+          location.reload();
+        }
+      });
     });
   });
 }

@@ -99,6 +99,11 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                <div id="flashMessage"
+                    style="display: none;"
+                    th:if="${errorMessage}"
+                    th:attr="data-error-message=${errorMessage}">
+                </div>
                 <div class="modal-body">
                     <p id="contentModalError" class="mb-1"></p>
                 </div>
