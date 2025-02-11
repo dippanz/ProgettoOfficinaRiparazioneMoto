@@ -128,7 +128,8 @@ public class AccettazioneServiceImpl implements AccettazioneService {
                 EnumStatoRiparazione.ACCETTATO.getValue(),
                 EnumStatoRiparazione.RIFIUTATO.getValue(),
                 EnumStatoRiparazione.IN_LAVORAZIONE.getValue(),
-                EnumStatoRiparazione.COMPLETATA.getValue()).stream().map(rip -> {
+                EnumStatoRiparazione.COMPLETATA.getValue())
+                .stream().map(rip -> {
                     RiparazioneAccettazioneDto dto = new RiparazioneAccettazioneDto();
                     dto.setIdRiparazione(rip.getId());
                     dto.setCodice(rip.getCodiceServizio());

@@ -172,7 +172,7 @@
                         th:href="@{/accettazione/storico/dettaglio/{id}(id=${riparazione.idRiparazione})}"
                         class="btn text-uppercase">Dettagli</a>
                     <button
-                        th:if="${riparazione.stato == 'In lavorazione'}"
+                        th:if="${utente == 'meccanico' && riparazione.stato == 'In lavorazione'}"
                         type="button"
                         th:attr="data-id=${riparazione.idRiparazione}"
                         class="btn btn-completa-riparazione text-uppercase">Completata</button>

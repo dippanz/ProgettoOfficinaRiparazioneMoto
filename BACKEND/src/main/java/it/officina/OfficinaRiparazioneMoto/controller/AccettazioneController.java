@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import it.officina.OfficinaRiparazioneMoto.dto.accettazione.ClienteVeicoloDto;
 import it.officina.OfficinaRiparazioneMoto.dto.accettazione.RiparazioneAccettazioneDto;
 import it.officina.OfficinaRiparazioneMoto.dto.accettazione.RiparazioneModuloAccettazioneDto;
-import it.officina.OfficinaRiparazioneMoto.dto.meccanico.RiparazioneMeccanicoDto;
 import it.officina.OfficinaRiparazioneMoto.service.AccettazioneService;
-import it.officina.OfficinaRiparazioneMoto.utils.Constants.EnumStatoRiparazione;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,7 +54,7 @@ public class AccettazioneController {
         return "accettazione/storico";
     }
 
-    @GetMapping("/dettaglio/{id}")
+    @GetMapping({"/dettaglio/{id}", "/storico/dettaglio/{id}"})
     public String dettaglio(@PathVariable("id") UUID idRiparazione, Model model) {
         model.addAttribute("dettaglioRiparazione", accettazioneService.getDettaglioAccettazione(idRiparazione));
         return "accettazione/dettaglio";

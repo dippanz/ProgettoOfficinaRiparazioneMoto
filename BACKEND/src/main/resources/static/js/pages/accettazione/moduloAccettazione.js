@@ -38,6 +38,9 @@ function toggleMotoSection() {
   let $email = $("#email");
   let $targa = $("#targa");
   let $selectMoto = $("#selectMoto");
+  let $selectCliente = $("#selectClienti");
+
+  let $checkboxCliente = $("#clienteEsistenteCheckbox");
 
   if ($checkbox.is(":checked")) {
     // Mostra la select e nasconde i campi di input della moto
@@ -50,6 +53,7 @@ function toggleMotoSection() {
 
     // Aggiunge required alla select delle moto
     $selectMoto.prop("required", true);
+    $selectCliente.prop("required", false);
   } else {
     // Mostra i campi di input della moto e nasconde la select
     $nuovaMotoSection.show();
@@ -61,6 +65,10 @@ function toggleMotoSection() {
 
     // Rimuove il required dalla select delle moto
     $selectMoto.prop("required", false);
+
+    if ($checkboxCliente.is(":checked")) {
+      $selectCliente.prop("required", true);
+    }
   }
 }
 
@@ -141,6 +149,11 @@ export function handleModuloAccettazioneForm() {
     } else {
       formData.delete("idCliente");
       formData.delete("idMoto");
+    }
+
+    // Debug: mostra cosa viene inviato
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
     }
 
     // Disabilita il pulsante di invio per evitare doppie richieste
