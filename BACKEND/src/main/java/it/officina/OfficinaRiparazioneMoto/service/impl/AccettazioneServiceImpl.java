@@ -1,8 +1,10 @@
 package it.officina.OfficinaRiparazioneMoto.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneDto;
 import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneMotoClienteDto;
 import it.officina.OfficinaRiparazioneMoto.dto.accettazione.ClienteVeicoloDto;
 import it.officina.OfficinaRiparazioneMoto.dto.accettazione.DettaglioAccettazioneDto;
+import it.officina.OfficinaRiparazioneMoto.dto.accettazione.RiparazioneAccettazioneDto;
 import it.officina.OfficinaRiparazioneMoto.dto.accettazione.RiparazioneModuloAccettazioneDto;
 import it.officina.OfficinaRiparazioneMoto.mapper.ClienteMapper;
 import it.officina.OfficinaRiparazioneMoto.mapper.MotoMapper;
@@ -33,9 +36,9 @@ public class AccettazioneServiceImpl implements AccettazioneService {
     @Autowired
     private ClienteService clienteService;
     @Autowired
-    private RiparazioneService riparazioneService;
-    @Autowired
     private AuthService authService;
+    @Autowired
+    private RiparazioneService riparazioneService;
     @Autowired
     private ClienteMapper clienteMapper;
     @Autowired
@@ -67,6 +70,7 @@ public class AccettazioneServiceImpl implements AccettazioneService {
         // salvo la riparazione come accettata
         RiparazioneDto riparazione = riparazioneMapper.mapEntityToDto(request);
         riparazione.setIdMoto(moto.getId());
+        riparazione.setDataFine(LocalDateTime.now().plusMonths(1));
         riparazione = riparazioneService.salvaRiparazioneAccettata(riparazione);
     }
 
@@ -88,14 +92,15 @@ public class AccettazioneServiceImpl implements AccettazioneService {
         response.setCognome(riparazione.getCognome());
         response.setTelefono(riparazione.getTelefono());
         response.setEmail(riparazione.getEmail());
-        
+
         return response;
     }
 
     @Override
     public List<RiparazioneModuloAccettazioneDto> getListaRiparazioniModuloAccettazioneDto() {
 
-        List<RiparazioneMotoClienteDto> listaRiparazioni = riparazioneService.getListaRiparazioniMotoClienteDto(null, null, EnumStatoRiparazione.REGISTRATO.getValue());
+        List<RiparazioneMotoClienteDto> listaRiparazioni = riparazioneService.getListaRiparazioniMotoClienteDto(
+                authService.getUtenteDtoAutenticato().getId(), null, EnumStatoRiparazione.REGISTRATO.getValue());
 
         List<RiparazioneModuloAccettazioneDto> response = new ArrayList<>();
 
@@ -115,5 +120,22 @@ public class AccettazioneServiceImpl implements AccettazioneService {
     @Override
     public void accettaRiparazione(UUID idRiparazione) {
         riparazioneService.aggiornaStatoRiparazione(idRiparazione, null);
+    }
+
+    @Override
+    public List<RiparazioneAccettazioneDto> getListaRiparazioneAccettazioneDto() {
+        return riparazioneService.getListaRiparazioniMotoClienteDto(authService.getUtenteDtoAutenticato().getId(), null,
+                EnumStatoRiparazione.ACCETTATO.getValue(),
+                EnumStatoRiparazione.RIFIUTATO.getValue(),
+                EnumStatoRiparazione.IN_LAVORAZIONE.getValue(),
+                EnumStatoRiparazione.COMPLETATA.getValue()).stream().map(rip -> {
+                    RiparazioneAccettazioneDto dto = new RiparazioneAccettazioneDto();
+                    dto.setIdRiparazione(rip.getId());
+                    dto.setCodice(rip.getCodiceServizio());
+                    dto.setTarga(rip.getTarga());
+                    dto.setEmailCliente(rip.getEmail());
+                    dto.setStato(rip.getStatoRiparazione());
+                    return dto;
+                }).collect(Collectors.toList());
     }
 }

@@ -8,7 +8,6 @@ public class MotoDto {
 	private String modello;
 	private String targa;
 	private UUID idCliente;
-	private UUID idUtenteReg;
 
     public UUID getId() {
         return id;
@@ -33,11 +32,5 @@ public class MotoDto {
     }
     public void setIdCliente(UUID idCliente) {
         this.idCliente = idCliente;
-    }
-    public UUID getIdUtenteReg() {
-        return idUtenteReg;
-    }
-    public void setIdUtenteReg(UUID idUtenteReg) {
-        this.idUtenteReg = idUtenteReg;
     }
 }

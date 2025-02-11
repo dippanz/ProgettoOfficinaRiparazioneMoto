@@ -11,15 +11,11 @@ import it.officina.OfficinaRiparazioneMoto.dto.ClienteDto;
 import it.officina.OfficinaRiparazioneMoto.exception.BadRequestException;
 import it.officina.OfficinaRiparazioneMoto.mapper.ClienteMapper;
 import it.officina.OfficinaRiparazioneMoto.model.Cliente;
-import it.officina.OfficinaRiparazioneMoto.service.AuthService;
 import it.officina.OfficinaRiparazioneMoto.service.ClienteService;
 import it.officina.OfficinaRiparazioneMoto.utils.Constants.ErrorManager;
 
 @Service
 public class ClienteServiceImpl implements ClienteService {
-
-    @Autowired
-    private AuthService authService;
 
     @Autowired
     private ClienteDao clienteDao;
@@ -37,7 +33,7 @@ public class ClienteServiceImpl implements ClienteService {
             throw new BadRequestException(ErrorManager.CLIENTE_EMAIL_ESISTENTE);
         }
         
-        Cliente clienteDb = clienteDao.save(mapper.toEntity(cliente, authService.getUtenteDtoAutenticato()));
+        Cliente clienteDb = clienteDao.save(mapper.toEntity(cliente));
         return mapper.toDto(clienteDb);
     }
 
@@ -50,5 +46,4 @@ public class ClienteServiceImpl implements ClienteService {
     public ClienteDto getClienteDtoById(UUID id) {
         return mapper.toDto(clienteDao.findById(id).orElseThrow(() -> new BadRequestException(ErrorManager.CLIENTE_NON_TROVATO)));
     }
-
 }

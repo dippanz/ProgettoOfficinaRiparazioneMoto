@@ -10,7 +10,6 @@ import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneDto;
 import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneMotoClienteDto;
 import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneMotoDto;
 import it.officina.OfficinaRiparazioneMoto.dto.UtenteDto;
-import it.officina.OfficinaRiparazioneMoto.utils.Constants.EnumStatoRiparazione;
 
 /**
  * 
@@ -22,4 +21,6 @@ public interface RiparazioneService {
     void aggiornaStatoRiparazione(UUID idRiparazione, UtenteDto utenteMec);
     RiparazioneMotoClienteDto getRiparazioneMotoClienteDto(UUID idRiparazione);
     RiparazioneDto getRiparazioneDto(UUID idRiparazione);
+    void eliminaRiparazione(UUID idRiparazione);
+    void rifiutaRiparazione(UUID idRiparazione);
 }

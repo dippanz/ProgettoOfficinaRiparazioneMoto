@@ -1,6 +1,7 @@
 package it.officina.OfficinaRiparazioneMoto.service.impl;
 
 import java.security.SecureRandom;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -21,6 +22,7 @@ import it.officina.OfficinaRiparazioneMoto.mapper.RiparazioneMapper;
 import it.officina.OfficinaRiparazioneMoto.mapper.UtenteMapper;
 import it.officina.OfficinaRiparazioneMoto.model.Riparazione;
 import it.officina.OfficinaRiparazioneMoto.model.StatoRiparazione;
+import it.officina.OfficinaRiparazioneMoto.service.AuthService;
 import it.officina.OfficinaRiparazioneMoto.service.MotoService;
 import it.officina.OfficinaRiparazioneMoto.service.RiparazioneService;
 import it.officina.OfficinaRiparazioneMoto.utils.Constants.EnumStatoRiparazione;
@@ -36,6 +38,8 @@ public class RiparazioneServiceImpl implements RiparazioneService {
 
     @Autowired
     private MotoService motoService;
+    @Autowired
+    private AuthService authService;
 
     @Autowired
     private RiparazioneMapper mapper;
@@ -76,7 +80,7 @@ public class RiparazioneServiceImpl implements RiparazioneService {
         StatoRiparazione stato = statoRiparazioneDao.findById(EnumStatoRiparazione.REGISTRATO.getValue())
                 .orElseThrow(() -> new BadRequestException(ErrorManager.STATO_RIPARAZIONE_NON_TROVATO));
 
-        Riparazione riparazioneDb = mapper.toEntity(riparazione, moto, stato);
+        Riparazione riparazioneDb = mapper.toEntity(riparazione, moto, stato, authService.getUtenteDtoAutenticato());
         return mapper.toDto(riparazioneDao.save(riparazioneDb));
     }
 
@@ -111,14 +115,14 @@ public class RiparazioneServiceImpl implements RiparazioneService {
         List<Riparazione> listaRiparazioni;
         if (idUtenteMec != null) {
             // Se c'è un meccanico, filtra per meccanico e stati (se presenti)
-            listaRiparazioni = stati.length > 0
+            listaRiparazioni = stati != null && stati.length > 0
                     ? riparazioneDao.findAllByIdUtenteMecAndStati(idUtenteMec, stati)
                     : riparazioneDao.findAllByUtenteMecId(idUtenteMec);
         } else if (idUtenteReg != null) {
             // Se c'è un utente registrato, filtra per utente e stati (se presenti)
-            listaRiparazioni = stati.length > 0
+            listaRiparazioni = stati != null && stati.length > 0
                     ? riparazioneDao.findAllByIdUtenteRegAndStati(idUtenteReg, stati)
-                    : riparazioneDao.findAllByIdUtenteReg(idUtenteReg);
+                    : riparazioneDao.findAllByUtenteRegId(idUtenteReg);
         } else {
             // Se non ci sono ID utente, filtra solo per stati
             listaRiparazioni = riparazioneDao.findAllByIdStati(stati);
@@ -132,12 +136,16 @@ public class RiparazioneServiceImpl implements RiparazioneService {
         Riparazione riparazioneDaAggiornare = riparazioneDao.findById(idRiparazione)
                 .orElseThrow(() -> new BadRequestException(ErrorManager.RIPARAZIONE_NON_TROVATA));
 
-        if (EnumStatoRiparazione.fromValore(riparazioneDaAggiornare.getStato().getId()) == EnumStatoRiparazione.COMPLETATA) {
+        if (EnumStatoRiparazione
+                .fromValue(riparazioneDaAggiornare.getStato().getId()) == EnumStatoRiparazione.COMPLETATA) {
             throw new BadRequestException(ErrorManager.RIPARAZIONE_GIA_COMPLETA);
         }
 
-        if (EnumStatoRiparazione.fromValore(riparazioneDaAggiornare.getStato().getId()) == EnumStatoRiparazione.IN_LAVORAZIONE && utenteMec != null) {
-           throw new IllegalArgumentException("Non è possibile settare un utente meccanico se si avanza verso completata");
+        if (EnumStatoRiparazione
+                .fromValue(riparazioneDaAggiornare.getStato().getId()) == EnumStatoRiparazione.IN_LAVORAZIONE
+                && utenteMec != null) {
+            throw new IllegalArgumentException(
+                    "Non è possibile settare un utente meccanico se si avanza verso completata");
         }
 
         StatoRiparazione stato = statoRiparazioneDao
@@ -150,6 +158,11 @@ public class RiparazioneServiceImpl implements RiparazioneService {
             // in carico la riparazione
             riparazioneDaAggiornare.setUtenteMec(utenteMapper.toEntity(utenteMec));
         }
+
+        if (EnumStatoRiparazione.fromValue(stato.getId()) == EnumStatoRiparazione.COMPLETATA) {
+            riparazioneDaAggiornare.setDataFine(LocalDateTime.now());
+        }
+
         riparazioneDao.save(riparazioneDaAggiornare);
     }
 
@@ -163,5 +176,34 @@ public class RiparazioneServiceImpl implements RiparazioneService {
     public RiparazioneDto getRiparazioneDto(UUID idRiparazione) {
         return mapper.toDto(riparazioneDao.findById(idRiparazione)
                 .orElseThrow(() -> new BadRequestException(ErrorManager.RIPARAZIONE_NON_TROVATA)));
+    }
+
+    @Override
+    public void eliminaRiparazione(UUID idRiparazione) {
+        Riparazione riparazione = riparazioneDao.findById(idRiparazione)
+                .orElseThrow(() -> new BadRequestException(ErrorManager.RIPARAZIONE_NON_TROVATA));
+
+        if (EnumStatoRiparazione.fromValue(riparazione.getStato().getId()) != EnumStatoRiparazione.REGISTRATO) {
+            throw new BadRequestException(ErrorManager.RIPARAZIONE_NON_ELIMINABILE);
+        }
+
+        riparazioneDao.delete(riparazione);
+    }
+
+    @Override
+    public void rifiutaRiparazione(UUID idRiparazione) {
+        Riparazione riparazione = riparazioneDao.findById(idRiparazione)
+                .orElseThrow(() -> new BadRequestException(ErrorManager.RIPARAZIONE_NON_TROVATA));
+
+        if (EnumStatoRiparazione.fromValue(riparazione.getStato().getId()) != EnumStatoRiparazione.REGISTRATO) {
+            throw new BadRequestException(ErrorManager.RIPARAZIONE_NON_RIFIUTABILE);
+        }
+
+        StatoRiparazione stato = statoRiparazioneDao
+                .findById(EnumStatoRiparazione.RIFIUTATO.getValue())
+                .orElseThrow(() -> new BadRequestException(ErrorManager.STATO_RIPARAZIONE_NON_TROVATO));
+
+        riparazione.setStato(stato);
+        riparazioneDao.save(riparazione);
     }
 }

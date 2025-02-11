@@ -1,23 +1,35 @@
 <th:block th:fragment="aggiungiLavorazioneForm">
     <h1>Aggiungi nuova lavorazione</h1>
-    <form 
+    <form
         id="aggiungiLavorazioneForm"
-        th:action="@{/meccanico/process_aggiungi_lavorazione}" 
-        method="post" 
+        th:action="@{/meccanico/process_aggiungi_lavorazione}"
+        method="post"
         th:object="${aggiungiLavorazioneDto}">
         <div class="form-group">
             <label for="descrizione">Descrizione:</label>
-            <input type="text" id="descrizione" th:field="*{descrizione}" name="descrizione" required />
-            <p th:if="${#fields.hasErrors('descrizione')}" th:errors="*{descrizione}" id="descrizioneError" class="error"></p>
+            <input type="text" id="descrizione" th:field="*{descrizione}"
+                name="descrizione" required />
+            <p th:if="${#fields.hasErrors('descrizione')}"
+                th:errors="*{descrizione}" id="descrizioneError"
+                class="error"></p>
         </div>
         <div class="form-group">
             <label for="ore">Ore Lavorate:</label>
-            <input type="number" id="ore" th:field="*{ore}" name="ore" step="0.1" min="0" required />
-            <p th:if="${#fields.hasErrors('ore')}" th:errors="*{ore}" id="oreError" class="error"></p>
+            <input type="number" id="ore" th:field="*{ore}" name="ore"
+                step="0.1" min="0" required />
+            <p th:if="${#fields.hasErrors('ore')}" th:errors="*{ore}"
+                id="oreError" class="error"></p>
         </div>
-        <input type="hidden" name="idRiparazione" th:value="${aggiungiLavorazioneDto.idRiparazione}">
-        <div class="form-group">
-            <button class="btn btn-success" type="submit">Aggiungi</button>
+        <input type="hidden" name="idRiparazione"
+            th:value="${aggiungiLavorazioneDto.idRiparazione}">
+        <div
+            class="form-group d-flex justify-content-between align-items-center">
+            <button class="btn btn-success text-uppercase"
+                type="submit">Aggiungi</button>
+
+            <button type="button" class="btn btn-success mr-3 mt-3 text-uppercase"
+                onclick="window.history.back()">Indietro</button>
+
         </div>
     </form>
 </th:block>
@@ -41,8 +53,8 @@
                 <td th:text="${lavorazione.ore}"></td>
                 <td th:text="${lavorazione.dataInserimento}"></td>
                 <td>
-                    <button 
-                        class="btn btn-danger btn-elimina"
+                    <button
+                        class="btn btn-danger btn-elimina text-uppercase"
                         th:attr="data-id=${lavorazione.id}"
                         type="button">Elimina</button>
                 </td>

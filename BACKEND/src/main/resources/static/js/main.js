@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
         meccanicoDettaglio: () => import("./pages/meccanico/dettaglio.js").then(module => module.handleDettaglioPage()),
         meccanicoAggiungiLavorazione: () => import("./pages/meccanico/aggiungiLavorazione.js").then(module => module.handleAggiungiLavorazioneForm()),
         meccanicoIndex: () => import("./pages/meccanico/index.js").then(module => module.handleIndexPage()),
+        accettazioneStorico: () => import("./pages/accettazione/storico.js").then(module => module.handleStoricoPage()),
     };
 
     if (modules[page]) {
@@ -21,4 +22,12 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(() => console.log(`Modulo "${page}" caricato ed eseguito`))
             .catch(err => console.error(`Errore nel caricamento del modulo "${page}"`, err));
     }
+
+    // gestione dell'header
+    document.getElementById("navbarHeader").querySelectorAll("a").forEach(link =>{
+        if(link.getAttribute("href") == window.location.pathname || 
+            (window.location.pathname == '/public/home' && link.getAttribute("href") == '/')){
+            link.setAttribute("href", "javascript:void(0)");
+        }
+    })
 });

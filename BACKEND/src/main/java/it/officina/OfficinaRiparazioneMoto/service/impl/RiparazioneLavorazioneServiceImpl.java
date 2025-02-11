@@ -54,11 +54,11 @@ public class RiparazioneLavorazioneServiceImpl implements RiparazioneLavorazione
     }
 
     @Override
-    public void eliminaLavorazione(UUID id) throws BadRequestException {
-        if(!riparazioneLavorazioneDao.existsById(id)){
+    public void eliminaLavorazione(UUID idLavorazione) throws BadRequestException {
+        if(!riparazioneLavorazioneDao.existsById(idLavorazione)){
             throw new BadRequestException(ErrorManager.LAVORAZIONE_NON_TROVATA);
         }
 
-        riparazioneLavorazioneDao.deleteById(id);
+        riparazioneLavorazioneDao.deleteById(idLavorazione);
     }
 }

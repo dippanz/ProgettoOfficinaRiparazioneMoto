@@ -41,10 +41,6 @@ public class Moto {
 	@JoinColumn(name = "id_cliente", nullable = false)
 	private Cliente cliente;
 	
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_utente_reg", nullable = false)
-	private Utente utenteReg;
-	
 	@OneToMany(mappedBy = "moto", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	private List<Riparazione> riparazioni;
 	
@@ -71,12 +67,6 @@ public class Moto {
 	}
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
-	}
-	public Utente getUtenteReg() {
-		return utenteReg;
-	}
-	public void setUtenteReg(Utente utenteReg) {
-		this.utenteReg = utenteReg;
 	}
 	public List<Riparazione> getRiparazioni() {
 		return riparazioni;

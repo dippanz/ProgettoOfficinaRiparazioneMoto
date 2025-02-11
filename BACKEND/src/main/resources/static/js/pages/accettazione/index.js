@@ -50,15 +50,65 @@ export function handleIndexPage() {
       });
   });
 
-  $("#accettaRiparazione").on("click", function (event) {
-    event.preventDefault(); // Previeni l'invio standard del form
+  // bottoni accetta
+  document.querySelectorAll(".btn-accetta-riparazione").forEach((button) => {
+    button.addEventListener("click", function () {
+      let idRiparazione = $(this).attr("data-id");
 
-    let idRiparazione = $(this).attr("data-id");
+      fetch(`/api/riparazione/avanza_stato_riparazione?id=${idRiparazione}`, {
+        method: "PATCH",
+      })
+        .then(handleFetchResponse)
+        .then((isUpdated) => {
+          if (isUpdated) {
+            location.reload();
+          }
+        })
+        .catch(handleFetchError);
+    });
+  });
 
-    fetch(`accettazione/process_update_status_riparazione?id=${idRiparazione}`, {
-      method: "PATCH",
-    })
-      .then(handleFetchResponse)
-      .catch(handleFetchError);
+  // bottoni rifiuta
+  document.querySelectorAll(".btn-rifiuta-riparazione").forEach((button) => {
+    button.addEventListener("click", function () {
+      let idRiparazione = $(this).attr("data-id");
+
+      if (!confirm("Sicuro di voler rifiutare la riparazione selezionata?")) {
+        return;
+      }
+
+      fetch(`/api/riparazione/rifiuta_riparazione?id=${idRiparazione}`, {
+        method: "PATCH",
+      })
+        .then(handleFetchResponse)
+        .then((isUpdated) => {
+          if (isUpdated) {
+            location.reload();
+          }
+        })
+        .catch(handleFetchError);
+    });
+  });
+
+  // bottoni elimina
+  document.querySelectorAll(".btn-elimina-riparazione").forEach((button) => {
+    button.addEventListener("click", function () {
+      let idRiparazione = $(this).attr("data-id");
+
+      if (!confirm("Sicuro di voler eliminare la riparazione selezionata?")) {
+        return;
+      }
+
+      fetch(`/api/riparazione/elimina?id=${idRiparazione}`, {
+        method: "DELETE",
+      })
+        .then(handleFetchResponse)
+        .then((isDeleted) => {
+          if (isDeleted) {
+            location.reload();
+          }
+        })
+        .catch(handleFetchError);
+    });
   });
 }

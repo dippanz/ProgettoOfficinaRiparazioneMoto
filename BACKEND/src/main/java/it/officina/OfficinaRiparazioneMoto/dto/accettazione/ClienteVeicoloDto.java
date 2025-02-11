@@ -28,7 +28,7 @@ public class ClienteVeicoloDto {
     private String modello;
 
     @Size(max = 500, message = "La descrizione non può superare i 500 caratteri")
-    private String descrizione;
+    private String descrizioneProblema;
 
     private UUID idCliente;
     private UUID idMoto;
@@ -99,12 +99,12 @@ public class ClienteVeicoloDto {
         this.modello = modello;
     }
 
-    public String getDescrizione() {
-        return descrizione;
+    public String getDescrizioneProblema() {
+        return descrizioneProblema;
     }
 
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
+    public void setDescrizioneProblema(String descrizione) {
+        this.descrizioneProblema = descrizione;
     }
     
     public UUID getIdMoto() {

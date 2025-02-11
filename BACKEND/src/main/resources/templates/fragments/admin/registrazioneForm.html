@@ -77,21 +77,6 @@
                 class="error"></p>
         </div>
 
-        <!-- 
-        versione con bootstrap 5 senza selezione multipla
-        <div class="form-group">
-            <label for="selectRuoli">Ruolo:</label>
-            <select class="form-select" id="selectRuoli" name="ruoli" th:field="*{ruoli}" required>
-                <option value="" selected>Scegli un ruolo...</option>
-                <option th:each="role : ${listaRuoli}" th:value="${role}" th:text="${role}"></option>
-            </select>
-            <p
-                th:if="${#fields.hasErrors('ruoli')}"
-                th:errors="*{ruoli}"
-                id="ruoliError"
-                class="error"></p>        
-        </div> -->
-
         <div class="form-group mb-3">
             <label for="selectRuoli" class="form-label">Ruoli:</label>
             <select id="selectRuoli"
@@ -109,6 +94,8 @@
                 class="error" id="ruoliError"></p>
         </div>
 
-        <button type="submit">Registrati</button>
+        <div class="text-right mt-4">
+            <button type="submit" class="btn text-uppercase">Registrati</button>
+        </div>
     </form>
 </th:block>

@@ -6,12 +6,13 @@ import java.util.UUID;
 public class RiparazioneDto {
     
     private UUID id;
-    private String descrizione;
+    private String descrizioneProblema;
     private LocalDateTime dataInizio;
     private LocalDateTime dataFine;
     private String codiceServizio;
     private UUID idMoto;
     private UUID idUtenteMec;
+	private UUID idUtenteReg;
     private String statoRiparazione;
     
     public UUID getId() {
@@ -20,11 +21,11 @@ public class RiparazioneDto {
     public void setId(UUID id) {
         this.id = id;
     }
-    public String getDescrizione() {
-        return descrizione;
+    public String getDescrizioneProblema() {
+        return descrizioneProblema;
     }
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
+    public void setDescrizioneProblema(String descrizione) {
+        this.descrizioneProblema = descrizione;
     }
     public LocalDateTime getDataInizio() {
         return dataInizio;
@@ -61,5 +62,11 @@ public class RiparazioneDto {
     }
     public void setStatoRiparazione(String statoRiparazione) {
         this.statoRiparazione = statoRiparazione;
+    }
+    public UUID getIdUtenteReg() {
+        return idUtenteReg;
+    }
+    public void setIdUtenteReg(UUID idUtenteReg) {
+        this.idUtenteReg = idUtenteReg;
     }
 }

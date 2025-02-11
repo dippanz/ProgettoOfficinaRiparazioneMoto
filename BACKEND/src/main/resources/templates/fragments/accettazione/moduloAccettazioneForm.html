@@ -6,11 +6,10 @@
         th:object="${clienteVeicoloDto}">
         <div class="form-section" id="motoSelected">
             <h3>Dati Cliente</h3>
-            <label>
-                <input type="checkbox" id="clienteEsistenteCheckbox"> Il cliente
-                è già presente
-                nel sistema?
-            </label>
+            <div class="custom-control custom-checkbox mb-3">
+                <input type="checkbox" class="custom-control-input" id="clienteEsistenteCheckbox">
+                <label class="custom-control-label" for="clienteEsistenteCheckbox">Il cliente è già presente nel sistema?</label>
+            </div>
             <div id="nuovoClienteSection">
                 <div class="form-group mb-3">
                     <label for="nome">Nome:</label>
@@ -70,11 +69,10 @@
 
         <div class="form-section">
             <h3>Dati Veicolo</h3>
-            <label>
-                <input type="checkbox" id="motoEsistenteCheckbox">
-                Il veicolo è già presente nel sistema?
-            </label>
-
+            <div class="custom-control custom-checkbox mb-3">
+                <input type="checkbox" class="custom-control-input" id="motoEsistenteCheckbox">
+                <label class="custom-control-label" for="motoEsistenteCheckbox">Il veicolo è già presente nel sistema?</label>
+            </div>
             <div id="nuovaMotoSection">
                 <div class="form-group mb-3">
                     <label for="targa">Targa:</label>
@@ -116,13 +114,13 @@
         </div>
 
         <div class="form-group mb-3">
-            <label for="descrizione">Descrizione del problema:</label>
-            <input type="text" th:field="*{descrizione}" id="descrizione"
-                name="descrizione"
+            <label for="descrizioneProblema">Descrizione del problema:</label>
+            <input type="text" th:field="*{descrizioneProblema}" id="descrizioneProblema"
+                name="descrizioneProblema"
                 maxlength="500"
                 placeholder="Descrivi il problema segnalato">
-            <p th:if="${#fields.hasErrors('descrizione')}"
-                th:errors="*{descrizione}" class="error"></p>
+            <p th:if="${#fields.hasErrors('descrizioneProblema')}"
+                th:errors="*{descrizioneProblema}" class="error"></p>
         </div>
 
         <div class="row justify-content-between">

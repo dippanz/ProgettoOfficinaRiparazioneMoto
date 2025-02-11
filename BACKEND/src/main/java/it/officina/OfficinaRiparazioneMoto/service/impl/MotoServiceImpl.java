@@ -12,7 +12,6 @@ import it.officina.OfficinaRiparazioneMoto.dto.MotoDto;
 import it.officina.OfficinaRiparazioneMoto.exception.BadRequestException;
 import it.officina.OfficinaRiparazioneMoto.mapper.MotoMapper;
 import it.officina.OfficinaRiparazioneMoto.model.Moto;
-import it.officina.OfficinaRiparazioneMoto.service.AuthService;
 import it.officina.OfficinaRiparazioneMoto.service.ClienteService;
 import it.officina.OfficinaRiparazioneMoto.service.MotoService;
 import it.officina.OfficinaRiparazioneMoto.utils.Constants.ErrorManager;
@@ -28,9 +27,6 @@ public class MotoServiceImpl implements MotoService {
 
     @Autowired
     private MotoMapper mapper;
-
-    @Autowired
-    private AuthService authService;
 
     @Override
     public MotoDto salvaMoto(MotoDto moto) throws BadRequestException {
@@ -50,7 +46,7 @@ public class MotoServiceImpl implements MotoService {
             throw new BadRequestException(ErrorManager.CLIENTE_NON_ASSEGNATO_MOTO);
         }
             
-        Moto motoDb = motoDao.save(mapper.toEntity(moto, clienteMoto, authService.getUtenteDtoAutenticato()));
+        Moto motoDb = motoDao.save(mapper.toEntity(moto, clienteMoto));
         return mapper.toDto(motoDb);
     }
 

@@ -19,6 +19,8 @@ export function handlePrendiInCaricoPage() {
       $("#saveButton").prop("disabled", false);
       hiddenInput.prop("disabled", false);
 
+      currentRow.addClass("table-primary");
+
       $(this).hide();
       buttonCancel.show();
     });
@@ -35,6 +37,8 @@ export function handlePrendiInCaricoPage() {
       // Rimuovi dagli ID selezionati
       riparazioniSelezionate.delete(idRiparazione);
       hiddenInput.prop("disabled", true);
+
+      currentRow.removeClass("table-primary");
 
       $(this).hide();
       buttonAdd.show();

@@ -57,10 +57,7 @@ public class Utente {
 	private List<Ruolo> ruoli;
 	
 	@OneToMany(mappedBy = "utenteReg", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	private List<Cliente> clienti;
-	
-	@OneToMany(mappedBy = "utenteReg", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	private List<Moto> listaMoto;
+	private List<Riparazione> listaRiparazioni;
 	
 	@OneToMany(mappedBy = "utenteMec", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	private List<Riparazione> riparazioni;
@@ -120,18 +117,6 @@ public class Utente {
 	public void setHashPassword(String hashPassword) {
 		this.hashPassword = hashPassword;
 	}
-	public List<Cliente> getClienti() {
-		return clienti;
-	}
-	public void setClienti(List<Cliente> clienti) {
-		this.clienti = clienti;
-	}
-	public List<Moto> getListaMoto() {
-		return listaMoto;
-	}
-	public void setListaMoto(List<Moto> listaMoto) {
-		this.listaMoto = listaMoto;
-	}
 	public List<Riparazione> getRiparazioni() {
 		return riparazioni;
 	}
@@ -143,5 +128,11 @@ public class Utente {
 	}
 	public void setRuoli(List<Ruolo> ruoli) {
 		this.ruoli = ruoli;
+	}
+	public List<Riparazione> getListaRiparazioni() {
+		return listaRiparazioni;
+	}
+	public void setListaRiparazioni(List<Riparazione> listaRiparazioni) {
+		this.listaRiparazioni = listaRiparazioni;
 	}
 }

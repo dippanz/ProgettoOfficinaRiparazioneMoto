@@ -57,6 +57,10 @@ public class Riparazione {
 	@JoinColumn(name = "id_utente_mec", nullable = true)
 	private Utente utenteMec;
 	
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_utente_reg", nullable = false)
+	private Utente utenteReg;
+	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_stato", nullable = false)
 	private StatoRiparazione stato;
@@ -114,5 +118,11 @@ public class Riparazione {
 	}
 	public void setLavorazioni(List<RiparazioneLavorazione> lavorazioni) {
 		this.lavorazioni = lavorazioni;
+	}
+	public Utente getUtenteReg() {
+		return utenteReg;
+	}
+	public void setUtenteReg(Utente utenteReg) {
+		this.utenteReg = utenteReg;
 	}
 }

@@ -13,11 +13,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import it.officina.OfficinaRiparazioneMoto.dto.accettazione.ClienteVeicoloDto;
+import it.officina.OfficinaRiparazioneMoto.dto.accettazione.RiparazioneAccettazioneDto;
 import it.officina.OfficinaRiparazioneMoto.dto.accettazione.RiparazioneModuloAccettazioneDto;
+import it.officina.OfficinaRiparazioneMoto.dto.meccanico.RiparazioneMeccanicoDto;
 import it.officina.OfficinaRiparazioneMoto.service.AccettazioneService;
+import it.officina.OfficinaRiparazioneMoto.utils.Constants.EnumStatoRiparazione;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,6 +49,13 @@ public class AccettazioneController {
         return "accettazione/moduloAccettazione";
     }
 
+    @GetMapping("/storico")
+    public String storico(Model model) {
+        List<RiparazioneAccettazioneDto> listaRiparazioni = accettazioneService.getListaRiparazioneAccettazioneDto();
+        model.addAttribute("listaRiparazioni", listaRiparazioni);
+        return "accettazione/storico";
+    }
+
     @GetMapping("/dettaglio/{id}")
     public String dettaglio(@PathVariable("id") UUID idRiparazione, Model model) {
         model.addAttribute("dettaglioRiparazione", accettazioneService.getDettaglioAccettazione(idRiparazione));
@@ -67,11 +75,4 @@ public class AccettazioneController {
         accettazioneService.salvaAccettazione(request);
         return "redirect:/accettazione";
     }
-
-    @PatchMapping("/process_update_status_riparazione")
-    public String aggiornaStatoRiparazione(@RequestParam("id") UUID idRiparazione) {
-        accettazioneService.accettaRiparazione(idRiparazione);
-        return "redirect:/accettazione"; //MODIFICA QUESTO METODO ED USARE API
-    }
-
 }

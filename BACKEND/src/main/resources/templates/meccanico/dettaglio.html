@@ -1,9 +1,24 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
     <head>
         <th:block th:replace="~{fragments/globalFragment :: head}"></th:block>
         <script type="text/javascript"
             th:src="@{/js/main.js}"></script>
+        <style>
+                body {
+                    background-color: #f4f4f9;
+                }
+
+                main {
+                    padding: 2rem;
+                }
+
+                table th {
+                    background-color: white;
+                    font-weight: bold;
+                    color: black;
+                }
+        </style>
     </head>
     <body data-page="meccanicoDettaglio">
 
@@ -12,7 +27,7 @@
 
         <main>
             <div class="container mt-5"
-                th:insert="~{fragments/dettaglio :: cardDettaglioRiparazione(mostraManutenzioni=true)}">
+                th:insert="~{fragments/tabelle :: cardDettaglioRiparazione(mostraManutenzioni=true)}">
             </div>
         </main>
         <footer th:insert="~{fragments/globalFragment :: footer}"></footer>

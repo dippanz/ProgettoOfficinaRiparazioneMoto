@@ -11,12 +11,12 @@ public class RiparazioneMotoDto {
     private LocalDateTime dataFine;
     private String codiceServizio;
     private UUID idUtenteMec;
+    private UUID idUtenteReg;
     private String statoRiparazione;
 
     // moto
     private String modello;
     private String targa;
-    private UUID idUtenteReg;
     
     public UUID getId() {
         return id;

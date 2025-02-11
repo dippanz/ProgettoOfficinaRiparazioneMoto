@@ -9,9 +9,9 @@
 
 <th:block th:fragment="header">
     <h1>Officina Riparazioni Moto</h1>
-    <nav class="navbar">
+    <nav class="navbar" id="navbarHeader">
         <ul class="left">
-            <li><a href="/" th:href="@{/}">Home</a></li>
+            <li><a href="/">Home</a></li>
             <li><a href="/public/cerca_riparazione"
                     th:href="@{/public/cerca_riparazione}">Cerca
                     Riparazione</a></li>
@@ -32,13 +32,7 @@
             </li>
             <li
                 th:if="${#authentication != null and #authentication.name != 'anonymousUser'}">
-                <form th:action="@{/logout}" method="post"
-                    style="display: inline;">
-                    <button type="submit"
-                        style="background: none; border: none; color: blue; cursor: pointer;">
-                        Logout
-                    </button>
-                </form>
+                <a href="/logout" th:href="@{/logout}">Logout</a>
             </li>
         </ul>
     </nav>

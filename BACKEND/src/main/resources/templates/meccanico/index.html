@@ -1,46 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
     <head>
         <th:block th:replace="~{fragments/globalFragment :: head}"></th:block>
         <script type="text/javascript"
             th:src="@{/js/main.js}"></script>
         <style>
-
-        h1, h2 {
-            color: #333;
-            text-align: center;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        table th, table td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-        }
-
-        table th {
-            background-color: #007bff;
-            color: white;
-        }
-
-        button {
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
 
         .form-section {
             margin-top: 20px;
@@ -67,24 +31,27 @@
         <div th:replace="~{fragments/globalFragment :: modalError}"></div>
         <header th:insert="~{fragments/globalFragment :: header}"></header>
         <main>
-            <h2>Gestione Riparazioni Meccaniche</h2>
-            <p class="description">
+            <div class="ml-5 mt-5 row d-flex justify-content-between align-items-center">
+                <h2 class="col-auto">Gestione Riparazioni Meccaniche</h2>
+                <div class="col-auto mr-5 mt-4 ">
+                    <a href="/meccanico/prendi_in_carico" class="btn">Prendi in
+                        carico</a>
+                    <a href="/meccanico/storico" class="btn">Visualizza storico</a>
+                </div>
+            </div>
+            <h2></h2>
+            <p class="ml-5 mr-5 pt-3 pb-3 border-bottom">
                 Benvenuto nella tua area di gestione. Qui puoi visualizzare
                 tutte le riparazioni assegnate a te,
                 controllarne lo stato e aggiornare le informazioni sullo
                 svolgimento dei lavori.
             </p>
 
-            <div class="button-container">
-                <a href="/meccanico/prendi_in_carico" class="btn">Prendi in
-                    carico</a>
-                <a href="/meccanico/storico" class="btn">Visualizza storico</a>
+            <div class="table-container">
+                <h3 class="mt-4 mb-2">Riparazioni assegnate</h3>
+                <div th:replace="~{fragments/tabelle :: tableRiparazioniMeccanico(utente='meccanico')}"></div>
             </div>
-
-            <h3>Riparazioni assegnate</h3>
-            <div
-                class="table-container"
-                th:insert="~{fragments/meccanico/index :: tableRiparazioniMeccanico}">
+            
                 
             </div>
         </main>

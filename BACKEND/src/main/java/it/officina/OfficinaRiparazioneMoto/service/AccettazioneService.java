@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import it.officina.OfficinaRiparazioneMoto.dto.accettazione.ClienteVeicoloDto;
 import it.officina.OfficinaRiparazioneMoto.dto.accettazione.DettaglioAccettazioneDto;
+import it.officina.OfficinaRiparazioneMoto.dto.accettazione.RiparazioneAccettazioneDto;
 import it.officina.OfficinaRiparazioneMoto.dto.accettazione.RiparazioneModuloAccettazioneDto;
 
 public interface AccettazioneService {
@@ -13,4 +14,5 @@ public interface AccettazioneService {
     DettaglioAccettazioneDto getDettaglioAccettazione(UUID idRiparazione);
     List<RiparazioneModuloAccettazioneDto> getListaRiparazioniModuloAccettazioneDto();
     void accettaRiparazione(UUID idRiparazione);
+    List<RiparazioneAccettazioneDto> getListaRiparazioneAccettazioneDto();
 }

@@ -9,7 +9,6 @@ public class ClienteDto {
 	private String cognome;
 	private String telefono;
 	private String email;
-	private UUID utenteReg;
 
     public UUID getId() {
         return id;
@@ -40,11 +39,5 @@ public class ClienteDto {
     }
     public void setEmail(String email) {
         this.email = email;
-    }
-    public UUID getUtenteReg() {
-        return utenteReg;
-    }
-    public void setUtenteReg(UUID utenteReg) {
-        this.utenteReg = utenteReg;
     }
 }

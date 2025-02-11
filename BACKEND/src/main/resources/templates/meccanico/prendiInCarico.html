@@ -1,23 +1,31 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
     <head>
         <th:block th:replace="~{fragments/globalFragment :: head}"></th:block>
         <script type="text/javascript"
             th:src="@{/js/main.js}"></script>
+        <style>
+                
 
+            </style>
     </head>
     <body data-page="prendiInCarico">
         <div th:replace="~{fragments/globalFragment :: modalError}"></div>
         <header th:insert="~{fragments/globalFragment :: header}"></header>
         <main>
-            <div class="table-container">
-                <h3>Riparazioni disponibili</h3>
-                <form 
+            <div class="table-container mt-5">
+                <div
+                    class="mt-5 row d-flex justify-content-between align-items-center">
+                    <h3 class="col-auto">Riparazioni disponibili</h3>
+                    <button type="button" class="btn mr-3 mt-3 text-uppercase"
+                        onclick="window.history.back()">Indietro</button>
+                </div>
+                <form
                     th:if="${not #lists.isEmpty(listaRiparazioni)}"
                     id="formPresaInCarico"
                     th:action="@{/meccanico/salva-prese-in-carico}"
                     method="post">
-                    <table >
+                    <table>
                         <thead>
                             <tr>
                                 <th class="col-2">Codice Servizio</th>
@@ -34,22 +42,26 @@
                                 <td th:text="${riparazione.targa}"></td>
                                 <td th:text="${riparazione.emailCliente}"></td>
                                 <td th:text="${riparazione.stato}"></td>
-                                <td>
-                                    <a
-                                        th:href="@{/meccanico/prendi_in_carico/dettaglio/{id}(id=${riparazione.idRiparazione})}"
-                                        class="btn">Dettagli</a>
-                                    <button class="btn btn-add" type="button">+</button>
-                                    <button class="btn btn-danger btn-cancel" type="button"
-                                        style="display: none;">x</button>
+                                <td class="d-flex justify-content-between align-items-center w-100">
+                                    <a th:href="@{/meccanico/prendi_in_carico/dettaglio/{id}(id=${riparazione.idRiparazione})}"
+                                       class="btn text-uppercase">Dettagli</a>
+                                    <div class="d-flex mr-3">
+                                        <button class="btn-plus btn-add ml-2" type="button">+</button>
+                                        <button class="btn-x btn-cancel ml-2" type="button" style="display: none;">&times;</button>
+                                    </div>
                                 </td>
+                                
 
                                 <input type="hidden" name="presaInCarico"
-                                    th:value="${riparazione.idRiparazione}" disabled>
+                                    th:value="${riparazione.idRiparazione}"
+                                    disabled>
                             </tr>
                         </tbody>
                     </table>
 
-                    <button id="saveButton" type="submit" class="btn" disabled>salva</button>
+                    <button id="saveButton" type="submit"
+                        class="btn mt-5 text-uppercase"
+                        disabled>salva</button>
                 </form>
                 <p class="no-data"
                     th:if="${#lists.isEmpty(listaRiparazioni)}">Nessun veicolo

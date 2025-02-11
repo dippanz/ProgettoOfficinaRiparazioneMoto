@@ -12,9 +12,7 @@ CREATE TABLE IF NOT EXISTS public."RUOLO"
 (
     "id" uuid NOT NULL DEFAULT gen_random_uuid(),
     "nome" character varying(50) NOT NULL UNIQUE,
-	-- "id_livello_accesso" int,
     PRIMARY KEY ("id")
-	-- CONSTRAINT fk_livello_accesso FOREIGN KEY("id_livello_accesso") REFERENCES public."LIVELLO_ACCESSO"("id")
 );
 
 ALTER TABLE IF EXISTS public."RUOLO"
@@ -31,9 +29,7 @@ CREATE TABLE IF NOT EXISTS public."UTENTE"
     "cognome" character varying(256),
     "telefono" character varying(20),
     "hashPassword" text NOT NULL,
-    -- "id_ruolo" uuid NOT NULL,
     PRIMARY KEY ("id")
-	-- CONSTRAINT fk_ruolo FOREIGN KEY("id_ruolo") REFERENCES public."RUOLO"("id")
 );
 
 ALTER TABLE IF EXISTS public."UTENTE"
@@ -64,9 +60,7 @@ CREATE TABLE IF NOT EXISTS public."CLIENTE"
     "cognome" character varying(256),
 	"telefono" character varying(20),
 	"email" character varying(256) NOT NULL UNIQUE,
-	"id_utente_reg" uuid NOT NULL, -- utente che registra il cliente
-    PRIMARY KEY ("id"),
-	CONSTRAINT fk_utentReg_cliente FOREIGN KEY("id_utente_reg") REFERENCES public."UTENTE"("id")
+    PRIMARY KEY ("id")
 );
 
 ALTER TABLE IF EXISTS public."CLIENTE"
@@ -80,10 +74,8 @@ CREATE TABLE IF NOT EXISTS public."MOTO"
     "modello" character varying(256),
     "targa" character varying(20) NOT NULL UNIQUE,
     "id_cliente" uuid NOT NULL,
-	"id_utente_reg" uuid NOT NULL, -- utente che registra la moto
     PRIMARY KEY ("id"),
-	CONSTRAINT fk_cliente FOREIGN KEY("id_cliente") REFERENCES public."CLIENTE"("id"),
-	CONSTRAINT fk_utenteReg_moto FOREIGN KEY("id_utente_reg") REFERENCES public."UTENTE"("id")
+	CONSTRAINT fk_cliente FOREIGN KEY("id_cliente") REFERENCES public."CLIENTE"("id")
 );
 
 ALTER TABLE IF EXISTS public."MOTO"
@@ -115,8 +107,10 @@ CREATE TABLE IF NOT EXISTS public."RIPARAZIONE"
 	"dataFine" TIMESTAMP, 
     "id_utente_mec" uuid DEFAULT NULL, -- utente che effettua la riparazione (meccanico)
 	"id_moto" uuid NOT NULL,
+    "id_utente_reg" uuid NOT NULL, -- utente che registra la riparazione
     PRIMARY KEY ("id"),
 	CONSTRAINT fk_utente_mec FOREIGN KEY("id_utente_mec") REFERENCES public."UTENTE"("id"),
+	CONSTRAINT fk_utente_reg FOREIGN KEY("id_utente_reg") REFERENCES public."UTENTE"("id"),
 	CONSTRAINT fk_stato_riparazione FOREIGN KEY("id_stato") REFERENCES public."STATO_RIPARAZIONE"("id"),
 	CONSTRAINT fk_moto FOREIGN KEY("id_moto") REFERENCES public."MOTO"("id")
 );
@@ -144,6 +138,7 @@ ALTER TABLE IF EXISTS public."RIPARAZIONE_LAVORAZIONE"
 INSERT INTO public."STATO_RIPARAZIONE" ("stato")
 VALUES
     ('Registrato'),
+    ('Rifiutato'),
     ('Accettato'),
     ('In lavorazione'),
     ('Completata');
@@ -158,8 +153,38 @@ VALUES
 INSERT INTO public."UTENTE" ("email", "username", "hashPassword")
 VALUES ('admin@admin.it', 'admin', '$2a$12$AiXIMBFu4qQa65z9oWRVBO8fL4wX4wtlnzg/bXWZr5yKiWhl.n3Ee'); -- pass: Prova@123
 
+INSERT INTO public."UTENTE" ("email", "username", "hashPassword")
+VALUES ('accettazione@ciao.it', 'accettazione', '$2a$12$AiXIMBFu4qQa65z9oWRVBO8fL4wX4wtlnzg/bXWZr5yKiWhl.n3Ee'); -- pass: Prova@123
+
+INSERT INTO public."UTENTE" ("email", "username", "hashPassword")
+VALUES ('meccanico@ciao.it', 'meccanico', '$2a$12$AiXIMBFu4qQa65z9oWRVBO8fL4wX4wtlnzg/bXWZr5yKiWhl.n3Ee'); -- pass: Prova@123
+
 INSERT INTO public."UTENTE_RUOLO" ("id_utente", "id_ruolo")
 VALUES (
   (SELECT ID FROM public."UTENTE" WHERE username='admin'),
   (SELECT ID FROM public."RUOLO" WHERE nome='ADMIN')
+);
+
+INSERT INTO public."UTENTE_RUOLO" ("id_utente", "id_ruolo")
+VALUES (
+  (SELECT ID FROM public."UTENTE" WHERE username='admin'),
+  (SELECT ID FROM public."RUOLO" WHERE nome='ADDETTO_ACCETTAZIONE')
+);
+
+INSERT INTO public."UTENTE_RUOLO" ("id_utente", "id_ruolo")
+VALUES (
+  (SELECT ID FROM public."UTENTE" WHERE username='admin'),
+  (SELECT ID FROM public."RUOLO" WHERE nome='MECCANICO')
+);
+
+INSERT INTO public."UTENTE_RUOLO" ("id_utente", "id_ruolo")
+VALUES (
+  (SELECT ID FROM public."UTENTE" WHERE username='accettazione'),
+  (SELECT ID FROM public."RUOLO" WHERE nome='ADDETTO_ACCETTAZIONE')
+);
+
+INSERT INTO public."UTENTE_RUOLO" ("id_utente", "id_ruolo")
+VALUES (
+  (SELECT ID FROM public."UTENTE" WHERE username='meccanico'),
+  (SELECT ID FROM public."RUOLO" WHERE nome='MECCANICO')
 );

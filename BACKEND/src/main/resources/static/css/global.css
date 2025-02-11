@@ -54,7 +54,8 @@ footer ul li a {
 }
 
 footer ul li a:hover {
-  color: #00bcd4; 
+  color: #00bcd4;
+  text-decoration: none;
 }
 
 header {
@@ -106,6 +107,7 @@ header h1 {
 
 .navbar a:hover {
   color: #00bcd4;
+  text-decoration: none;
 }
 
 /* Stile modale di errore */
@@ -164,12 +166,9 @@ header h1 {
 
 /* stile bottoni */
 .btn {
-  padding: 12px 20px;
   background-color: #007bff;
   color: white;
   text-decoration: none;
-  border-radius: 5px;
-  transition: background-color 0.3s;
 }
 
 .btn:hover {
@@ -191,7 +190,7 @@ table {
 
 table th, table td {
   border: 1px solid #ddd;
-  padding: 10px;
+  padding: 0.75rem;
   text-align: left;
 }
 
@@ -206,4 +205,66 @@ table th {
   font-size: 18px;
   padding: 20px;
   margin-top: 10px;
+}
+
+form label {
+  font-weight: bold;
+}
+
+form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* bottone con x e +*/
+.btn-x {
+  background: none;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  color: #dc3545; 
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+}
+
+.btn-x:hover {
+  color: #a71d2a; 
+  transform: scale(1.2);
+}
+
+.btn-plus {
+  background: none;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  color: #28a745; 
+  cursor: pointer;
+  transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+}
+
+.btn-plus:hover {
+  color: #1e7e34; 
+  transform: scale(1.2); 
+}
+
+.btn-plus:focus, 
+.btn-plus:active, 
+.btn-x:focus, 
+.btn-x:active {
+    outline: none !important;
+    box-shadow: none !important;
 }

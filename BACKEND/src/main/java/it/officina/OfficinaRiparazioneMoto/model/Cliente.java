@@ -13,8 +13,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -42,10 +40,6 @@ public class Cliente {
 	@NotBlank(message = "Email obbligatoria")
 	@Column(length = 256, unique = true, nullable = false)
 	private String email;
-	
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_utente_reg", nullable = false)
-	private Utente utenteReg;
 	
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	private List<Moto> listaMoto;
@@ -79,12 +73,6 @@ public class Cliente {
 	}
 	public void setEmail(String email) {
 		this.email = email;
-	}
-	public Utente getUtenteReg() {
-		return utenteReg;
-	}
-	public void setUtenteReg(Utente utenteReg) {
-		this.utenteReg = utenteReg;
 	}
 	public List<Moto> getListaMoto() {
 		return listaMoto;

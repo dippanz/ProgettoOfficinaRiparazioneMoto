@@ -6,7 +6,6 @@ package it.officina.OfficinaRiparazioneMoto.controller;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import it.officina.OfficinaRiparazioneMoto.dto.RiparazioneLavorazioneDto;
 import it.officina.OfficinaRiparazioneMoto.dto.meccanico.AggiungiLavorazioneDto;
 import it.officina.OfficinaRiparazioneMoto.dto.meccanico.RiparazioneMeccanicoDto;
+import it.officina.OfficinaRiparazioneMoto.exception.BadRequestException;
 import it.officina.OfficinaRiparazioneMoto.service.MeccanicoService;
 import it.officina.OfficinaRiparazioneMoto.utils.Constants.ErrorManager;
 import it.officina.OfficinaRiparazioneMoto.utils.Constants.EnumStatoRiparazione;
