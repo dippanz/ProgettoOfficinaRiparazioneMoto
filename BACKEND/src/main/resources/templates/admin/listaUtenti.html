@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <th:block th:replace="~{fragments/globalFragment :: head}"></th:block>
+        <script type="module" th:src="@{/js/main.js}"></script>
+    </head>
+    <body data-page="adminUtenti">
+        <div th:replace="~{fragments/globalFragment :: modalError}"></div>
+        <div th:replace="~{fragments/globalFragment :: modalSuccess}"></div>
+        <header th:insert="~{fragments/globalFragment :: header}"></header>
+
+        <main>
+            <div class="table-container mt-5">
+                <div
+                    class="ml-5 mt-5 row d-flex justify-content-between align-items-center">
+                    <h2 class="col-auto">Utenti Registrati</h2>
+                    <div class="col-auto mr-5 mt-4 ">
+                        <button
+                            onclick="window.history.back()"
+                            class="btn text-uppercase">indietro
+                        </button>
+                    </div>
+                </div>
+                <p class="ml-5 mr-5 pt-3 pb-3 border-bottom">
+                    In quest area puoi visualizzare tutti gli utenti presenti
+                    nel sistema
+                </p>
+                <table th:if="${not #lists.isEmpty(listaUtenti)}">
+                    <thead>
+                        <tr>
+                            <th class="col-2">Nome</th>
+                            <th class="col-2">Cognome</th>
+                            <th class="col-2">Email</th>
+                            <th class="col-2">Username</th>
+                            <th class="col-2">Telefono</th>
+                            <th class="col-2">Ruoli</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="utente : ${listaUtenti}">
+                            <td class="col-2" th:text="${utente.nome}"></td>
+                            <td class="col-2" th:text="${utente.cognome}"></td>
+                            <td class="col-2" th:text="${utente.email}"></td>
+                            <td class="col-2" th:text="${utente.username}"></td>
+                            <td class="col-2" th:text="${utente.telefono}"></td>
+                            <td class="col-2">
+                                <span th:each="ruolo : ${utente.ruoli}"
+                                    th:text="${ruolo + ' '}"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div th:if="${#lists.isEmpty(listaUtenti)}">
+                    <p>Nessun utente registrato.</p>
+                </div>
+            </div>
+        </main>
+
+        <footer th:insert="~{fragments/globalFragment :: footer}"></footer>
+    </body>
+</html>

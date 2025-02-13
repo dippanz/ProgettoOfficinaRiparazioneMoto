@@ -3,7 +3,6 @@ package it.officina.OfficinaRiparazioneMoto.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,6 +12,7 @@ import it.officina.OfficinaRiparazioneMoto.dao.UtenteDao;
 import it.officina.OfficinaRiparazioneMoto.dto.UtenteDto;
 import it.officina.OfficinaRiparazioneMoto.dto.admin.RegistrazioneUtenteDto;
 import it.officina.OfficinaRiparazioneMoto.exception.BadRequestException;
+import it.officina.OfficinaRiparazioneMoto.mapper.UtenteMapper;
 import it.officina.OfficinaRiparazioneMoto.model.Utente;
 import it.officina.OfficinaRiparazioneMoto.service.UtenteService;
 import it.officina.OfficinaRiparazioneMoto.utils.Constants.ErrorManager;
@@ -21,16 +21,16 @@ import it.officina.OfficinaRiparazioneMoto.utils.Constants.ErrorManager;
 public class UtenteServiceImpl implements UtenteService {
 
     @Autowired
-    ModelMapper modelMapper;
+    private UtenteMapper mapper;
 
     @Autowired
-    UtenteDao utenteDao;
+    private UtenteDao utenteDao;
 
     @Autowired
-    RuoloDao ruoloDao;
+    private RuoloDao ruoloDao;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UtenteDto registraUtente(RegistrazioneUtenteDto utenteDto) throws BadRequestException {
@@ -43,13 +43,13 @@ public class UtenteServiceImpl implements UtenteService {
         }
 
         // Mappo l'utenteDto in un oggetto Utente
-        Utente utente = modelMapper.map(utenteDto, Utente.class);
+        Utente utente = mapper.toEntityFrom(utenteDto);
         utente.setRuoli(ruoloDao.findByNomeIn(utenteDto.getRuoli()));
         
         // Hash della password
         utente.setHashPassword(passwordEncoder.encode(utenteDto.getHashPassword()));
         // ritorno un oggetto UtenteDto per non esporre troppi dati
-        return modelMapper.map(utenteDao.save(utente), UtenteDto.class);
+        return mapper.toDto(utenteDao.save(utente));
     }
 
     @Override
@@ -64,5 +64,10 @@ public class UtenteServiceImpl implements UtenteService {
         });
 
         return response;
+    }
+
+    @Override
+    public List<UtenteDto> getListaUtenteDto() {
+        return mapper.toDtoList(utenteDao.findAllExceptAdmin());
     }
 }

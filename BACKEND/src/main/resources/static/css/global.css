@@ -192,6 +192,8 @@ table th, table td {
   border: 1px solid #ddd;
   padding: 0.75rem;
   text-align: left;
+  overflow-wrap: break-word; 
+  word-break: break-all;
 }
 
 table th {

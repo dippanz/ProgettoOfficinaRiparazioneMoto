@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+    <head>
+        <th:block th:replace="~{fragments/globalFragment :: head}"></th:block>
+        <script type="module" th:src="@{/js/main.js}"></script>
+    </head>
+    <body data-page="adminDashboard">
+        <div th:replace="~{fragments/globalFragment :: modalError}"></div>
+        <div th:replace="~{fragments/globalFragment :: modalSuccess}"></div>
+        <header th:insert="~{fragments/globalFragment :: header}"></header>
+        <main>
+            <div
+                class="ml-5 mt-5 row d-flex justify-content-between align-items-center">
+                <h2 class="col-auto">Dashboard Admin</h2>
+                <div class="col-auto mr-5 mt-4 ">
+                    <a th:href="@{/admin/dashboard/registra_utente}"
+                        class="btn text-uppercase">Registra Nuovo Utente</a>
+
+                </div>
+                <p class="ml-5 mr-5 pt-3 pb-3 border-bottom">
+                    Benvenuto nella dashboard di amministrazione! Qui puoi
+                    gestire in modo semplice e veloce utenti, moto e clienti.
+                    Usa i link sottostanti per navigare tra le varie sezioni
+                    oppure registra un nuovo utente cliccando sul pulsante qui
+                    sotto.
+                </p>
+            </div>
+            <div class="row ml-5">
+                <a th:href="@{/admin/dashboard/utenti}"
+                    class="btn text-uppercase col-auto ml-5 mr-2">VISUALIZZA UTENTI</a>
+                <a th:href="@{/admin/dashboard/moto}"
+                    class="btn text-uppercase col-auto mr-2">VISUALIZZA MOTO</a>
+                <a th:href="@{/admin/dashboard/clienti}"
+                    class="btn text-uppercase col-auto">VISUALIZZA CLIENTI</a>
+            </div>
+        </main>
+        <footer th:insert="~{fragments/globalFragment :: footer}"></footer>
+    </body>
+</html>

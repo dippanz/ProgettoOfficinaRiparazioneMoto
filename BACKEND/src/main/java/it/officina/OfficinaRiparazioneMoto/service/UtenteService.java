@@ -12,4 +12,5 @@ public interface UtenteService {
 
     UtenteDto registraUtente(RegistrazioneUtenteDto utenteDto);
     List<String> getRuoliUtente();
+    List<UtenteDto> getListaUtenteDto();
 }

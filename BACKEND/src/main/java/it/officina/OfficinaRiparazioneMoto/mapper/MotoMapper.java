@@ -1,10 +1,14 @@
 package it.officina.OfficinaRiparazioneMoto.mapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import jakarta.annotation.PostConstruct;
 import it.officina.OfficinaRiparazioneMoto.dto.ClienteDto;
+import it.officina.OfficinaRiparazioneMoto.dto.MotoClienteDto;
 import it.officina.OfficinaRiparazioneMoto.dto.MotoDto;
 import it.officina.OfficinaRiparazioneMoto.model.Moto;
 
@@ -21,6 +25,12 @@ public class MotoMapper implements BaseMapper<Moto, MotoDto> {
         // Configurazione personalizzata per la conversione tra Moto e MotoDto
         modelMapper.typeMap(Moto.class, MotoDto.class).addMappings(mapper -> {
             mapper.map(src -> src.getCliente().getId(), MotoDto::setIdCliente);
+        });
+        modelMapper.typeMap(Moto.class, MotoClienteDto.class).addMappings(mapper -> {
+            mapper.map(src -> src.getCliente().getNome(), MotoClienteDto::setNome);
+            mapper.map(src -> src.getCliente().getCognome(), MotoClienteDto::setCognome);
+            mapper.map(src -> src.getCliente().getTelefono(), MotoClienteDto::setTelefono);
+            mapper.map(src -> src.getCliente().getEmail(), MotoClienteDto::setEmail);
         });
     }
 
@@ -50,5 +60,17 @@ public class MotoMapper implements BaseMapper<Moto, MotoDto> {
     @Override
     public MotoDto mapEntityToDto(Object entity) {
         return modelMapper.map(entity, MotoDto.class);
+    }
+
+    public MotoClienteDto entityToMotoClienteDto(Moto moto) {
+        return modelMapper.map(moto, MotoClienteDto.class);
+    }
+
+    public List<MotoClienteDto> entityToListaMotoClienteDto(List<Moto> listaMoto) {
+        List<MotoClienteDto> dto = new ArrayList<>();
+        for (Moto moto : listaMoto) {
+            dto.add(entityToMotoClienteDto(moto));
+        }
+        return dto;
     }
 }

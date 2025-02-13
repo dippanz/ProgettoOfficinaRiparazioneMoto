@@ -3,6 +3,7 @@
  */
 package it.officina.OfficinaRiparazioneMoto.dao;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -33,4 +34,7 @@ public interface UtenteDao extends JpaRepository<Utente, UUID> {
 
     @Query("SELECT u FROM Utente u JOIN FETCH u.ruoli WHERE u.username = :username")
     Optional<Utente> findByUsernameWithRoles(@Param("username") String username);
+
+	@Query("SELECT u FROM Utente u WHERE NOT EXISTS (SELECT r FROM u.ruoli r WHERE r.nome = 'ADMIN')")
+    List<Utente> findAllExceptAdmin();
 }

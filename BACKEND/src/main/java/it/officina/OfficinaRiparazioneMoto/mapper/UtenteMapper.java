@@ -1,5 +1,6 @@
 package it.officina.OfficinaRiparazioneMoto.mapper;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import it.officina.OfficinaRiparazioneMoto.dto.UtenteDto;
+import it.officina.OfficinaRiparazioneMoto.dto.admin.RegistrazioneUtenteDto;
 import it.officina.OfficinaRiparazioneMoto.model.Ruolo;
 import it.officina.OfficinaRiparazioneMoto.model.Utente;
 import jakarta.annotation.PostConstruct;
@@ -19,11 +21,16 @@ public class UtenteMapper implements BaseMapper<Utente, UtenteDto> {
 
     @PostConstruct
     public void configureMappings() {
-        modelMapper.typeMap(Utente.class, UtenteDto.class).addMappings(mapper -> {
-            mapper.map(src -> src.getRuoli() != null
-                    ? src.getRuoli().stream().map(Ruolo::getNome).collect(Collectors.toList())
-                    : null, UtenteDto::setRuoli);
-        });
+        modelMapper.typeMap(Utente.class, UtenteDto.class)
+                .addMappings(mapper -> mapper.using(ctx -> {
+                    List<Ruolo> ruoli = null;
+                    if (ctx.getSource() instanceof List<?>) {
+                        ruoli = (List<Ruolo>) ctx.getSource();
+                    }
+                    return ruoli != null
+                            ? ruoli.stream().map(Ruolo::getNome).collect(Collectors.toList())
+                            : null;
+                }).map(Utente::getRuoli, UtenteDto::setRuoli));
     }
 
     @Override
@@ -33,6 +40,10 @@ public class UtenteMapper implements BaseMapper<Utente, UtenteDto> {
 
     @Override
     public Utente toEntity(UtenteDto dto) {
+        return modelMapper.map(dto, Utente.class);
+    }
+
+    public Utente toEntityFrom(RegistrazioneUtenteDto dto) {
         return modelMapper.map(dto, Utente.class);
     }
 

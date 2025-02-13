@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <th:block th:replace="~{fragments/globalFragment :: head}"></th:block>
+        <script type="module" th:src="@{/js/main.js}"></script>
+    </head>
+    <body data-page="adminMoto">
+        <div th:replace="~{fragments/globalFragment :: modalError}"></div>
+        <div th:replace="~{fragments/globalFragment :: modalSuccess}"></div>
+        <header th:insert="~{fragments/globalFragment :: header}"></header>
+        <main>
+            <div class="table-container mt-5">
+                <div
+                    class="ml-5 mt-5 row d-flex justify-content-between align-items-center">
+                    <h2 class="col-auto">Moto Registrate</h2>
+                    <div class="col-auto mr-5 mt-4 ">
+                        <button
+                            onclick="window.history.back()"
+                            class="btn text-uppercase">indietro
+                        </button>
+                    </div>
+                </div>
+                <p class="ml-5 mr-5 pt-3 pb-3 border-bottom">
+                    In quest area puoi visualizzare tutte le moto presenti
+                    nel sistema
+                </p>
+                <table th:if="${!#lists.isEmpty(listaMoto)}">
+                    <thead>
+                        <tr>
+                            <th>Modello</th>
+                            <th>Targa</th>
+                            <th>Cliente</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="moto : ${listaMoto}">
+                            <td th:text="${moto.modello}"></td>
+                            <td th:text="${moto.targa}"></td>
+                            <td th:text="${moto.email}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div th:if="${#lists.isEmpty(listaMoto)}">
+                    <p>Nessuna moto registrata.</p>
+                </div>
+            </div>
+        </main>
+        <footer th:insert="~{fragments/globalFragment :: footer}"></footer>
+    </body>
+</html>

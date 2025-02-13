@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import it.officina.OfficinaRiparazioneMoto.dao.MotoDao;
 import it.officina.OfficinaRiparazioneMoto.dto.ClienteDto;
+import it.officina.OfficinaRiparazioneMoto.dto.MotoClienteDto;
 import it.officina.OfficinaRiparazioneMoto.dto.MotoDto;
 import it.officina.OfficinaRiparazioneMoto.exception.BadRequestException;
 import it.officina.OfficinaRiparazioneMoto.mapper.MotoMapper;
@@ -58,6 +59,11 @@ public class MotoServiceImpl implements MotoService {
     @Override
     public MotoDto getMotoDtoById(UUID id) throws BadRequestException{
         return mapper.toDto(motoDao.findById(id).orElseThrow(() -> new BadRequestException(ErrorManager.MOTO_NON_TROVATA)));
+    }
+
+    @Override
+    public List<MotoClienteDto> getListMotoClienteDto() {
+        return mapper.entityToListaMotoClienteDto(motoDao.findAll());
     }
 
 }
