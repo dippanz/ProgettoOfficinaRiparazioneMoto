@@ -18,10 +18,18 @@ export function handleFetchResponse(response) {
 
   // Controllo se la risposta è un redirect
   if (response.redirected) {
-    const flashMessageError =
-      document.getElementById("flashMessage")?.dataset?.errorMessage;
-    if (!flashMessageError) {
-      showSuccessModal("Operazione competata correttamente", true);
+    // se devo navigare verso login è dovuto a mancate autorizzazioni
+    if (response.url.includes("/public/login")) {
+      showErrorModal(
+        "La sessione è scaduta o non sei autorizzato. Effettua il login.",
+        true
+      );
+    } else {
+      const flashMessageError =
+        document.getElementById("flashMessage")?.dataset?.errorMessage;
+      if (!flashMessageError) {
+        showSuccessModal("Operazione competata correttamente", true);
+      }
     }
     window.location.href = response.url; // Effettua il redirect manuale
     return Promise.reject({ redirecting: true }); // Interrompe il flusso della Promise

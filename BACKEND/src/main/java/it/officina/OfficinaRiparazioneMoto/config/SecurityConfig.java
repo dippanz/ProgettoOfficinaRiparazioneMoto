@@ -24,6 +24,9 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 	    http
 	        .csrf(csrf -> csrf.disable())
+			.sessionManagement(session -> session
+            	.invalidSessionUrl("/public/login?sessionExpired=true")
+        	)
 	        .authorizeHttpRequests(authorize -> authorize
 	        	.dispatcherTypeMatchers(DispatcherType.FORWARD,DispatcherType.ERROR).permitAll()
 	            .requestMatchers(

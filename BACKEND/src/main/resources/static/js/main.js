@@ -83,7 +83,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const error = flashMessageError
       ? flashMessageError.dataset.errorMessage
       : errorMessage;
-    console.log(error)
     setTimeout(() => {
       showErrorModal(error);
       sessionStorage.removeItem("errorMessage");

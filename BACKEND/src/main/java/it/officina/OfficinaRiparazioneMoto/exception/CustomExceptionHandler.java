@@ -24,15 +24,9 @@ public class CustomExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
-    // qua è possibile gestire gli errori generici cosi per non farli uscire e fare
-    // scoppiare il sito
-    // cosi facendo mando un errore personalizzato e non faccio vedere il vero
-    // errore
-
     @ExceptionHandler(NoResourceFoundException.class)
     public String handleNotFoundException(HttpServletRequest request, RedirectAttributes redirectAttributes,
             NoResourceFoundException ex) {
-
         redirectAttributes.addFlashAttribute("errorCode", "404");
         return "redirect:/error";
     }
@@ -41,8 +35,11 @@ public class CustomExceptionHandler {
     public Object handleGlobalException(HttpServletRequest request, RedirectAttributes redirectAttributes,
             Exception ex) {
 
+        System.err.println(ex);
+
         String httpMethod = request.getMethod();
-        // se NON è una get allora torna un json classico, altrimenti fa un redirect verso la stessa pagina
+        // se NON è una get allora torna un json classico, altrimenti fa un redirect
+        // verso la stessa pagina
         if (!"GET".equalsIgnoreCase(httpMethod)) {
             Map<String, String> errorDetails = new HashMap<>();
             errorDetails.put("errorCode", "UNKNOWN_ERROR");
