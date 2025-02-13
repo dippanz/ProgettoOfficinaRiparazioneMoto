@@ -6,8 +6,11 @@ package it.officina.OfficinaRiparazioneMoto.model;
 import java.util.List;
 import java.util.UUID;
 
+import it.officina.OfficinaRiparazioneMoto.converter.LowercaseConverter;
+import it.officina.OfficinaRiparazioneMoto.converter.UppercaseConverter;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -29,9 +32,11 @@ public class Cliente {
 	private UUID id;
 	
 	@Column(length = 256)
+	@Convert(converter = UppercaseConverter.class)
 	private String nome;
 	
 	@Column(length = 256)
+	@Convert(converter = UppercaseConverter.class)
 	private String cognome;
 	
 	@Column(length = 256)
@@ -39,6 +44,7 @@ public class Cliente {
 	
 	@NotBlank(message = "Email obbligatoria")
 	@Column(length = 256, unique = true, nullable = false)
+	@Convert(converter = LowercaseConverter.class)
 	private String email;
 	
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)

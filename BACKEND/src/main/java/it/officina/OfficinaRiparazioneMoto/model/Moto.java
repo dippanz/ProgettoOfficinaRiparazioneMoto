@@ -6,8 +6,10 @@ package it.officina.OfficinaRiparazioneMoto.model;
 import java.util.List;
 import java.util.UUID;
 
+import it.officina.OfficinaRiparazioneMoto.converter.UppercaseConverter;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -35,6 +37,7 @@ public class Moto {
 	
 	@NotBlank(message = "Targa obbligatoria")
 	@Column(length = 20, unique = true, nullable = false)
+	@Convert(converter = UppercaseConverter.class)
 	private String targa;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)

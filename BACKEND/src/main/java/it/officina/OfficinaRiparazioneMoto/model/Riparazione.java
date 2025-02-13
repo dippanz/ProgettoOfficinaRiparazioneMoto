@@ -7,8 +7,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+import it.officina.OfficinaRiparazioneMoto.converter.UppercaseConverter;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -47,6 +49,7 @@ public class Riparazione {
 			message = "Il codice non rispetta i criteri richiesti"
 	)
 	@Column(name = "codice_servizio", unique = true, nullable = false)
+	@Convert(converter = UppercaseConverter.class)
 	private String codiceServizio;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)

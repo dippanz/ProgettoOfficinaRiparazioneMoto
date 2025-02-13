@@ -16,8 +16,10 @@ import org.springframework.stereotype.Service;
 
 import it.officina.OfficinaRiparazioneMoto.dao.UtenteDao;
 import it.officina.OfficinaRiparazioneMoto.dto.UtenteDto;
+import it.officina.OfficinaRiparazioneMoto.exception.BadRequestException;
 import it.officina.OfficinaRiparazioneMoto.model.Utente;
 import it.officina.OfficinaRiparazioneMoto.service.AuthService;
+import it.officina.OfficinaRiparazioneMoto.utils.Constants.ErrorManager;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -31,10 +33,14 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public UserDetails loadUserByUsername(String identify) throws UsernameNotFoundException {
 
-        Optional<Utente> utenteOp = utenteDao.findByEmailWithRoles(identify);
+        if(identify == null){
+            throw new BadRequestException(ErrorManager.IDENTIFY_NULLO);
+        }
+
+        Optional<Utente> utenteOp = utenteDao.findByEmailWithRoles(identify.toLowerCase());
 
         if (!utenteOp.isPresent()) {
-            utenteOp = utenteDao.findByUsernameWithRoles(identify);
+            utenteOp = utenteDao.findByUsernameWithRoles(identify.toUpperCase());
 
             if (!utenteOp.isPresent()) {
                 throw new UsernameNotFoundException("Nessun utente trovato con questo identificativo: " + identify);

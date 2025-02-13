@@ -3,8 +3,11 @@ package it.officina.OfficinaRiparazioneMoto.model;
 import java.util.List;
 import java.util.UUID;
 
+import it.officina.OfficinaRiparazioneMoto.converter.LowercaseConverter;
+import it.officina.OfficinaRiparazioneMoto.converter.UppercaseConverter;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -29,9 +32,11 @@ public class Utente {
 	private UUID id;
 	
 	@Column(length = 256)
+	@Convert(converter = UppercaseConverter.class)
 	private String nome;
 	
 	@Column(length = 256)
+	@Convert(converter = UppercaseConverter.class)
 	private String cognome;
 	
 	@Column(length = 256)
@@ -39,9 +44,11 @@ public class Utente {
 	
 	@NotBlank(message = "Email obbligatoria")
 	@Column(nullable = false, unique = true, length = 256)
+	@Convert(converter = LowercaseConverter.class)
 	private String email;
 	
 	@Column(unique = true, length = 256)
+	@Convert(converter = UppercaseConverter.class)
 	private String username;
 	
 	@NotBlank(message = "HashPassword obbligatoria")

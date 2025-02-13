@@ -38,7 +38,8 @@ public class Constants {
         NESSUN_ID_PRESA_IN_CARICO("00015", "Specificare almeno un ID per la presa in carico"),
 
         // Auth section
-        UTENTE_NON_LOGGATO("00008", "Utente non loggato");
+        UTENTE_NON_LOGGATO("00008", "Utente non loggato"),
+        IDENTIFY_NULLO("00020", "Inserire email o username");
 
         private final String code;
         private final String message;
