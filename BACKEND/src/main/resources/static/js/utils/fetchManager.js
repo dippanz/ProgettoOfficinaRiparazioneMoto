@@ -1,7 +1,11 @@
-import { showErrorModal } from "../utils/domManager.js";
+import { showErrorModal, showSuccessModal } from "../utils/domManager.js";
 
 export function handleFetchError(error) {
   try {
+    if (error.redirecting) {
+      // se si tratta di un redirecting allora torno direttamente
+      return;
+    }
     const errorParsed = JSON.parse(error.message);
     showErrorModal(errorParsed.message, true); // Mostra il messaggio di errore JSON
   } catch (e) {
@@ -14,8 +18,13 @@ export function handleFetchResponse(response) {
 
   // Controllo se la risposta è un redirect
   if (response.redirected) {
+    const flashMessageError =
+      document.getElementById("flashMessage")?.dataset?.errorMessage;
+    if (!flashMessageError) {
+      showSuccessModal("Operazione competata correttamente", true);
+    }
     window.location.href = response.url; // Effettua il redirect manuale
-    return Promise.reject("Redirecting..."); // Interrompe il flusso della Promise
+    return Promise.reject({ redirecting: true }); // Interrompe il flusso della Promise
   }
 
   if (response.ok) {
@@ -34,7 +43,5 @@ export function handleFetchResponse(response) {
 }
 
 export function fetchHandled(url, options = {}) {
-  return fetch(url, options)
-    .then(handleFetchResponse)
-    .catch(handleFetchError);
+  return fetch(url, options).then(handleFetchResponse).catch(handleFetchError);
 }
