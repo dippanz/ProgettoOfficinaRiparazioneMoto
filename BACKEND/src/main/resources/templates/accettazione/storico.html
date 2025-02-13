@@ -7,6 +7,7 @@
     </head>
     <body data-page="accettazioneStorico">
         <div th:replace="~{fragments/globalFragment :: modalError}"></div>
+        <div th:replace="~{fragments/globalFragment :: modalSuccess}"></div>
         <header th:insert="~{fragments/globalFragment :: header}"></header>
         <main>
             <div class="table-container">
@@ -16,7 +17,7 @@
                     <button type="button" class="btn mr-3 mt-3 text-uppercase"
                         onclick="window.history.back()">Indietro</button>
                 </div>
-                <th:block th:replace="~{fragments/tabelle :: tableRiparazioniMeccanico(utente='accettazione')}"></th:blockth:replace>
+                <th:block th:replace="~{fragments/tabelle :: tableRiparazioniMeccanico(utente='accettazione', path='storico')}">
                 </th:block>
             </div>
         </main>

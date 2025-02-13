@@ -151,40 +151,40 @@ VALUES
     ('ADDETTO_ACCETTAZIONE');  
 
 INSERT INTO public."UTENTE" ("email", "username", "hashPassword")
-VALUES ('admin@admin.it', 'admin', '$2a$12$AiXIMBFu4qQa65z9oWRVBO8fL4wX4wtlnzg/bXWZr5yKiWhl.n3Ee'); -- pass: Prova@123
+VALUES ('admin@admin.it', 'ADMIN', '$2a$12$AiXIMBFu4qQa65z9oWRVBO8fL4wX4wtlnzg/bXWZr5yKiWhl.n3Ee'); -- pass: Prova@123
 
 INSERT INTO public."UTENTE" ("email", "username", "hashPassword")
-VALUES ('accettazione@ciao.it', 'accettazione', '$2a$12$AiXIMBFu4qQa65z9oWRVBO8fL4wX4wtlnzg/bXWZr5yKiWhl.n3Ee'); -- pass: Prova@123
+VALUES ('accettazione@ciao.it', 'ACCETTAZIONE', '$2a$12$AiXIMBFu4qQa65z9oWRVBO8fL4wX4wtlnzg/bXWZr5yKiWhl.n3Ee'); -- pass: Prova@123
 
 INSERT INTO public."UTENTE" ("email", "username", "hashPassword")
-VALUES ('meccanico@ciao.it', 'meccanico', '$2a$12$AiXIMBFu4qQa65z9oWRVBO8fL4wX4wtlnzg/bXWZr5yKiWhl.n3Ee'); -- pass: Prova@123
+VALUES ('meccanico@ciao.it', 'MECCANICO', '$2a$12$AiXIMBFu4qQa65z9oWRVBO8fL4wX4wtlnzg/bXWZr5yKiWhl.n3Ee'); -- pass: Prova@123
 
 INSERT INTO public."UTENTE_RUOLO" ("id_utente", "id_ruolo")
 VALUES (
-  (SELECT ID FROM public."UTENTE" WHERE username='admin'),
+  (SELECT ID FROM public."UTENTE" WHERE username='ADMIN'),
   (SELECT ID FROM public."RUOLO" WHERE nome='ADMIN')
 );
 
 INSERT INTO public."UTENTE_RUOLO" ("id_utente", "id_ruolo")
 VALUES (
-  (SELECT ID FROM public."UTENTE" WHERE username='admin'),
+  (SELECT ID FROM public."UTENTE" WHERE username='ADMIN'),
   (SELECT ID FROM public."RUOLO" WHERE nome='ADDETTO_ACCETTAZIONE')
 );
 
 INSERT INTO public."UTENTE_RUOLO" ("id_utente", "id_ruolo")
 VALUES (
-  (SELECT ID FROM public."UTENTE" WHERE username='admin'),
+  (SELECT ID FROM public."UTENTE" WHERE username='ADMIN'),
   (SELECT ID FROM public."RUOLO" WHERE nome='MECCANICO')
 );
 
 INSERT INTO public."UTENTE_RUOLO" ("id_utente", "id_ruolo")
 VALUES (
-  (SELECT ID FROM public."UTENTE" WHERE username='accettazione'),
+  (SELECT ID FROM public."UTENTE" WHERE username='ACCETTAZIONE'),
   (SELECT ID FROM public."RUOLO" WHERE nome='ADDETTO_ACCETTAZIONE')
 );
 
 INSERT INTO public."UTENTE_RUOLO" ("id_utente", "id_ruolo")
 VALUES (
-  (SELECT ID FROM public."UTENTE" WHERE username='meccanico'),
+  (SELECT ID FROM public."UTENTE" WHERE username='MECCANICO'),
   (SELECT ID FROM public."RUOLO" WHERE nome='MECCANICO')
 );

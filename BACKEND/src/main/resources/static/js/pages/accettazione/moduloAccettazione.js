@@ -31,9 +31,9 @@ export function handleModuloAccettazioneForm() {
     }
 
     // Debug: mostra cosa viene inviato
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
+    // for (let [key, value] of formData.entries()) {
+    //   console.log(key, value);
+    // }
 
     // Disabilita il pulsante di invio per evitare doppie richieste
     const submitButton = form.querySelector("button[type='submit']");

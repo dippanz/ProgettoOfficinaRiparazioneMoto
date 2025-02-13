@@ -131,11 +131,13 @@
     </div>
 </th:block>
 
-<th:block th:fragment="tableRiparazioniMeccanico(utente)">
-    <div th:if="${not #lists.isEmpty(listaRiparazioni) && utente == 'accettazione'}" class="mb-3 mt-5">
+<th:block th:fragment="tableRiparazioniMeccanico(utente, path)">
+    <div
+        th:if="${not #lists.isEmpty(listaRiparazioni) && utente == 'accettazione' && path == 'storico'}"
+        class="mb-3 mt-5">
         <label for="filterStatus" class="form-label">Filtra per Stato:</label>
         <select id="filterStatus" class="form-control">
-            <option value="">Tutti</option>
+            <option value>Tutti</option>
             <option value="Accettato">Accettato</option>
             <option value="In lavorazione">In Lavorazione</option>
             <option value="Completata">Completata</option>
@@ -160,11 +162,11 @@
                 <td th:text="${riparazione.stato}"></td>
                 <td>
                     <a
-                        th:if="${utente == 'meccanico' && riparazione.stato == 'In lavorazione'}"
+                        th:if="${utente == 'meccanico' && path == ''}"
                         th:href="@{/meccanico/dettaglio/{id}(id=${riparazione.idRiparazione})}"
                         class="btn text-uppercase">Dettagli</a>
                     <a
-                        th:if="${utente == 'meccanico' && riparazione.stato == 'Completata'}"
+                        th:if="${utente == 'meccanico' && path == 'storico'}"
                         th:href="@{/meccanico/storico/dettaglio/{id}(id=${riparazione.idRiparazione})}"
                         class="btn text-uppercase">Dettagli</a>
                     <a
@@ -180,7 +182,18 @@
             </tr>
         </tbody>
     </table>
-    <p class="no-data"
-        th:if="${#lists.isEmpty(listaRiparazioni)}">Nessun veicolo
-        in attesa di lavorazion per te.</p>
+    <div>
+        <p class="no-data"
+            th:if="${#lists.isEmpty(listaRiparazioni) && utente == 'meccanico' && path == ''}">Nessun
+            veicolo
+            in attesa di lavorazion per te.</p>
+        <p class="no-data"
+            th:if="${#lists.isEmpty(listaRiparazioni) && utente == 'meccanico' && path == 'storico'}">Nessun
+            veicolo
+            ancora completato.</p>
+        <p class="no-data"
+            th:if="${#lists.isEmpty(listaRiparazioni) && utente == 'accettazione' && path == 'storico'}">Nessun
+            veicolo
+            ancora gestito.</p>
+    </div>
 </th:block>

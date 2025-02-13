@@ -71,7 +71,7 @@ public class AccettazioneServiceImpl implements AccettazioneService {
         RiparazioneDto riparazione = riparazioneMapper.mapEntityToDto(request);
         riparazione.setIdMoto(moto.getId());
         riparazione.setDataFine(LocalDateTime.now().plusMonths(1));
-        riparazione = riparazioneService.salvaRiparazioneAccettata(riparazione);
+        riparazioneService.salvaRiparazioneAccettata(riparazione);
     }
 
     @Override
