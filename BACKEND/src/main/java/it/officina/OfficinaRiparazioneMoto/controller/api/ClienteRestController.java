@@ -18,15 +18,15 @@ import it.officina.OfficinaRiparazioneMoto.service.ClienteService;
 public class ClienteRestController {
 
     @Autowired
-    private ClienteService clienteService;
+    private ClienteService service;
 
     @GetMapping
     public ResponseEntity<List<ClienteDto>> getAllClienti() {
-        return ResponseEntity.ok(clienteService.getAllClienti());
+        return ResponseEntity.ok(service.getAllClienti());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ClienteDto> getClienteById(@PathVariable UUID id) {
-        return ResponseEntity.ok(clienteService.getClienteDtoById(id));
+        return ResponseEntity.ok(service.getClienteDtoById(id));
     }
 }

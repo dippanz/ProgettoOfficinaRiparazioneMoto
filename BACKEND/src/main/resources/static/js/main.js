@@ -43,6 +43,18 @@ document.addEventListener("DOMContentLoaded", function () {
       import("./pages/accettazione/storico.js").then((module) =>
         module.handleStoricoPage()
       ),
+    adminModificaUtente: () =>
+      import("./pages/admin/modificaUtente.js").then((module) =>
+        module.handleModificaUtenteForm()
+      ),
+    adminModificaCliente: () =>
+      import("./pages/admin/modificaCliente.js").then((module) =>
+        module.handleModificaClienteForm()
+      ),
+    adminModificaMoto: () =>
+      import("./pages/admin/modificaMoto.js").then((module) =>
+        module.handleModificaMotoForm()
+      ),
   };
 
   if (modules[page]) {

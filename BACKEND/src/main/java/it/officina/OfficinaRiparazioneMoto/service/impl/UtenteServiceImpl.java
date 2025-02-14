@@ -2,6 +2,7 @@ package it.officina.OfficinaRiparazioneMoto.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import it.officina.OfficinaRiparazioneMoto.dao.RuoloDao;
 import it.officina.OfficinaRiparazioneMoto.dao.UtenteDao;
 import it.officina.OfficinaRiparazioneMoto.dto.UtenteDto;
+import it.officina.OfficinaRiparazioneMoto.dto.admin.ModificaUtenteDto;
 import it.officina.OfficinaRiparazioneMoto.dto.admin.RegistrazioneUtenteDto;
 import it.officina.OfficinaRiparazioneMoto.exception.BadRequestException;
 import it.officina.OfficinaRiparazioneMoto.mapper.UtenteMapper;
@@ -45,7 +47,7 @@ public class UtenteServiceImpl implements UtenteService {
         // Mappo l'utenteDto in un oggetto Utente
         Utente utente = mapper.toEntityFrom(utenteDto);
         utente.setRuoli(ruoloDao.findByNomeIn(utenteDto.getRuoli()));
-        
+
         // Hash della password
         utente.setHashPassword(passwordEncoder.encode(utenteDto.getHashPassword()));
         // ritorno un oggetto UtenteDto per non esporre troppi dati
@@ -67,7 +69,38 @@ public class UtenteServiceImpl implements UtenteService {
     }
 
     @Override
-    public List<UtenteDto> getListaUtenteDto() {
+    public List<UtenteDto> getListaUtenteDto() throws BadRequestException {
         return mapper.toDtoList(utenteDao.findAllExceptAdmin());
+    }
+
+    @Override
+    public void modificaUtente(ModificaUtenteDto request) throws BadRequestException{
+        Utente utente = utenteDao.findById(request.getId())
+                .orElseThrow(() -> new BadRequestException(ErrorManager.UTENTE_NON_TROVATO));
+
+        if (request.getNome() != null) {
+            utente.setNome(request.getNome());
+        }
+        if (request.getCognome() != null) {
+            utente.setCognome(request.getCognome());
+        }
+        if (request.getEmail() != null) {
+            Optional<Utente> altroUtente = utenteDao.findByEmail(request.getEmail());
+            if (altroUtente.isPresent() && !altroUtente.get().getId().equals(request.getId())) {
+                throw new BadRequestException(ErrorManager.EMAIL_ALREADY_EXISTS);
+            }
+            utente.setEmail(request.getEmail());
+        }
+        if (request.getTelefono() != null) {
+            utente.setTelefono(request.getTelefono());
+        }
+        if (request.getUsername() != null) {
+            Optional<Utente> altroUtente = utenteDao.findByUsername(request.getUsername());
+            if (altroUtente.isPresent() && !altroUtente.get().getId().equals(request.getId())) {
+                throw new BadRequestException(ErrorManager.USERNAME_ALREADY_EXISTS);
+            }
+            utente.setUsername(request.getUsername());
+        }
+        utenteDao.save(utente);
     }
 }

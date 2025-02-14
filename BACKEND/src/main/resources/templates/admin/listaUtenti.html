@@ -32,8 +32,9 @@
                             <th class="col-2">Cognome</th>
                             <th class="col-2">Email</th>
                             <th class="col-2">Username</th>
-                            <th class="col-2">Telefono</th>
+                            <th class="col-auto">Telefono</th>
                             <th class="col-2">Ruoli</th>
+                            <th class="col-auto">Azioni</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -42,10 +43,19 @@
                             <td class="col-2" th:text="${utente.cognome}"></td>
                             <td class="col-2" th:text="${utente.email}"></td>
                             <td class="col-2" th:text="${utente.username}"></td>
-                            <td class="col-2" th:text="${utente.telefono}"></td>
+                            <td class="col-auto" style="word-break: keep-all;"
+                                th:text="${utente.telefono}"></td>
                             <td class="col-2">
                                 <span th:each="ruolo : ${utente.ruoli}"
                                     th:text="${ruolo + ' '}"></span>
+                            </td>
+                            <td class="col-auto">
+                                <div>
+                                    <a
+                                        th:href="@{utenti/modifica/{id}(id=${utente.id})}"
+                                        class="btn text-uppercase">modifica
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     </tbody>

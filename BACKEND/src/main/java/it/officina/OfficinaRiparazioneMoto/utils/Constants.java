@@ -39,6 +39,7 @@ public class Constants {
 
         // Auth section
         UTENTE_NON_LOGGATO("00008", "Utente non loggato"),
+        UTENTE_NON_TROVATO("00021", "Utente con l'id specificato non trovato"),
         IDENTIFY_NULLO("00020", "Inserire email o username");
 
         private final String code;

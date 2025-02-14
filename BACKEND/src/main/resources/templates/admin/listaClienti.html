@@ -24,21 +24,31 @@
                     In quest area puoi visualizzare tutti i clienti presenti
                     nel sistema
                 </p>
-                <table th:if="${!#lists.isEmpty(listaClienti)}">
+                <table 
+                    th:if="${!#lists.isEmpty(listaClienti)}">
                     <thead>
                         <tr>
                             <th>Nome</th>
                             <th>Cognome</th>
                             <th>Email</th>
                             <th>Telefono</th>
+                            <th class="col-auto">Azioni</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tbodyClienti">
                         <tr th:each="cliente : ${listaClienti}">
                             <td th:text="${cliente.nome}"></td>
                             <td th:text="${cliente.cognome}"></td>
                             <td th:text="${cliente.email}"></td>
                             <td th:text="${cliente.telefono}"></td>
+                            <td class="col-auto">
+                                <div>
+                                    <a
+                                        th:href="@{clienti/modifica/{id}(id=${cliente.id})}"
+                                        class="btn text-uppercase">modifica
+                                    </a>
+                                </div>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

@@ -30,6 +30,7 @@
                             <th>Modello</th>
                             <th>Targa</th>
                             <th>Cliente</th>
+                            <th>Azioni</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,6 +38,14 @@
                             <td th:text="${moto.modello}"></td>
                             <td th:text="${moto.targa}"></td>
                             <td th:text="${moto.email}"></td>
+                            <td>
+                                <div>
+                                    <a
+                                        th:href="@{moto/modifica/{id}(id=${moto.id})}"
+                                        class="btn text-uppercase">modifica
+                                    </a>
+                                </div>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

@@ -1,0 +1,158 @@
+<th:block th:fragment="modificaUtenteForm">
+    <h2 class="mb-4">Modifica Utente</h2>
+    <form
+        th:action="@{/admin/dashboard/process_modifica_utente}"
+        method="post"
+        id="modificaUtenteForm"
+        th:object="${modificaUtenteDto}">
+        <input type="hidden" name="id" th:value="${modificaUtenteDto.id}" />
+        <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" th:field="*{nome}"
+                min="2" max="50"
+                class="form-control" placeholder="Inserisci il nome" />
+            <div class="text-danger"
+                th:if="${#fields.hasErrors('nome')}"
+                th:errors="*{nome}"></div>
+        </div>
+        <div class="form-group">
+            <label for="cognome">Cognome</label>
+            <input type="text" id="cognome" th:field="*{cognome}"
+                min="2" max="50"
+                class="form-control"
+                placeholder="Inserisci il cognome" />
+            <div class="text-danger"
+                th:if="${#fields.hasErrors('cognome')}"
+                th:errors="*{cognome}"></div>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" th:field="*{email}"
+                class="form-control" placeholder="Inserisci l'email" />
+            <div class="text-danger"
+                th:if="${#fields.hasErrors('email')}"
+                th:errors="*{email}"></div>
+        </div>
+        <div class="form-group">
+            <label for="telefono">Telefono</label>
+            <input type="text" id="telefono" th:field="*{telefono}"
+                class="form-control"
+                pattern="^\+?[0-9]{1,3}?\s?[0-9]{6,10}$"
+                placeholder="Inserisci il telefono" />
+            <div class="text-danger"
+                th:if="${#fields.hasErrors('telefono')}"
+                th:errors="*{telefono}"></div>
+        </div>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" th:field="*{username}"
+                class="form-control"
+                min="4" max="50"
+                placeholder="Inserisci il username" />
+            <div class="text-danger"
+                th:if="${#fields.hasErrors('username')}"
+                th:errors="*{username}"></div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary text-uppercase">Salva
+            </button>
+            <button
+                type="button"
+                onclick="window.history.back()"
+                class="btn btn-secondary ml-2 text-uppercase">Annulla</button>
+        </div>
+    </form>
+</th:block>
+
+<th:block th:fragment="modificaClienteForm">
+    <h2 class="mb-4">Modifica Cliente</h2>
+    <form
+        th:action="@{/admin/dashboard/process_modifica_cliente}"
+        method="post"
+        id="modificaClienteForm"
+        th:object="${modificaClienteDto}">
+        <input type="hidden" name="id" th:value="${modificaClienteDto.id}" />
+        <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" th:field="*{nome}"
+                min="2" max="50"
+                class="form-control" placeholder="Inserisci il nome" />
+            <div class="text-danger"
+                th:if="${#fields.hasErrors('nome')}"
+                th:errors="*{nome}"></div>
+        </div>
+        <div class="form-group">
+            <label for="cognome">Cognome</label>
+            <input type="text" id="cognome" th:field="*{cognome}"
+                min="2" max="50"
+                class="form-control"
+                placeholder="Inserisci il cognome" />
+            <div class="text-danger"
+                th:if="${#fields.hasErrors('cognome')}"
+                th:errors="*{cognome}"></div>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" th:field="*{email}"
+                class="form-control" placeholder="Inserisci l'email" />
+            <div class="text-danger"
+                th:if="${#fields.hasErrors('email')}"
+                th:errors="*{email}"></div>
+        </div>
+        <div class="form-group">
+            <label for="telefono">Telefono</label>
+            <input type="text" id="telefono" th:field="*{telefono}"
+                class="form-control"
+                pattern="^\+?[0-9]{1,3}?\s?[0-9]{6,10}$"
+                placeholder="Inserisci il telefono" />
+            <div class="text-danger"
+                th:if="${#fields.hasErrors('telefono')}"
+                th:errors="*{telefono}"></div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary text-uppercase">Salva
+            </button>
+            <button
+                type="button"
+                onclick="window.history.back()"
+                class="btn btn-secondary ml-2 text-uppercase">Annulla</button>
+        </div>
+    </form>
+</th:block>
+
+<th:block th:fragment="modificaMotoForm">
+    <h2 class="mb-4">Modifica Moto</h2>
+    <form th:action="@{/admin/dashboard/process_modifica_moto}"
+        method="post"
+        id="modificaMotoForm"
+        th:object="${modificaMotoDto}">
+        <input type="hidden" name="id" th:value="${modificaMotoDto.id}" />
+        <div class="form-group">
+            <label for="targa">Targa</label>
+            <input type="text" id="targa" th:field="*{targa}"
+                pattern="^[A-Z]{1,3}[0-9]{1,4}[A-Z]{1,3}$|^[A-Z]{1,3}-[0-9]{1,4}-[A-Z]{1,3}$|^[A-Z0-9]{6,8}$"
+                class="form-control" placeholder="Inserisci la targa" />
+            <div class="text-danger"
+                th:if="${#fields.hasErrors('targa')}"
+                th:errors="*{targa}"></div>
+        </div>
+        <div class="form-group">
+            <label for="modello">Modello</label>
+            <input type="text" id="modello" th:field="*{modello}"
+                class="form-control"
+                max="80"
+                placeholder="Inserisci il modello" />
+            <div class="text-danger"
+                th:if="${#fields.hasErrors('modello')}"
+                th:errors="*{modello}"></div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary text-uppercase">Salva
+            </button>
+            <button
+                type="button"
+                onclick="window.history.back()"
+                class="btn btn-secondary ml-2 text-uppercase">Annulla</button>
+        </div>
+    </form>
+</th:block>

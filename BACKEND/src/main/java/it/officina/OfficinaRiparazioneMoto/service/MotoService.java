@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import it.officina.OfficinaRiparazioneMoto.dto.MotoClienteDto;
 import it.officina.OfficinaRiparazioneMoto.dto.MotoDto;
+import it.officina.OfficinaRiparazioneMoto.dto.admin.ModificaMotoDto;
 
 /**
  * 
@@ -21,5 +22,7 @@ public interface MotoService {
     MotoDto getMotoDtoById(UUID id);
 
     List<MotoClienteDto> getListMotoClienteDto();
+
+    void modificaMoto(ModificaMotoDto request);
 
 }

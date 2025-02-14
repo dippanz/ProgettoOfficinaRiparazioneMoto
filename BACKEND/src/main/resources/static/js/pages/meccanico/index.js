@@ -1,3 +1,4 @@
+import { showSuccessModal } from "../../utils/domManager.js";
 import { fetchHandled } from "../../utils/fetchManager.js";
 
 export function handleIndexPage(params) {
@@ -12,6 +13,7 @@ export function handleIndexPage(params) {
         }
       ).then((isUpdated) => {
         if (isUpdated) {
+          showSuccessModal("Riparazione completata correttamente", true)
           location.reload();
         }
       });
