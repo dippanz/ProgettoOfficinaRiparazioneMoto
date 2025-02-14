@@ -19,6 +19,18 @@ import it.officina.OfficinaRiparazioneMoto.service.ClienteService;
 import it.officina.OfficinaRiparazioneMoto.service.MotoService;
 import it.officina.OfficinaRiparazioneMoto.utils.Constants.ErrorManager;
 
+/**
+ * Implementation of the {@link MotoService} interface.
+ * <p>
+ * This service provides operations for managing motorcycles, including saving a
+ * new motorcycle,
+ * retrieving motorcycles, and modifying motorcycle details. It uses
+ * {@link MotoDao} for data access,
+ * and {@link MotoMapper} to convert between entity and DTO objects. It also
+ * interacts with {@link ClienteService}
+ * to retrieve client information associated with a motorcycle.
+ * </p>
+ */
 @Service
 public class MotoServiceImpl implements MotoService {
 
@@ -44,7 +56,6 @@ public class MotoServiceImpl implements MotoService {
         ClienteDto clienteMoto;
         try {
             clienteMoto = clienteService.getClienteDtoById(moto.getIdCliente());
-
         } catch (BadRequestException e) {
             throw new BadRequestException(ErrorManager.CLIENTE_NON_ASSEGNATO_MOTO);
         }
@@ -70,7 +81,7 @@ public class MotoServiceImpl implements MotoService {
     }
 
     @Override
-    public void modificaMoto(ModificaMotoDto request) {
+    public void modificaMoto(ModificaMotoDto request) throws BadRequestException {
         Moto moto = motoDao.findById(request.getId())
                 .orElseThrow(() -> new BadRequestException(ErrorManager.MOTO_NON_TROVATA));
 
@@ -86,5 +97,4 @@ public class MotoServiceImpl implements MotoService {
         }
         motoDao.save(moto);
     }
-
 }

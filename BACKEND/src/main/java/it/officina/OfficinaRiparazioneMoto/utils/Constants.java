@@ -1,6 +1,18 @@
 package it.officina.OfficinaRiparazioneMoto.utils;
 
+/**
+ * Contains application-wide constants including error management and repair
+ * state enumerations.
+ */
 public class Constants {
+
+    /**
+     * Enum for managing error codes and messages.
+     * <p>
+     * Each constant represents a specific error scenario with a unique code and
+     * descriptive message.
+     * </p>
+     */
     public enum ErrorManager {
 
         // Cliente section
@@ -45,24 +57,54 @@ public class Constants {
         private final String code;
         private final String message;
 
+        /**
+         * Constructs an error manager constant with the specified code and message.
+         *
+         * @param code    the unique error code
+         * @param message the descriptive error message
+         */
         ErrorManager(String code, String message) {
             this.code = code;
             this.message = message;
         }
 
+        /**
+         * Retrieves the error code.
+         *
+         * @return the error code as a {@code String}
+         */
         public String getCode() {
             return code;
         }
 
+        /**
+         * Retrieves the error message.
+         *
+         * @return the error message as a {@code String}
+         */
         public String getMessage() {
             return message;
         }
 
+        /**
+         * Returns the error message for the given error manager constant.
+         *
+         * @param error the {@code ErrorManager} constant
+         * @return the associated error message, or "Errore sconosciuto" if null
+         */
         public static String getErrorMessage(ErrorManager error) {
             return error != null ? error.getMessage() : "Errore sconosciuto";
         }
     }
 
+    /**
+     * Enum representing the states of a repair.
+     * <p>
+     * Each constant corresponds to a repair state with an associated integer value.
+     * Utility methods are provided to get the next state, check if a state exists,
+     * and convert a numeric value to its corresponding state.
+     * </p>
+     */
     public enum EnumStatoRiparazione {
         REGISTRATO(1),
         RIFIUTATO(2),
@@ -72,15 +114,37 @@ public class Constants {
 
         private final int valore;
 
+        /**
+         * Constructs a repair state with the specified numeric value.
+         *
+         * @param valore the integer value associated with the state
+         */
         EnumStatoRiparazione(int valore) {
             this.valore = valore;
         }
 
+        /**
+         * Retrieves the numeric value of the repair state.
+         *
+         * @return the state value as an {@code int}
+         */
         public int getValue() {
             return valore;
         }
 
-        // Metodo per ottenere lo stato successivo
+        /**
+         * Obtains the next repair state in the workflow.
+         * <p>
+         * The state transitions are defined as follows:
+         * REGISTRATO → ACCETTATO, ACCETTATO → IN_LAVORAZIONE, IN_LAVORAZIONE →
+         * COMPLETATA.
+         * For any other state, {@code null} is returned.
+         * </p>
+         *
+         * @param stato the current state value
+         * @return the next {@code EnumStatoRiparazione} or {@code null} if not
+         *         applicable
+         */
         public static EnumStatoRiparazione getNextStato(int stato) {
             EnumStatoRiparazione statoAttuale = fromValue(stato);
             return switch (statoAttuale) {
@@ -91,7 +155,12 @@ public class Constants {
             };
         }
 
-        // Controlla se un valore esiste tra gli stati validi
+        /**
+         * Checks whether the provided state value corresponds to a valid repair state.
+         *
+         * @param stato the state value to check
+         * @return {@code true} if the state exists, {@code false} otherwise
+         */
         public static boolean haveThisState(int stato) {
             for (EnumStatoRiparazione s : EnumStatoRiparazione.values()) {
                 if (s.getValue() == stato) {
@@ -101,7 +170,14 @@ public class Constants {
             return false;
         }
 
-        // Converte un valore numerico nello stato corrispondente
+        /**
+         * Converts a numeric value to its corresponding {@code EnumStatoRiparazione}.
+         *
+         * @param valore the state value to convert
+         * @return the corresponding {@code EnumStatoRiparazione}
+         * @throws IllegalArgumentException if the value does not correspond to any
+         *                                  valid state
+         */
         public static EnumStatoRiparazione fromValue(int valore) {
             for (EnumStatoRiparazione stato : EnumStatoRiparazione.values()) {
                 if (stato.getValue() == valore) {
@@ -111,5 +187,4 @@ public class Constants {
             throw new IllegalArgumentException("Stato non valido: " + valore);
         }
     }
-
 }

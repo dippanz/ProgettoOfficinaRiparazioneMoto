@@ -7,6 +7,18 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+/**
+ * Data Transfer Object for capturing client and vehicle information during the
+ * acceptance process.
+ * <p>
+ * This DTO is used to collect data from the acceptance form including client
+ * details (name, surname, email,
+ * telephone) and vehicle details (license plate, model) along with a
+ * description of the problem.
+ * It also supports referencing an existing client or vehicle via their unique
+ * identifiers.
+ * </p>
+ */
 public class ClienteVeicoloDto {
 
     @Size(min = 2, max = 50, message = "Il nome non può superare i 50 caratteri")
@@ -33,11 +45,25 @@ public class ClienteVeicoloDto {
     private UUID idCliente;
     private UUID idMoto;
 
+    /**
+     * Validates that an email is provided if no existing client or vehicle is
+     * selected.
+     *
+     * @return {@code true} if an email is provided or an existing client/vehicle is
+     *         selected, {@code false} otherwise.
+     */
     @AssertTrue(message = "La email è obbligatoria se non hai selezionato un cliente esistente")
     public boolean isEmailValid() {
         return idCliente != null || idMoto != null || (email != null && !email.isBlank());
     }
 
+    /**
+     * Validates that a license plate is provided if no existing vehicle is
+     * selected.
+     *
+     * @return {@code true} if a license plate is provided or an existing vehicle is
+     *         selected, {@code false} otherwise.
+     */
     @AssertTrue(message = "La targa è obbligatoria se non hai selezionato un veicolo esistente")
     public boolean isTargaValid() {
         return idMoto != null || (targa != null && !targa.isBlank());
@@ -106,7 +132,7 @@ public class ClienteVeicoloDto {
     public void setDescrizioneProblema(String descrizione) {
         this.descrizioneProblema = descrizione;
     }
-    
+
     public UUID getIdMoto() {
         return idMoto;
     }

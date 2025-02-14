@@ -19,6 +19,16 @@ import it.officina.OfficinaRiparazioneMoto.utils.Constants.ErrorManager;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 
+/**
+ * Service implementation for managing repair work (lavorazione) operations.
+ * <p>
+ * This service provides methods for retrieving, adding, and deleting repair
+ * work records
+ * associated with a repair. It leverages the {@link RiparazioneLavorazioneDao}
+ * for data access,
+ * and uses mappers to convert between entities and DTOs.
+ * </p>
+ */
 @Service
 public class RiparazioneLavorazioneServiceImpl implements RiparazioneLavorazioneService {
 
@@ -30,6 +40,7 @@ public class RiparazioneLavorazioneServiceImpl implements RiparazioneLavorazione
 
     @Autowired
     private RiparazioneLavorazioneMapper mapper;
+
     @Autowired
     private RiparazioneMapper riparazioneMapper;
 
@@ -55,7 +66,7 @@ public class RiparazioneLavorazioneServiceImpl implements RiparazioneLavorazione
 
     @Override
     public void eliminaLavorazione(UUID idLavorazione) throws BadRequestException {
-        if(!riparazioneLavorazioneDao.existsById(idLavorazione)){
+        if (!riparazioneLavorazioneDao.existsById(idLavorazione)) {
             throw new BadRequestException(ErrorManager.LAVORAZIONE_NON_TROVATA);
         }
 

@@ -28,21 +28,38 @@ import it.officina.OfficinaRiparazioneMoto.service.RiparazioneService;
 import it.officina.OfficinaRiparazioneMoto.utils.Constants.EnumStatoRiparazione;
 import jakarta.transaction.Transactional;
 
+/**
+ * Implementation of the {@link AccettazioneService} interface.
+ * <p>
+ * This service provides operations related to the acceptance process of
+ * repairs.
+ * It manages the saving of acceptance records by creating or retrieving vehicle
+ * and client data,
+ * saving the repair as accepted, and retrieving detailed as well as summary
+ * views of repair records.
+ * </p>
+ */
 @Service
 public class AccettazioneServiceImpl implements AccettazioneService {
 
     @Autowired
     private MotoService motoService;
+
     @Autowired
     private ClienteService clienteService;
+
     @Autowired
     private AuthService authService;
+
     @Autowired
     private RiparazioneService riparazioneService;
+
     @Autowired
     private ClienteMapper clienteMapper;
+
     @Autowired
     private MotoMapper motoMapper;
+
     @Autowired
     private RiparazioneMapper riparazioneMapper;
 
@@ -50,7 +67,6 @@ public class AccettazioneServiceImpl implements AccettazioneService {
     @Transactional // aggiunto per rendere le operazioni atomiche, in caso una non vada a buon fine
                    // viene effettuo rollback
     public void salvaAccettazione(ClienteVeicoloDto request) {
-
         MotoDto moto;
         ClienteDto cliente;
 
@@ -76,7 +92,6 @@ public class AccettazioneServiceImpl implements AccettazioneService {
 
     @Override
     public DettaglioAccettazioneDto getDettaglioAccettazione(UUID idRiparazione) {
-
         RiparazioneMotoClienteDto riparazione = riparazioneService.getRiparazioneMotoClienteDto(idRiparazione);
 
         DettaglioAccettazioneDto response = new DettaglioAccettazioneDto();
@@ -98,7 +113,6 @@ public class AccettazioneServiceImpl implements AccettazioneService {
 
     @Override
     public List<RiparazioneModuloAccettazioneDto> getListaRiparazioniModuloAccettazioneDto() {
-
         List<RiparazioneMotoClienteDto> listaRiparazioni = riparazioneService.getListaRiparazioniMotoClienteDto(
                 authService.getUtenteDtoAutenticato().getId(), null, EnumStatoRiparazione.REGISTRATO.getValue());
 

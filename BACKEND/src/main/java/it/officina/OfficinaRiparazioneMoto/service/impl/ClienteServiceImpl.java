@@ -16,6 +16,15 @@ import it.officina.OfficinaRiparazioneMoto.model.Cliente;
 import it.officina.OfficinaRiparazioneMoto.service.ClienteService;
 import it.officina.OfficinaRiparazioneMoto.utils.Constants.ErrorManager;
 
+/**
+ * Implementation of the {@link ClienteService} interface.
+ * <p>
+ * This service provides operations for managing client data, including saving
+ * new clients,
+ * retrieving client lists, retrieving a specific client by ID, and modifying
+ * client details.
+ * </p>
+ */
 @Service
 public class ClienteServiceImpl implements ClienteService {
 

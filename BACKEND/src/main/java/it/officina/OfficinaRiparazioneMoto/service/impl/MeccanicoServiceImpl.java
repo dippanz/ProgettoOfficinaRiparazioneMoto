@@ -20,13 +20,26 @@ import it.officina.OfficinaRiparazioneMoto.service.RiparazioneLavorazioneService
 import it.officina.OfficinaRiparazioneMoto.service.RiparazioneService;
 import it.officina.OfficinaRiparazioneMoto.utils.Constants.EnumStatoRiparazione;
 
+/**
+ * Implementation of the {@link MeccanicoService} interface.
+ * <p>
+ * This service provides operations related to the mechanic's perspective of
+ * repairs.
+ * It supports retrieval of repair lists based on their status, obtaining
+ * detailed repair
+ * information, accepting repairs for work, and managing repair work items
+ * (lavorazioni).
+ * </p>
+ */
 @Service
 public class MeccanicoServiceImpl implements MeccanicoService {
 
     @Autowired
     private RiparazioneService riparazioneService;
+
     @Autowired
     private AuthService authService;
+
     @Autowired
     private RiparazioneLavorazioneService riparazioneLavorazioneService;
 
@@ -68,7 +81,6 @@ public class MeccanicoServiceImpl implements MeccanicoService {
 
     @Override
     public DettaglioMeccanicoDto getDettaglioRiparazione(UUID idRiparazione) {
-
         RiparazioneMotoClienteDto riparazione = riparazioneService.getRiparazioneMotoClienteDto(idRiparazione);
         List<RiparazioneLavorazioneDto> lavorazioni = riparazioneLavorazioneService
                 .getListaRiparazioneLavorazioneDto(idRiparazione);

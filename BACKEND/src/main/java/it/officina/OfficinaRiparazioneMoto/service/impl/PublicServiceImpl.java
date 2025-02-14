@@ -11,16 +11,26 @@ import it.officina.OfficinaRiparazioneMoto.dto.publics.RiparazioneDettaglioGener
 import it.officina.OfficinaRiparazioneMoto.service.PublicService;
 import it.officina.OfficinaRiparazioneMoto.service.RiparazioneService;
 
+/**
+ * Implementation of the {@link PublicService} interface.
+ * <p>
+ * This service provides public-facing operations to retrieve general repair
+ * details.
+ * It leverages the {@link RiparazioneService} to obtain repair data and
+ * transforms it
+ * into a format suitable for public presentation.
+ * </p>
+ */
 @Service
-public class PublicServiceImpl implements PublicService{
+public class PublicServiceImpl implements PublicService {
 
     @Autowired
     private RiparazioneService riparazioneService;
 
     @Override
     public List<RiparazioneDettaglioGeneraleDto> getRiparazioneDettaglioGenerale(String codiceServizio, String targa) {
-
-        List<RiparazioneMotoDto> listaRiparazioni = riparazioneService.getListaRiparazioneMotoDto(codiceServizio, targa);
+        List<RiparazioneMotoDto> listaRiparazioni = riparazioneService.getListaRiparazioneMotoDto(codiceServizio,
+                targa);
         List<RiparazioneDettaglioGeneraleDto> response = new ArrayList<>();
 
         for (RiparazioneMotoDto rip : listaRiparazioni) {
@@ -35,5 +45,4 @@ public class PublicServiceImpl implements PublicService{
 
         return response;
     }
-
 }

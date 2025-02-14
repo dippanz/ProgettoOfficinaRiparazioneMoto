@@ -19,6 +19,13 @@ import it.officina.OfficinaRiparazioneMoto.model.Utente;
 import it.officina.OfficinaRiparazioneMoto.service.UtenteService;
 import it.officina.OfficinaRiparazioneMoto.utils.Constants.ErrorManager;
 
+/**
+ * Implementation of the {@link UtenteService} interface.
+ * <p>
+ * Provides methods for registering users, retrieving user roles and lists, and
+ * modifying user details.
+ * </p>
+ */
 @Service
 public class UtenteServiceImpl implements UtenteService {
 
@@ -56,25 +63,22 @@ public class UtenteServiceImpl implements UtenteService {
 
     @Override
     public List<String> getRuoliUtente() {
-
         List<String> response = new ArrayList<>();
-
         ruoloDao.findAll().forEach(ruolo -> {
             if (!ruolo.getNome().equals("ADMIN")) {
                 response.add(ruolo.getNome());
             }
         });
-
         return response;
     }
 
     @Override
-    public List<UtenteDto> getListaUtenteDto() throws BadRequestException {
+    public List<UtenteDto> getListaUtenteDto() {
         return mapper.toDtoList(utenteDao.findAllExceptAdmin());
     }
 
     @Override
-    public void modificaUtente(ModificaUtenteDto request) throws BadRequestException{
+    public void modificaUtente(ModificaUtenteDto request) throws BadRequestException {
         Utente utente = utenteDao.findById(request.getId())
                 .orElseThrow(() -> new BadRequestException(ErrorManager.UTENTE_NON_TROVATO));
 
