@@ -92,6 +92,11 @@ public class RiparazioneServiceImpl implements RiparazioneService {
 
         MotoDto moto = motoService.getMotoDtoById(riparazione.getIdMoto());
 
+        // controllo se la moto è gia in riparazione
+        if(riparazioneDao.existsByMotoTargaNotCompleted(moto.getTarga())){
+            throw new BadRequestException(ErrorManager.MOTO_GIA_IN_RIPARAZIONE);
+        }
+
         StatoRiparazione stato = statoRiparazioneDao.findById(EnumStatoRiparazione.REGISTRATO.getValue())
                 .orElseThrow(() -> new BadRequestException(ErrorManager.STATO_RIPARAZIONE_NON_TROVATO));
 

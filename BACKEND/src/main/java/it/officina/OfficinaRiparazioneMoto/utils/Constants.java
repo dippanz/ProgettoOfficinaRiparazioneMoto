@@ -31,6 +31,7 @@ public class Constants {
         RIPARAZIONE_GIA_COMPLETA("00016", "Non è possibile aggiornare una riparazione già completa"),
         RIPARAZIONE_NON_ELIMINABILE("00018", "La riparazione selezionata non è eliminabile"),
         RIPARAZIONE_NON_RIFIUTABILE("00019", "Non è possibile rifiutare questa riparazione"),
+        MOTO_GIA_IN_RIPARAZIONE("00022", "Non è possibile aggiungere una riparazione di una moto ancora non completata"),
 
         // Lavorazione section
         LAVORAZIONE_NON_TROVATA("00017", "Lavorazione con l'id specificato non trovata"),
